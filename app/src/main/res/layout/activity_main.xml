@@ -27,7 +27,7 @@
             android:layout_height="@dimen/height_home_activity_tablayout"
             android:paddingTop="@dimen/padding_top_home_activity_tablayout"
             android:paddingBottom="@dimen/padding_bottom_home_activity_tablayout"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center_vertical"
             android:background="@color/grey_dark"
             style="@style/MyCustomTabLayout"
             app:layout_scrollFlags="scroll"/>
