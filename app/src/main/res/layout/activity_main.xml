@@ -20,9 +20,22 @@
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/Movie.PopupOverlay"/>
 
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/grey_dark"
+            style="@style/MyCustomTabLayout"
+            app:layout_scrollFlags="scroll"/>
     </android.support.design.widget.AppBarLayout>
 
+    <!--main content-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <include layout="@layout/content_main"/>
 
 </android.support.design.widget.CoordinatorLayout>
