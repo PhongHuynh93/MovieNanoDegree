@@ -1,7 +1,10 @@
-package dhbk.android.movienanodegree;
+package dhbk.android.movienanodegree.ui.home;
 
 import android.view.Menu;
 import android.view.MenuItem;
+
+import dhbk.android.movienanodegree.BaseActivity;
+import dhbk.android.movienanodegree.R;
 
 public class HomeActivity extends BaseActivity {
 
@@ -22,7 +25,22 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        getSupportActionBar().setTitle(R.string.app_name);
+//        // Set up the navigation drawer.
+//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
+//        setupDrawerContent(mNavView);
 
+//        HomeFragment homeFragment = (HomeFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_FRAGMENT_HOME);
+//        if (homeFragment == null) {
+//            // Create the fragment
+//            homeFragment = HomeFragment.newInstance();
+//            ActivityUtils.addFragmentToActivity(
+//                    getSupportFragmentManager(), homeFragment, R.id.contentFrame_searchartist);
+//        }
+
+        // Create the presenter
+//        SearchArtistPresenter mSearchArtistPresenter = new SearchArtistPresenter(searchArtistFragment);
     }
 
     @Override

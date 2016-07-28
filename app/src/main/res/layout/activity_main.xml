@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".HomeActivity">
+    tools:context=".ui.home.HomeActivity">
 
 
     <android.support.design.widget.AppBarLayout
@@ -21,7 +21,7 @@
             app:popupTheme="@style/Movie.PopupOverlay"/>
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
+            android:id="@+id/tablayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -32,7 +32,7 @@
 
     <!--main content-->
     <android.support.v4.view.ViewPager
-        android:id="@+id/main_container"
+        android:id="@+id/viewpager_main_contain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
