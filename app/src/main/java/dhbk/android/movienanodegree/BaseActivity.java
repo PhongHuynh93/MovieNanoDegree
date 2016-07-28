@@ -7,6 +7,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import butterknife.ButterKnife;
+
 /**
  * Created by huynhducthanhphong on 7/28/16.
  */
@@ -15,7 +17,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
-//        injectViews();
+        injectViews();
         if (hasToolbar()) {
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -41,8 +43,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     // init view object in view
     protected abstract void initView();
 
-    // Every object annotated with {@link butterknife.Bind} its gonna injected trough butterknife
-//    private void injectViews() {
-//        ButterKnife.bind(this);
-//    }
+//     Every object annotated with {@link butterknife.Bind} its gonna injected trough butterknife
+    private void injectViews() {
+        ButterKnife.bind(this);
+    }
 }

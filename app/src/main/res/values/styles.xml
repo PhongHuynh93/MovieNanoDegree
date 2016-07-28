@@ -32,7 +32,9 @@
         <item name="android:background">@color/grey_dark</item>
     </style>
 
-    <style name="Movie.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    <style name="Movie.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:textColor">@color/white_solid</item>
+    </style>
 
     <!--style for tab layout-->
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
@@ -41,6 +43,7 @@
     </style>
 
     <style name="MyCustomTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">@dimen/textsize_small</item>
         <item name="textAllCaps">false</item>
     </style>
 </resources>

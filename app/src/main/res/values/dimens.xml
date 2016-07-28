@@ -6,4 +6,7 @@
 
     <!-- Z-axis elevations -->
     <dimen name="z_app_bar">4dp</dimen>
+
+    <dimen name="textsize_small">12sp</dimen>
+
 </resources>
