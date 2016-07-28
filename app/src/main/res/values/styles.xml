@@ -14,4 +14,25 @@
         <item name="android:windowSharedElementsUseOverlay">false</item>
     </style>
 
+
+    <!--Home activity theme-->
+    <style name="Movie.Home">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <!--<item name="android:statusBarColor">@color/immersive_bars</item>-->
+        <!--<item name="android:navigationBarColor">@color/immersive_bars</item>-->
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowActionModeOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!--<item name="android:windowBackground">@color/grey_dark</item>-->
+        <!--<item name="android:windowEnterTransition">@transition/home_enter</item>-->
+    </style>
+
+    <!--style for apbar with dark overlay-->
+    <style name="Movie.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:background">@color/grey_dark</item>
+    </style>
+
+    <style name="Movie.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+
+
 </resources>
