@@ -1,5 +1,6 @@
 package dhbk.android.movienanodegree;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import butterknife.ButterKnife;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
  * Created by huynhducthanhphong on 7/28/16.
@@ -29,6 +31,21 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        if (hasUseCustomeFont()) {
+            super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        } else {
+            super.attachBaseContext(newBase);
+        }
+    }
+
+
+    //     Every object annotated with {@link butterknife.Bind} its gonna injected trough butterknife
+    private void injectViews() {
+        ButterKnife.bind(this);
+    }
+
 
     // if a activity want to use the custome font, return true
     protected abstract boolean hasUseCustomeFont();
@@ -43,8 +60,4 @@ public abstract class BaseActivity extends AppCompatActivity {
     // init view object in view
     protected abstract void initView();
 
-//     Every object annotated with {@link butterknife.Bind} its gonna injected trough butterknife
-    private void injectViews() {
-        ButterKnife.bind(this);
-    }
 }

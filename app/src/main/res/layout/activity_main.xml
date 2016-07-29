@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.home.HomeActivity">
+    tools:context=".ui.home.HomeActivity"
+    tools:ignore="MissingPrefix">
 
 
     <android.support.design.widget.AppBarLayout
@@ -23,13 +24,14 @@
         <!-- change the default size and position of tab layout-->
         <android.support.design.widget.TabLayout
             android:id="@+id/tablayout"
+            style="@style/MyCustomTabLayout"
+            fontPath="fonts/Helvetica.ttf"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_home_activity_tablayout"
-            android:paddingTop="@dimen/padding_top_home_activity_tablayout"
-            android:paddingBottom="@dimen/padding_bottom_home_activity_tablayout"
             android:layout_gravity="center_vertical"
             android:background="@color/grey_dark"
-            style="@style/MyCustomTabLayout"
+            android:paddingBottom="@dimen/padding_bottom_home_activity_tablayout"
+            android:paddingTop="@dimen/padding_top_home_activity_tablayout"
             app:layout_scrollFlags="scroll"/>
     </android.support.design.widget.AppBarLayout>
 
