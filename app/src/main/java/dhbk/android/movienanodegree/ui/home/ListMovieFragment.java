@@ -12,22 +12,26 @@ import dhbk.android.movienanodegree.R;
 
 /**
  * A simple {@link Fragment} subclass.
+ * depends on position via Intent:
+ * 0: it show the most popular movies.
+ * 1: it show the highest rated movies.
+ * 2: it show the most rated movies.
  */
-public class HomeFragment extends Fragment {
+public class ListMovieFragment extends Fragment implements ListMovieContract.View{
     private static final String ARG_POSITION = "position";
 
-    public HomeFragment() {
+    public ListMovieFragment() {
         // Required empty public constructor
     }
 
 
     @NonNull
-    public static HomeFragment newInstance(int position) {
-        HomeFragment homeFragment = new HomeFragment();
+    public static ListMovieFragment newInstance(int position) {
+        ListMovieFragment listMovieFragment = new ListMovieFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_POSITION, position);
-        homeFragment.setArguments(args);
-        return homeFragment;
+        listMovieFragment.setArguments(args);
+        return listMovieFragment;
     }
 
 
@@ -36,5 +40,10 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
+    public void setPresenter(ListMovieContract.Presenter presenter) {
+
     }
 }

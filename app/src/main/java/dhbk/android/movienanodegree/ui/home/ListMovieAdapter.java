@@ -3,21 +3,20 @@ package dhbk.android.movienanodegree.ui.home;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 
 import dhbk.android.movienanodegree.R;
 
 /**
  * Created by huynhducthanhphong on 7/28/16.
  */
-public class HomeAdapter extends FragmentPagerAdapter {
+public class ListMovieAdapter extends SmartFragmentStatePagerAdapter {
     private static final int NUM_ITEMS = 3;
     private static final int MOST_POPULAR = 0;
     private static final int HIGHEST_RATED = 1;
     private static final int MOST_RATED = 2;
     private final Context mContext;
 
-    public HomeAdapter(Context context, FragmentManager fm) {
+    public ListMovieAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }
@@ -26,11 +25,11 @@ public class HomeAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case MOST_POPULAR: // Fragment # 0 - This will show FirstFragment
-                return HomeFragment.newInstance(MOST_POPULAR);
+                return ListMovieFragment.newInstance(MOST_POPULAR);
             case HIGHEST_RATED: // Fragment # 0 - This will show FirstFragment different title
-                return HomeFragment.newInstance(HIGHEST_RATED);
+                return ListMovieFragment.newInstance(HIGHEST_RATED);
             case MOST_RATED: // Fragment # 1 - This will show SecondFragment
-                return HomeFragment.newInstance(MOST_RATED);
+                return ListMovieFragment.newInstance(MOST_RATED);
             default:
                 return null;
         }

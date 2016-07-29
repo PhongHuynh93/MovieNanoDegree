@@ -2,30 +2,38 @@ package dhbk.android.movienanodegree;
 
 import android.app.Application;
 
+import dhbk.android.movienanodegree.component.DaggerMovieComponent;
+import dhbk.android.movienanodegree.component.MovieComponent;
+import dhbk.android.movienanodegree.module.ApplicationModule;
+import dhbk.android.movienanodegree.module.MovieModule;
+import dhbk.android.movienanodegree.module.TasksRepositoryModule;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by phongdth.ky on 7/13/2016.
+ *  * this is a singleton application, which create graph for dagger 2 and setup font for all app
  */
 public class MVPApp extends Application {
+    private MovieComponent mMovieComponent;
 
     @Override
     public void onCreate() {
         super.onCreate();
         setupFont();
-//        setupGraph();
+        setupGraph();
     }
 
-//    // contains dependency use to inject into class
-//    private void setupGraph() {
-//        // we use subcomponent, this is a parent dependance
-//        mSpotifyStreamerComponent = DaggerSpotifyStreamerComponent
-//                .builder()
-//                .spotifyStreamerModule(new SpotifyStreamerModule(this))
-//                .build();
-//    }
+    // setup parent component
+    private void setupGraph() {
+        mMovieComponent = DaggerMovieComponent
+                .builder()
+                .applicationModule(new ApplicationModule((getApplicationContext())))
+                .tasksRepositoryModule(new TasksRepositoryModule())
+                .movieModule(new MovieModule())
+                .build();
+    }
 
-    // setup custome font for all my views
+    // setup custome default font for all views in projects.
     private void setupFont() {
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath("fonts/Helvetica.ttf")
@@ -33,8 +41,8 @@ public class MVPApp extends Application {
                 .build()
         );
     }
-//
-//    public SpotifyStreamerComponent getSpotifyStreamerComponent() {
-//        return mSpotifyStreamerComponent;
-//    }
+
+    public MovieComponent getMovieComponent() {
+        return mMovieComponent;
+    }
 }
