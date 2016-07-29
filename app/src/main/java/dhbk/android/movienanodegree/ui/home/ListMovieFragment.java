@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import dhbk.android.movienanodegree.R;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * A simple {@link Fragment} subclass.
  * depends on position via Intent:
@@ -19,6 +21,7 @@ import dhbk.android.movienanodegree.R;
  */
 public class ListMovieFragment extends Fragment implements ListMovieContract.View{
     private static final String ARG_POSITION = "position";
+    private ListMovieContract.Presenter mPresenter;
 
     public ListMovieFragment() {
         // Required empty public constructor
@@ -44,6 +47,7 @@ public class ListMovieFragment extends Fragment implements ListMovieContract.Vie
 
     @Override
     public void setPresenter(ListMovieContract.Presenter presenter) {
-
+        checkNotNull(presenter, "Present must not null");
+        mPresenter = presenter;
     }
 }

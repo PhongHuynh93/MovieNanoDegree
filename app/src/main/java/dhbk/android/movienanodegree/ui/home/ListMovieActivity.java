@@ -14,7 +14,6 @@ import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieActivityModule;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieAdapterModule;
-import dhbk.android.movienanodegree.ui.home.module.ListMoviePresenterModule;
 
 /**
  * contains a viewpager, which also contains a fragment {@link ListMovieFragment}:
@@ -65,8 +64,6 @@ public class ListMovieActivity extends BaseActivity{
 //        }
 
 
-        mViewpagerMainContain.setAdapter(mListMovieAdapter);
-        mTablayout.setupWithViewPager(mViewpagerMainContain);
 
         // Create the presenter, adapter
         // TODO: 7/29/2016 fix this, adapter not already implement yet, so can not get the fragment here
@@ -74,11 +71,12 @@ public class ListMovieActivity extends BaseActivity{
                 .builder()
                 .movieComponent(((MVPApp) getApplication()).getMovieComponent())
                 .listMovieActivityModule(new ListMovieActivityModule(this))
-                .listMoviePresenterModule(new ListMoviePresenterModule((ListMovieContract.View)mListMovieAdapter.getRegisteredFragment(mViewpagerMainContain.getCurrentItem())))
                 .listMovieAdapterModule(new ListMovieAdapterModule())
                 .build()
                 .inject(this);
 
+        mViewpagerMainContain.setAdapter(mListMovieAdapter);
+        mTablayout.setupWithViewPager(mViewpagerMainContain);
     }
 
     @Override
