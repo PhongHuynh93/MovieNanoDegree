@@ -6,4 +6,11 @@
 
     <!-- Z-axis elevations -->
     <dimen name="z_app_bar">4dp</dimen>
+
+    <dimen name="textsize_small">12sp</dimen>
+
+    <!--home activity-->
+    <dimen name="height_home_activity_tablayout">20dp</dimen>
+    <dimen name="padding_top_home_activity_tablayout">0dp</dimen>
+    <dimen name="padding_bottom_home_activity_tablayout">0dp</dimen>
 </resources>

@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".HomeActivity">
+    tools:context=".ui.home.HomeActivity"
+    tools:ignore="MissingPrefix">
 
 
     <android.support.design.widget.AppBarLayout
@@ -20,17 +21,26 @@
             android:layout_height="?attr/actionBarSize"
             app:popupTheme="@style/Movie.PopupOverlay"/>
 
+        <!-- change the default size and position of tab layout-->
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout"
+            style="@style/MyCustomTabLayout"
+            fontPath="fonts/Helvetica.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_home_activity_tablayout"
+            android:layout_gravity="center_vertical"
+            android:background="@color/grey_dark"
+            android:paddingBottom="@dimen/padding_bottom_home_activity_tablayout"
+            android:paddingTop="@dimen/padding_top_home_activity_tablayout"
+            app:layout_scrollFlags="scroll"/>
     </android.support.design.widget.AppBarLayout>
 
+    <!--main content-->
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager_main_contain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
-    <include layout="@layout/content_main"/>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email"/>
 
 </android.support.design.widget.CoordinatorLayout>
