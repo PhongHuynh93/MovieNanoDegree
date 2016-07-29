@@ -2,11 +2,12 @@
 
 buildscript {
     repositories {
-        jcenter()
+        jcenter { url "http://jcenter.bintray.com/" }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.2'
-
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+        classpath 'me.tatarka:gradle-retrolambda:3.2.3'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -14,10 +15,43 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+        jcenter { url "http://jcenter.bintray.com/" }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+// Define versions in a single place
+ext {
+    // Sdk and tools
+    minSdkVersion = 21
+    targetSdkVersion = 24
+    compileSdkVersion = 24
+    buildToolsVersion = "24.0.0"
+
+    // App dependencies
+    supportLibraryVersion = '24.0.0'
+    guavaVersion = '19.0'
+    junitVersion = '4.12'
+    butterknife = '8.2.1'
+    font = '2.2.0'
+//    dagger
+    daggerCompiler = '2.5'
+    dagger = '2.5'
+    javax = '1.0'
+//    retrofit
+    gsonVersion = '2.6.2'
+    retrofitVersion = '2.1.0'
+    gsonConverterVersion = '2.1.0'
+//    rxjava
+    rxjavaVersion = '1.1.6'
+    rxandroidVersion = '1.2.1'
+    adapterRxjavaVersion = '2.1.0'
+    // picasso
+    picassoVersion = '2.5.2'
+
+}
+
