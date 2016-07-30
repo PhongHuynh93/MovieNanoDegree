@@ -44,6 +44,8 @@ public class MovieApiAdapter {
      * Use timeouts to fail a call when its peer is unreachable
      * Handling authentication:
      * OkHttp can automatically retry unauthenticated requests. When a response is 401 Not Authorized, an Authenticator is asked to supply credentials.
+     *
+     * Cache: add cache to client https://github.com/codepath/android_guides/wiki/Using-OkHttp
      */
     private static OkHttpClient getClient(Context context) {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
@@ -57,12 +59,14 @@ public class MovieApiAdapter {
                 .addInterceptor(loggingInterceptor)
                 .addInterceptor(new AuthorizationInterceptor());
 
+        // add cache to client
         final File baseDir = context.getCacheDir();
         if (baseDir != null) {
             final File cacheDir = new File(baseDir, MovieRequestConstants.CACHE_DIR);
             builder.cache(new Cache(cacheDir, MovieRequestConstants.CACHE_SIZE));
         }
 
+        // build all client
         return builder.build();
     }
 }
