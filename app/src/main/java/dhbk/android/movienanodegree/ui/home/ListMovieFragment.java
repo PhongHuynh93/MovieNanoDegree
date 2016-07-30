@@ -37,6 +37,11 @@ public class ListMovieFragment extends BaseFragment implements ListMovieContract
     }
 
     @Override
+    public int getLayout() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
     public void setPresenter(ListMovieContract.Presenter presenter) {
         checkNotNull(presenter, "Present must not null");
         mPresenter = presenter;
@@ -64,11 +69,6 @@ public class ListMovieFragment extends BaseFragment implements ListMovieContract
     @Override
     protected void doThingWhenDestroyApp() {
 
-    }
-
-    @Override
-    public int getLayout() {
-        return R.layout.fragment_home;
     }
 
     @Override
