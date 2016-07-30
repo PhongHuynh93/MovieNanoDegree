@@ -17,4 +17,9 @@ class MovieRequestConstants {
     public static final int CONNECT_TIMEOUT = 15;
     public static final int WRITE_TIMEOUT = 60;
     public static final int TIMEOUT = 60;
+
+
+    //    api key
+    public static final String THE_MOVIE_DB_API_KEY = "53470b56a60668274e1dd9f84d882564";
+
 }
