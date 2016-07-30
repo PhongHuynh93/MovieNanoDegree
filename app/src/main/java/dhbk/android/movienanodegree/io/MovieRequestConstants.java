@@ -2,10 +2,8 @@ package dhbk.android.movienanodegree.io;
 
 /**
  * Created by phongdth.ky on 7/15/2016.
- * Constants value used for search from spotify api
+ * Constants value used for search from movie api
  *
- * @see <a href="https://developer.spotify.com/web-api/search-item/">Search for an Item
- * </a>
  */
 class MovieRequestConstants {
     // base url for movie search

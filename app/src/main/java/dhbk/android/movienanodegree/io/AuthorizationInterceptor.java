@@ -7,6 +7,9 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/**
+ * add api key for server to authen.
+ */
 public class AuthorizationInterceptor implements Interceptor {
 
     private static final String API_KEY_PARAM = "api_key";
@@ -20,6 +23,7 @@ public class AuthorizationInterceptor implements Interceptor {
                 .setQueryParameter(API_KEY_PARAM, MovieRequestConstants.THE_MOVIE_DB_API_KEY)
                 .build();
 
+        // add api key to request
         Request newRequest = originalRequest.newBuilder()
                 .url(newHttpUrl)
                 .build();
