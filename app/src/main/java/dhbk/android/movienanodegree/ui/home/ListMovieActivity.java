@@ -49,24 +49,17 @@ public class ListMovieActivity extends BaseActivity{
 
     @Override
     protected void initView() {
+//        change toolbar title
         getSupportActionBar().setTitle(R.string.home_activity_toolbar_title);
-//        // Set up the navigation drawer.
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
-//        setupDrawerContent(mNavView);
+        // set up viewpager
+        mViewpagerMainContain.setAdapter(mListMovieAdapter);
+        mTablayout.setupWithViewPager(mViewpagerMainContain);
+        // TODO set up nav
+    }
 
-//        ListMovieFragment homeFragment = (ListMovieFragment) getSupportFragmentManager().findFragmentByTag(Constant.TAG_FRAGMENT_HOME);
-//        if (homeFragment == null) {
-//            // Create the fragment
-//            homeFragment = ListMovieFragment.newInstance();
-//            ActivityUtils.addFragmentToActivity(
-//                    getSupportFragmentManager(), homeFragment, R.id.contentFrame_searchartist);
-//        }
-
-
-
-        // Create the presenter, adapter
-        // TODO: 7/29/2016 fix this, adapter not already implement yet, so can not get the fragment here
+    @Override
+    protected void injectDependencies() {
+        // Create adapter
         DaggerListMovieComponent
                 .builder()
                 .movieComponent(((MVPApp) getApplication()).getMovieComponent())
@@ -74,9 +67,6 @@ public class ListMovieActivity extends BaseActivity{
                 .listMovieAdapterModule(new ListMovieAdapterModule())
                 .build()
                 .inject(this);
-
-        mViewpagerMainContain.setAdapter(mListMovieAdapter);
-        mTablayout.setupWithViewPager(mViewpagerMainContain);
     }
 
     @Override

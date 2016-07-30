@@ -20,6 +20,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
         injectViews();
+        injectDependencies();
         if (hasToolbar()) {
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -46,6 +47,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
+    /**
+     * Setup the object graph and inject the dependencies needed on this activity.
+     */
+    protected abstract void injectDependencies();
 
     // if a activity want to use the custome font, return true
     protected abstract boolean hasUseCustomeFont();
