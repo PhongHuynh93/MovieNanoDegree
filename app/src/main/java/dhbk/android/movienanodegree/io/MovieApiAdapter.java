@@ -1,6 +1,7 @@
 package dhbk.android.movienanodegree.io;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;
@@ -21,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MovieApiAdapter {
     private static Retrofit sRetrofit;
 
-    public static Retrofit getInstance(){
+    public static Retrofit getInstance(@NonNull Context context){
         // because we want this api use rxjava in callback so we attach the adapter to this retrofit instance.
         if(sRetrofit == null)
             sRetrofit = new Retrofit.Builder()
