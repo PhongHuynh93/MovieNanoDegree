@@ -17,6 +17,5 @@ import dhbk.android.movienanodegree.module.TasksRepositoryModule;
 @Singleton
 @Component(modules = {ApplicationModule.class, TasksRepositoryModule.class, MovieModule.class})
 public interface MovieComponent {
-    // TODO: 7/29/2016  declare components that child component need here
     Context getContext();
 }

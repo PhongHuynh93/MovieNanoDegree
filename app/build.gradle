@@ -65,6 +65,8 @@ dependencies {
 //    picasso
     compile "com.squareup.picasso:picasso:$rootProject.picassoVersion"
 
-    compile 'com.android.support:support-v4:24.1.1'
+    // use to debug http
+    compile 'com.squareup.okhttp3:logging-interceptor:3.3.0'
+
 }
 

@@ -4,10 +4,8 @@ package dhbk.android.movienanodegree.ui.home;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
+import dhbk.android.movienanodegree.BaseFragment;
 import dhbk.android.movienanodegree.R;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -19,14 +17,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * 1: it show the highest rated movies.
  * 2: it show the most rated movies.
  */
-public class ListMovieFragment extends Fragment implements ListMovieContract.View{
+public class ListMovieFragment extends BaseFragment implements ListMovieContract.View{
     private static final String ARG_POSITION = "position";
     private ListMovieContract.Presenter mPresenter;
+    // save the tab position of this view
+    private String mTabLayoutPosition;
 
     public ListMovieFragment() {
         // Required empty public constructor
     }
-
 
     @NonNull
     public static ListMovieFragment newInstance(int position) {
@@ -37,17 +36,54 @@ public class ListMovieFragment extends Fragment implements ListMovieContract.Vie
         return listMovieFragment;
     }
 
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
-    }
-
     @Override
     public void setPresenter(ListMovieContract.Presenter presenter) {
         checkNotNull(presenter, "Present must not null");
         mPresenter = presenter;
     }
+
+    // get data from intent
+    @Override
+    protected void doThingWhenCreateApp() {
+        if (getArguments() != null) {
+            mTabLayoutPosition = getArguments().getString(ARG_POSITION);
+        }
+    }
+
+    // start the presenter when resume
+    @Override
+    protected void doThingWhenResumeApp() {
+        mPresenter.start();
+    }
+
+    @Override
+    protected void doThingWhenPauseApp() {
+
+    }
+
+    @Override
+    protected void doThingWhenDestroyApp() {
+
+    }
+
+    @Override
+    public int getLayout() {
+        return R.layout.fragment_home;
+    }
+
+    @Override
+    protected boolean hasToolbar() {
+        return false;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void injectDependencies() {
+
+    }
+
 }
