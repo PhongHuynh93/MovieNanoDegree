@@ -110,6 +110,7 @@ public class ListMovieFragment extends BaseFragment implements ListMovieContract
 
     @Override
     public void getMoviesFromNetwork() {
-
+        // TODO: 7/30/16 make sort in pref so the second we get to this screen, open depend on tab screen
+//        callDiscoverMovies(sort, null);
     }
 }
