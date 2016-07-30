@@ -8,6 +8,11 @@ import dhbk.android.movienanodegree.BaseView;
  */
 public interface ListMovieContract {
     interface View extends BaseView<Presenter> {
+        // make the icon appear
+        void makePullToRefreshAppear();
+
+        // connect to server to pull datas
+        void getMoviesFromNetwork();
     }
 
     interface Presenter extends BasePresenter {

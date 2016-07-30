@@ -33,7 +33,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
 
     @Override
     public void fetchMoviesAsync() {
-        // TODO fetch the movie in the network
-
+        mListMovieView.makePullToRefreshAppear();
+        mListMovieView.getMoviesFromNetwork();
     }
 }
