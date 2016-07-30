@@ -1,10 +1,9 @@
 package dhbk.android.movienanodegree.io;
 
-import dhbk.android.spotifygcs.io.model.ArtistSearchResponse;
-import dhbk.android.spotifygcs.io.model.TopTrackSearchResponse;
+import dhbk.android.movienanodegree.io.model.MovieReviewsResponse;
+import dhbk.android.movienanodegree.io.model.MovieVideosResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 import rx.Observable;
 
 /**
