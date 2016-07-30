@@ -13,14 +13,14 @@ import rx.Observable;
  */
 public interface MovieApiService {
     /**
-     *     Get the videos (trailers, teasers, clips, etc...) for a specific movie id.
+     *     Get the videos (trailers, teasers, clips, etc...) for a specific movie id to {@link MovieVideosResponse}
      * http://api.themoviedb.org/3/movie/id/videos
       */
     @GET("movie/{id}/videos")
     Observable<MovieVideosResponse> getMovieVideos(@Path("id") long movieId);
 
     /**
-     *     Get the reviews for a particular movie id.
+     *     Get the reviews for a particular movie id to {@link MovieReviewsResponse}
      * http://api.themoviedb.org/3/movie/id/reviews
      */
     @GET("movie/{id}/reviews")
