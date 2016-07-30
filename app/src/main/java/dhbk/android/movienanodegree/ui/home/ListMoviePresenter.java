@@ -28,6 +28,12 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
 
     @Override
     public void start() {
+        fetchMoviesAsync();
+    }
+
+    @Override
+    public void fetchMoviesAsync() {
+        // TODO fetch the movie in the network
 
     }
 }

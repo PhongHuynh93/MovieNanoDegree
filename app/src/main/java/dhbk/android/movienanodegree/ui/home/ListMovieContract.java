@@ -11,7 +11,8 @@ public interface ListMovieContract {
     }
 
     interface Presenter extends BasePresenter {
-
+        // fetch the movie in the network
+        void fetchMoviesAsync();
     }
 
 }
