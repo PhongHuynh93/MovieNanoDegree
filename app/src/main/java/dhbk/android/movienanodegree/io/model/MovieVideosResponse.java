@@ -30,7 +30,17 @@ import java.util.ArrayList;
  }
  */
 public class MovieVideosResponse {
+    @SerializedName(MovieResponseConstant.MOVIE_ID)
+    private long movieId;
+
     @SerializedName(MovieResponseConstant.MOVIE_RESULTS)
     private ArrayList<MovieVideo> results;
 
+    public long getMovieId() {
+        return movieId;
+    }
+
+    public ArrayList<MovieVideo> getResults() {
+        return results;
+    }
 }

@@ -7,4 +7,5 @@ public class MovieResponseConstant {
 //    video
     public static final String MOVIE_RESULTS = "results";
 
+    public static final String MOVIE_ID = "id";
 }
