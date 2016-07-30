@@ -12,6 +12,6 @@ package dhbk.android.movienanodegree.io.model;
  "size": 720,
  "type": "Trailer"
  */
-// TODO: 7/30/16 implement this model
+// TODO: 7/30/16 implement this model to show movies
 public class MovieVideo {
 }

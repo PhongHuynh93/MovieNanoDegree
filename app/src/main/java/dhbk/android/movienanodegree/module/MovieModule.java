@@ -1,7 +1,6 @@
 package dhbk.android.movienanodegree.module;
 
 import dagger.Module;
-import dagger.Provides;
 
 /**
  * Created by phongdth.ky on 7/29/2016.
