@@ -17,7 +17,7 @@ import dhbk.android.movienanodegree.ui.base.BaseFragment;
  * 1: it show the highest rated movies.
  * 2: it show the most rated movies.
  */
-public class ListMovieItemFragment extends BaseFragment{
+public class ListMovieItemFragment extends BaseFragment {
     private static final String ARG_POSITION = "position";
     @BindView(R.id.recyclerview_home_list_movies)
     RecyclerView mRecyclerviewHomeListMovies;
@@ -70,12 +70,6 @@ public class ListMovieItemFragment extends BaseFragment{
 
     }
 
-//    @Override
-//    public void setPresenter(ListMovieContract.Presenter presenter) {
-//        checkNotNull(presenter, "Present must not null");
-//        mPresenter = presenter;
-//    }
-
     // get data from intent
     @Override
     protected void doThingWhenCreateApp() {
@@ -89,7 +83,6 @@ public class ListMovieItemFragment extends BaseFragment{
 
     }
 
-    // start the presenter when resume
     @Override
     protected void doThingWhenResumeApp() {
     }
@@ -103,15 +96,4 @@ public class ListMovieItemFragment extends BaseFragment{
     protected void doThingWhenDestroyApp() {
 
     }
-
-//    @Override
-//    public void makePullToRefreshAppear() {
-//        mSwiperefreshHome.setRefreshing(true);
-//    }
-//
-//    @Override
-//    public void getMoviesFromNetwork() {
-//        // TODO: 7/30/16 make sort in pref so the second we get to this screen, open depend on tab screen
-////        callDiscoverMovies(sort, null);
-//    }
 }

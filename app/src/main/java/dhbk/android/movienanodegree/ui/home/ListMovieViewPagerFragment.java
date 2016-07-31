@@ -22,6 +22,7 @@ import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieAdapter;
+import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieComponent;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieActivityModule;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieAdapterModule;
 

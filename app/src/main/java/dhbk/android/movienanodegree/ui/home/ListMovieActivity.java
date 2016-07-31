@@ -8,6 +8,7 @@ import butterknife.ButterKnife;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.ui.base.BaseActivity;
+import dhbk.android.movienanodegree.ui.home.component.DaggerListMoviePresenterComponent;
 import dhbk.android.movienanodegree.ui.home.module.ListMoviePresenterModule;
 import dhbk.android.movienanodegree.utils.ActivityUtils;
 
@@ -52,7 +53,6 @@ public class ListMovieActivity extends BaseActivity {
     // call after initVIew()
     @Override
     protected void injectDependencies() {
-        // TODO create a presenter
         // create the presenter
         DaggerListMoviePresenterComponent
                 .builder()
