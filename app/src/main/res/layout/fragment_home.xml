@@ -1,13 +1,22 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="dhbk.android.movienanodegree.ui.home.HomeFragment">
+<!--Implementing Pull to Refresh Guide-->
+<!--http://guides.codepath.com/android/Implementing-Pull-to-Refresh-Guide#using-swiperefreshlayout-->
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/swiperefresh_home"
+    tools:context=".ui.home.ListMovieActivity">
+
+    <!--lists of movies -->
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_home_list_movies"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+    </android.support.v7.widget.RecyclerView>
 
-</FrameLayout>
+    <!--TODO when no movies here, show a different layout-->
+</android.support.v4.widget.SwipeRefreshLayout>
