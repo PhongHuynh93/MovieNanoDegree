@@ -36,4 +36,15 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
         mListMovieView.makePullToRefreshAppear();
         mListMovieView.getMoviesFromNetwork();
     }
+
+    /**
+     * make the network call to get the list of movie
+     *
+     * @param sort is the way to get the movies from network
+     * @param page page of the movie on server
+     */
+    @Override
+    public void callDiscoverMovies(String sort, Integer page) {
+        // TODO: 7/31/16 call the interactor to perform search
+    }
 }

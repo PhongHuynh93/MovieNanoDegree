@@ -114,5 +114,4 @@ public abstract class BaseFragment extends Fragment {
         ButterKnife.bind(this, v);
     }
 
-
 }

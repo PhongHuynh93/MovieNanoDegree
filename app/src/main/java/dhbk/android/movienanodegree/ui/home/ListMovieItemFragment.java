@@ -23,7 +23,6 @@ public class ListMovieItemFragment extends BaseFragment {
     RecyclerView mRecyclerviewHomeListMovies;
     @BindView(R.id.swiperefresh_home)
     SwipeRefreshLayout mSwiperefreshHome;
-    private ListMovieContract.Presenter mPresenter;
     // save the tab position of this view
     private String mTabLayoutPosition;
 
@@ -55,7 +54,7 @@ public class ListMovieItemFragment extends BaseFragment {
         // when data again whenever system notice a refresh gesture.
         mSwiperefreshHome.setOnRefreshListener(() ->
         {
-            mPresenter.fetchMoviesAsync();
+            ((ListMovieViewPagerFragment)getParentFragment()).showListOfMovies();
         });
         // Configure the refreshing colors
         mSwiperefreshHome.setColorSchemeResources(
@@ -95,5 +94,9 @@ public class ListMovieItemFragment extends BaseFragment {
     @Override
     protected void doThingWhenDestroyApp() {
 
+    }
+
+    public void setThePullToRefreshAppear() {
+        mSwiperefreshHome.setRefreshing(true);
     }
 }

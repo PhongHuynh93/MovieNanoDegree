@@ -20,6 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
+import dhbk.android.movienanodegree.interactor.MovieInteractor;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieAdapter;
 import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieComponent;
@@ -36,7 +37,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
     @Inject
     ListMovieAdapter mListMovieAdapter;
-
     @BindView(R.id.viewpager_frag_list_movie_contain)
     ViewPager mViewpagerFragListMovieContent;
     @BindView(R.id.tablayout_fraglistmovie)
@@ -129,16 +129,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     }
 
     @Override
-    public void makePullToRefreshAppear() {
-
-    }
-
-    @Override
-    public void getMoviesFromNetwork() {
-
-    }
-
-    @Override
     public void setPresenter(ListMovieContract.Presenter presenter) {
         checkNotNull(presenter);
         mPresenter = presenter;
@@ -151,5 +141,30 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         ButterKnife.bind(this, rootView);
         return rootView;
     }
+
+    /**
+     * connect to server to pull the data
+     */
+    @Override
+    public void showListOfMovies() {
+        mPresenter.fetchMoviesAsync();
+    }
+
+    /**
+     * show a icon indicate that the app is pulling to server
+     */
+    @Override
+    public void makePullToRefreshAppear() {
+        // call the current fraagment to make the icon
+        ((ListMovieItemFragment)mListMovieAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).setThePullToRefreshAppear();
+    }
+
+    // connect to network
+    @Override
+    public void getMoviesFromNetwork() {
+        mPresenter.callDiscoverMovies(MovieInteractor.MOST_POPULAR, null);
+    }
+
+
 }
 
