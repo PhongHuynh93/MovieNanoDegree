@@ -1,4 +1,4 @@
-package dhbk.android.movienanodegree;
+package dhbk.android.movienanodegree.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import butterknife.ButterKnife;
+import dhbk.android.movienanodegree.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**

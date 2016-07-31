@@ -4,7 +4,6 @@ import dagger.Component;
 import dhbk.android.movienanodegree.component.MovieComponent;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieActivityModule;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieAdapterModule;
-import dhbk.android.movienanodegree.ui.home.module.ListMoviePresenterModule;
 import dhbk.android.movienanodegree.utils.ActivityScoped;
 
 /**
@@ -13,7 +12,7 @@ import dhbk.android.movienanodegree.utils.ActivityScoped;
  * contains adapter {@link ListMovieAdapter} module
  */
 @ActivityScoped
-@Component(dependencies = MovieComponent.class, modules = {ListMovieActivityModule.class, ListMoviePresenterModule.class, ListMovieAdapterModule.class})
+@Component(dependencies = MovieComponent.class, modules = {ListMovieActivityModule.class, ListMovieAdapterModule.class})
 public interface ListMovieComponent {
     void inject(ListMovieActivity activity);
 }

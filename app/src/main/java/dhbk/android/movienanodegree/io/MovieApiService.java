@@ -1,9 +1,11 @@
 package dhbk.android.movienanodegree.io;
 
+import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
 import dhbk.android.movienanodegree.io.model.MovieReviewsResponse;
 import dhbk.android.movienanodegree.io.model.MovieVideosResponse;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 import rx.Observable;
 
 /**
@@ -25,5 +27,15 @@ public interface MovieApiService {
      */
     @GET("movie/{id}/reviews")
     Observable<MovieReviewsResponse> getMovieReviews(@Path("id") long movieId);
+
+
+    /**
+     * http://docs.themoviedb.apiary.io/#reference/discover/discovermovie/get
+     * @param sortBy
+     * @param page
+     * @return
+     */
+    @GET("discover/movie")
+    Observable<DiscoverMovieResponse> discoverMovies(@Query("sort_by") String sortBy, @Query("page") Integer page);
 
 }

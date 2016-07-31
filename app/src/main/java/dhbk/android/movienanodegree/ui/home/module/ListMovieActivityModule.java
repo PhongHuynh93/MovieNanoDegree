@@ -18,14 +18,9 @@ public class ListMovieActivityModule {
         mActivity  = activity;
     }
 
-    @Provides
-    public FragmentActivity getActivity() {
-        return mActivity;
-    }
-
 
     @Provides
-    FragmentManager provideFragmentManager(FragmentActivity activity) {
-        return activity.getSupportFragmentManager();
+    FragmentManager provideFragmentManager() {
+        return mActivity.getSupportFragmentManager();
     }
 }

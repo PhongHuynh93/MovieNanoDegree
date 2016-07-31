@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import dhbk.android.movienanodegree.BaseActivity;
+import dhbk.android.movienanodegree.ui.base.BaseActivity;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieActivityModule;
