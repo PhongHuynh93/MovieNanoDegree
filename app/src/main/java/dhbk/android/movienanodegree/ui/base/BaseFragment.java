@@ -4,16 +4,27 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
+import dhbk.android.movienanodegree.R;
 
 /**
  * Created by huynhducthanhphong on 7/16/16.
  */
 public abstract class BaseFragment extends Fragment {
+    /**
+     * put         injectDependencies() before initView() so we can make adapter after already initview
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     // inject view and dependance
     @Nullable
     @Override
@@ -21,9 +32,6 @@ public abstract class BaseFragment extends Fragment {
         View v = inflater.inflate(getLayout(), container, false);
         injectViews(v);
         injectDependencies();
-        if (hasToolbar()) {
-            setHasOptionsMenu(true);
-        }
         initView();
         return v;
     }
@@ -32,6 +40,21 @@ public abstract class BaseFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         doThingWhenCreateApp();
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (hasToolbar()) {
+            setHasOptionsMenu(true);
+            Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+            ActionBar ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
+            ab.setHomeAsUpIndicator(R.drawable.toolbar_open_drawer);
+            ab.setDisplayHomeAsUpEnabled(true); // set the left arrow in toolbar
+        }
+        doThingWhenActivityCreated();
+
     }
 
 
@@ -57,6 +80,9 @@ public abstract class BaseFragment extends Fragment {
     // get the data from intent
     protected abstract void doThingWhenCreateApp();
 
+    // after activity create, do thing such as change toolbar title
+    protected abstract void doThingWhenActivityCreated();
+
 
     // when app is on resume, add listener, start the presenter
     protected abstract void doThingWhenResumeApp();
@@ -66,6 +92,7 @@ public abstract class BaseFragment extends Fragment {
 
     // when app is on destroy state, stop network.
     protected abstract void doThingWhenDestroyApp();
+
 
     // return layout for fragment
     @LayoutRes

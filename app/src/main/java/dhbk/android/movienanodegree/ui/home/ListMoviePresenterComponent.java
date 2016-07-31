@@ -16,5 +16,5 @@ import dhbk.android.movienanodegree.utils.FragmentScoped;
 @FragmentScoped
 @Component(dependencies = MovieComponent.class, modules = {ListMoviePresenterModule.class})
 public interface ListMoviePresenterComponent {
-    void inject(ListMovieAdapter adapter);
+    void inject(ListMovieActivity adapter);
 }
