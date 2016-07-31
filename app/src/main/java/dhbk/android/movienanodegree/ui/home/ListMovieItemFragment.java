@@ -3,6 +3,7 @@ package dhbk.android.movienanodegree.ui.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 
@@ -24,7 +25,7 @@ public class ListMovieItemFragment extends BaseFragment {
     @BindView(R.id.swiperefresh_home)
     SwipeRefreshLayout mSwiperefreshHome;
     // save the tab position of this view
-    private String mTabLayoutPosition;
+    private int mTabLayoutPosition;
 
     public ListMovieItemFragment() {
         // Required empty public constructor
@@ -51,17 +52,6 @@ public class ListMovieItemFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        // when data again whenever system notice a refresh gesture.
-        mSwiperefreshHome.setOnRefreshListener(() ->
-        {
-            ((ListMovieViewPagerFragment)getParentFragment()).showListOfMovies();
-        });
-        // Configure the refreshing colors
-        mSwiperefreshHome.setColorSchemeResources(
-                android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
     }
 
     @Override
@@ -73,13 +63,27 @@ public class ListMovieItemFragment extends BaseFragment {
     @Override
     protected void doThingWhenCreateApp() {
         if (getArguments() != null) {
-            mTabLayoutPosition = getArguments().getString(ARG_POSITION);
+            mTabLayoutPosition = getArguments().getInt(ARG_POSITION);
         }
     }
 
     @Override
     protected void doThingWhenActivityCreated() {
+        // when data again whenever system notice a refresh gesture.
+        mSwiperefreshHome.setOnRefreshListener(() ->
+        {
+            Fragment parentFrag = getActivity().getSupportFragmentManager().findFragmentById(R.id.framelayout_act_main_content);
+            if (parentFrag instanceof ListMovieViewPagerFragment){
+                ((ListMovieViewPagerFragment)parentFrag).showListOfMovies();
 
+            }
+        });
+        // Configure the refreshing colors
+        mSwiperefreshHome.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
     }
 
     @Override

@@ -37,4 +37,7 @@ public class DiscoverMovie {
     @SerializedName("backdrop_path")
     private String backdropPath;
 
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
 }

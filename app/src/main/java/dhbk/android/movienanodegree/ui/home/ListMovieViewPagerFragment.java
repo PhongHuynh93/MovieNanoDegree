@@ -1,23 +1,18 @@
 package dhbk.android.movienanodegree.ui.home;
 
 
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.interactor.MovieInteractor;
@@ -132,14 +127,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     public void setPresenter(ListMovieContract.Presenter presenter) {
         checkNotNull(presenter);
         mPresenter = presenter;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
     }
 
     /**
