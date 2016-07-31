@@ -21,7 +21,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
         injectViews();
-        injectDependencies();
         if (hasToolbar()) {
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
@@ -29,8 +28,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             ab.setHomeAsUpIndicator(R.drawable.toolbar_open_drawer);
             ab.setDisplayHomeAsUpEnabled(true); // set the left arrow in toolbar
         }
-
         initView();
+        injectDependencies();
     }
 
     @Override
@@ -48,8 +47,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
+    // init view object in view
+    protected abstract void initView();
+
+
     /**
-     * Setup the object graph and inject the dependencies needed on this activity.
+     * use to inject presenter so, put it after initView
      */
     protected abstract void injectDependencies();
 
@@ -63,7 +66,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     // check a view has toolbar or not
     protected abstract boolean hasToolbar();
 
-    // init view object in view
-    protected abstract void initView();
 
 }

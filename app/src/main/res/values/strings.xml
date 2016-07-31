@@ -11,4 +11,7 @@
     <string name="home_adapter_pager_most_popular">MOST POPULAR</string>
     <string name="home_adapter_pager_highest_rated">HIGHEST RATED</string>
     <string name="home_adapter_pager_most_rated">MOST RATED</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank listMovieItemFragment</string>
 </resources>

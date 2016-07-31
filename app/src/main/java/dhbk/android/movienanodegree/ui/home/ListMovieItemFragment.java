@@ -3,24 +3,21 @@ package dhbk.android.movienanodegree.ui.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 
 import butterknife.BindView;
-import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.R;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import dhbk.android.movienanodegree.ui.base.BaseFragment;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link android.support.v4.app.Fragment} subclass.
  * depends on position via Intent:
  * 0: it show the most popular movies.
  * 1: it show the highest rated movies.
  * 2: it show the most rated movies.
  */
-public class ListMovieFragment extends BaseFragment implements ListMovieContract.View {
+public class ListMovieItemFragment extends BaseFragment{
     private static final String ARG_POSITION = "position";
     @BindView(R.id.recyclerview_home_list_movies)
     RecyclerView mRecyclerviewHomeListMovies;
@@ -30,22 +27,22 @@ public class ListMovieFragment extends BaseFragment implements ListMovieContract
     // save the tab position of this view
     private String mTabLayoutPosition;
 
-    public ListMovieFragment() {
+    public ListMovieItemFragment() {
         // Required empty public constructor
     }
 
     @NonNull
-    public static ListMovieFragment newInstance(int position) {
-        ListMovieFragment listMovieFragment = new ListMovieFragment();
+    public static ListMovieItemFragment newInstance(int position) {
+        ListMovieItemFragment listMovieItemFragment = new ListMovieItemFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_POSITION, position);
-        listMovieFragment.setArguments(args);
-        return listMovieFragment;
+        listMovieItemFragment.setArguments(args);
+        return listMovieItemFragment;
     }
 
     @Override
     public int getLayout() {
-        return R.layout.fragment_home;
+        return R.layout.fragment_listmovie_viewpager;
     }
 
     @Override
@@ -73,11 +70,11 @@ public class ListMovieFragment extends BaseFragment implements ListMovieContract
 
     }
 
-    @Override
-    public void setPresenter(ListMovieContract.Presenter presenter) {
-        checkNotNull(presenter, "Present must not null");
-        mPresenter = presenter;
-    }
+//    @Override
+//    public void setPresenter(ListMovieContract.Presenter presenter) {
+//        checkNotNull(presenter, "Present must not null");
+//        mPresenter = presenter;
+//    }
 
     // get data from intent
     @Override
@@ -87,10 +84,14 @@ public class ListMovieFragment extends BaseFragment implements ListMovieContract
         }
     }
 
+    @Override
+    protected void doThingWhenActivityCreated() {
+
+    }
+
     // start the presenter when resume
     @Override
     protected void doThingWhenResumeApp() {
-        mPresenter.start();
     }
 
     @Override
@@ -103,14 +104,14 @@ public class ListMovieFragment extends BaseFragment implements ListMovieContract
 
     }
 
-    @Override
-    public void makePullToRefreshAppear() {
-        mSwiperefreshHome.setRefreshing(true);
-    }
-
-    @Override
-    public void getMoviesFromNetwork() {
-        // TODO: 7/30/16 make sort in pref so the second we get to this screen, open depend on tab screen
-//        callDiscoverMovies(sort, null);
-    }
+//    @Override
+//    public void makePullToRefreshAppear() {
+//        mSwiperefreshHome.setRefreshing(true);
+//    }
+//
+//    @Override
+//    public void getMoviesFromNetwork() {
+//        // TODO: 7/30/16 make sort in pref so the second we get to this screen, open depend on tab screen
+////        callDiscoverMovies(sort, null);
+//    }
 }

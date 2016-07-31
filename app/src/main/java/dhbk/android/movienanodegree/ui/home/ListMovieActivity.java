@@ -1,36 +1,25 @@
 package dhbk.android.movienanodegree.ui.home;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import javax.inject.Inject;
+import android.os.Bundle;
+import android.widget.FrameLayout;
 
 import butterknife.BindView;
-import dhbk.android.movienanodegree.ui.base.BaseActivity;
+import butterknife.ButterKnife;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
-import dhbk.android.movienanodegree.ui.home.module.ListMovieActivityModule;
-import dhbk.android.movienanodegree.ui.home.module.ListMovieAdapterModule;
+import dhbk.android.movienanodegree.ui.base.BaseActivity;
+import dhbk.android.movienanodegree.ui.home.module.ListMoviePresenterModule;
+import dhbk.android.movienanodegree.utils.ActivityUtils;
 
 /**
- * contains a viewpager, which also contains a fragment {@link ListMovieFragment}:
+ * contains a viewpager, which also contains a fragment {@link ListMovieItemFragment}:
  */
-public class ListMovieActivity extends BaseActivity{
+public class ListMovieActivity extends BaseActivity {
+    @BindView(R.id.framelayout_act_main_content)
+    FrameLayout mFramelayoutActMainContent;
+    private ListMovieViewPagerFragment mListMovieViewPagerFragment;
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
-    @BindView(R.id.tablayout)
-    TabLayout mTablayout;
-    @BindView(R.id.viewpager_main_contain)
-    ViewPager mViewpagerMainContain;
-
-    @Inject
-    ListMovieAdapter mListMovieAdapter;
-
-//    @Inject
+    //    @Inject
 //    ListMoviePresenter mListMoviePresenter;
     @Override
     protected boolean hasUseCustomeFont() {
@@ -44,50 +33,39 @@ public class ListMovieActivity extends BaseActivity{
 
     @Override
     protected boolean hasToolbar() {
-        return true;
+        return false;
     }
 
     @Override
     protected void initView() {
-//        change toolbar title
-        getSupportActionBar().setTitle(R.string.home_activity_toolbar_title);
-        // set up viewpager
-        mViewpagerMainContain.setAdapter(mListMovieAdapter);
-        mTablayout.setupWithViewPager(mViewpagerMainContain);
+        // add fragment
+        mListMovieViewPagerFragment = (ListMovieViewPagerFragment) getSupportFragmentManager().findFragmentById(R.id.framelayout_act_main_content);
+        if (mListMovieViewPagerFragment == null) {
+            // Create the fragment
+            mListMovieViewPagerFragment = ListMovieViewPagerFragment.newInstance();
+            ActivityUtils.addFragmentToActivity(
+                    getSupportFragmentManager(), mListMovieViewPagerFragment, R.id.framelayout_act_main_content);
+        }
         // TODO set up nav
     }
 
+    // call after initVIew()
     @Override
     protected void injectDependencies() {
-        // Create adapter
-        DaggerListMovieComponent
+        // TODO create a presenter
+        // create the presenter
+        DaggerListMoviePresenterComponent
                 .builder()
-                .movieComponent(((MVPApp) getApplication()).getMovieComponent())
-                .listMovieActivityModule(new ListMovieActivityModule(this))
-                .listMovieAdapterModule(new ListMovieAdapterModule())
+                .movieComponent(((MVPApp) getApplicationContext()).getMovieComponent())
+                .listMoviePresenterModule(new ListMoviePresenterModule((ListMovieContract.View) mListMovieViewPagerFragment))
                 .build()
                 .inject(this);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 }

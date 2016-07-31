@@ -14,5 +14,5 @@ import dhbk.android.movienanodegree.utils.ActivityScoped;
 @ActivityScoped
 @Component(dependencies = MovieComponent.class, modules = {ListMovieActivityModule.class, ListMovieAdapterModule.class})
 public interface ListMovieComponent {
-    void inject(ListMovieActivity activity);
+    void inject(ListMovieViewPagerFragment fragment);
 }
