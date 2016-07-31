@@ -1,9 +1,10 @@
-package dhbk.android.movienanodegree.ui.home;
+package dhbk.android.movienanodegree.ui.home.adapter;
 
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
 import dhbk.android.movienanodegree.R;
+import dhbk.android.movienanodegree.ui.home.ListMovieItemFragment;
 
 /**
  * Created by huynhducthanhphong on 7/28/16.

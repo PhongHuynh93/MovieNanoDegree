@@ -1,7 +1,9 @@
-package dhbk.android.movienanodegree.ui.home;
+package dhbk.android.movienanodegree.ui.home.component;
 
 import dagger.Component;
 import dhbk.android.movienanodegree.component.MovieComponent;
+import dhbk.android.movienanodegree.ui.home.ListMovieActivity;
+import dhbk.android.movienanodegree.ui.home.ListMoviePresenter;
 import dhbk.android.movienanodegree.ui.home.module.ListMoviePresenterModule;
 import dhbk.android.movienanodegree.utils.FragmentScoped;
 
