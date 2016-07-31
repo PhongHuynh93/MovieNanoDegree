@@ -1,4 +1,4 @@
-package dhbk.android.movienanodegree;
+package dhbk.android.movienanodegree.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
