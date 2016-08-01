@@ -1,5 +1,8 @@
 package dhbk.android.movienanodegree.ui.home;
 
+import java.util.ArrayList;
+
+import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.ui.base.Mvp;
 
 /**
@@ -12,9 +15,25 @@ public interface ListMovieContract {
         // make the icon appear
         void makePullToRefreshAppear();
 
+        /**
+         * make the icon pull to refresh dissappear
+         */
+        void makePullToRefreshDissappear();
+
         // connect to server to pull datas
         void getMoviesFromNetwork();
 
+        /**
+         *         show para (movies list to recycler view)
+         * @param list movies that pull from network
+         * @return
+         */
+        void loadDataToLists(ArrayList<DiscoverMovie> movies);
+
+        /**
+         *         show a snackbar to info user that cannot get the movie
+         */
+        void infoUserErrorFetchData();
 
     }
 

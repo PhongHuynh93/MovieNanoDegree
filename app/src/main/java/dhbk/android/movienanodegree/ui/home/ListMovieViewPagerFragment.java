@@ -10,12 +10,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.interactor.MovieInteractor;
+import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieAdapter;
 import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieComponent;
@@ -146,12 +149,40 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         ((ListMovieItemFragment)mListMovieAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).setThePullToRefreshAppear();
     }
 
+    /**
+     * show a icon indicate that the app is pulling to server
+     */
+    @Override
+    public void makePullToRefreshDissappear() {
+        // call the current fraagment to make the icon
+        ((ListMovieItemFragment)mListMovieAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).setThePullToRefreshDissappear();
+    }
+
+
+
     // connect to network
     @Override
     public void getMoviesFromNetwork() {
         mPresenter.callDiscoverMovies(MovieInteractor.MOST_POPULAR, null);
     }
 
+    /**
+     * show para (movies list to recycler view)
+     *
+     * @param movies
+     * @return
+     */
+    @Override
+    public void loadDataToLists(ArrayList<DiscoverMovie> movies) {
 
+    }
+
+    /**
+     * show a snackbar to info user that cannot get the movie
+     */
+    @Override
+    public void infoUserErrorFetchData() {
+        // TODO: 8/1/16
+    }
 }
 
