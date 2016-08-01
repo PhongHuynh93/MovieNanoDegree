@@ -6,6 +6,7 @@ package dhbk.android.movienanodegree.ui.home.module;
 
 import dagger.Module;
 import dagger.Provides;
+import dhbk.android.movienanodegree.interactor.MovieInteractor;
 import dhbk.android.movienanodegree.ui.home.ListMovieContract;
 import dhbk.android.movienanodegree.ui.home.ListMoviePresenter;
 
@@ -25,4 +26,10 @@ public class ListMoviePresenterModule {
     ListMovieContract.View provideTasksContractView() {
         return mView;
     }
+
+    @Provides
+    MovieInteractor provideMovieInteractor(MovieInteractor movieInteractor) {
+        return movieInteractor;
+    }
+
 }

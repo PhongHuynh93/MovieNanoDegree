@@ -5,6 +5,7 @@ import android.content.Context;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import dhbk.android.movienanodegree.interactor.MovieInteractor;
 import dhbk.android.movienanodegree.module.ApplicationModule;
 import dhbk.android.movienanodegree.module.MovieModule;
 import dhbk.android.movienanodegree.module.TasksRepositoryModule;
@@ -18,4 +19,5 @@ import dhbk.android.movienanodegree.module.TasksRepositoryModule;
 @Component(modules = {ApplicationModule.class, TasksRepositoryModule.class, MovieModule.class})
 public interface MovieComponent {
     Context getContext();
+    MovieInteractor getMovieInteractor();
 }

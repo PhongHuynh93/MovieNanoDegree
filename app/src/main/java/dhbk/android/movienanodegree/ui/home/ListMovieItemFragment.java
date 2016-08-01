@@ -3,6 +3,7 @@ package dhbk.android.movienanodegree.ui.home;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 
@@ -17,15 +18,14 @@ import dhbk.android.movienanodegree.ui.base.BaseFragment;
  * 1: it show the highest rated movies.
  * 2: it show the most rated movies.
  */
-public class ListMovieItemFragment extends BaseFragment{
+public class ListMovieItemFragment extends BaseFragment {
     private static final String ARG_POSITION = "position";
     @BindView(R.id.recyclerview_home_list_movies)
     RecyclerView mRecyclerviewHomeListMovies;
     @BindView(R.id.swiperefresh_home)
     SwipeRefreshLayout mSwiperefreshHome;
-    private ListMovieContract.Presenter mPresenter;
     // save the tab position of this view
-    private String mTabLayoutPosition;
+    private int mTabLayoutPosition;
 
     public ListMovieItemFragment() {
         // Required empty public constructor
@@ -52,10 +52,31 @@ public class ListMovieItemFragment extends BaseFragment{
 
     @Override
     protected void initView() {
+    }
+
+    @Override
+    protected void injectDependencies() {
+
+    }
+
+    // get data from intent
+    @Override
+    protected void doThingWhenCreateApp() {
+        if (getArguments() != null) {
+            mTabLayoutPosition = getArguments().getInt(ARG_POSITION);
+        }
+    }
+
+    @Override
+    protected void doThingWhenActivityCreated() {
         // when data again whenever system notice a refresh gesture.
         mSwiperefreshHome.setOnRefreshListener(() ->
         {
-            mPresenter.fetchMoviesAsync();
+            Fragment parentFrag = getActivity().getSupportFragmentManager().findFragmentById(R.id.framelayout_act_main_content);
+            if (parentFrag instanceof ListMovieViewPagerFragment){
+                ((ListMovieViewPagerFragment)parentFrag).showListOfMovies();
+
+            }
         });
         // Configure the refreshing colors
         mSwiperefreshHome.setColorSchemeResources(
@@ -65,31 +86,6 @@ public class ListMovieItemFragment extends BaseFragment{
                 android.R.color.holo_red_light);
     }
 
-    @Override
-    protected void injectDependencies() {
-
-    }
-
-//    @Override
-//    public void setPresenter(ListMovieContract.Presenter presenter) {
-//        checkNotNull(presenter, "Present must not null");
-//        mPresenter = presenter;
-//    }
-
-    // get data from intent
-    @Override
-    protected void doThingWhenCreateApp() {
-        if (getArguments() != null) {
-            mTabLayoutPosition = getArguments().getString(ARG_POSITION);
-        }
-    }
-
-    @Override
-    protected void doThingWhenActivityCreated() {
-
-    }
-
-    // start the presenter when resume
     @Override
     protected void doThingWhenResumeApp() {
     }
@@ -104,14 +100,7 @@ public class ListMovieItemFragment extends BaseFragment{
 
     }
 
-//    @Override
-//    public void makePullToRefreshAppear() {
-//        mSwiperefreshHome.setRefreshing(true);
-//    }
-//
-//    @Override
-//    public void getMoviesFromNetwork() {
-//        // TODO: 7/30/16 make sort in pref so the second we get to this screen, open depend on tab screen
-////        callDiscoverMovies(sort, null);
-//    }
+    public void setThePullToRefreshAppear() {
+        mSwiperefreshHome.setRefreshing(true);
+    }
 }

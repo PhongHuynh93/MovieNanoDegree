@@ -1,4 +1,4 @@
-package dhbk.android.movienanodegree.ui.home;
+package dhbk.android.movienanodegree.ui.home.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

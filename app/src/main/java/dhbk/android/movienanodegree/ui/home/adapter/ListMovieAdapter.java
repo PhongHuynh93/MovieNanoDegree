@@ -1,9 +1,11 @@
-package dhbk.android.movienanodegree.ui.home;
+package dhbk.android.movienanodegree.ui.home.adapter;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import dhbk.android.movienanodegree.R;
+import dhbk.android.movienanodegree.ui.home.ListMovieItemFragment;
 
 /**
  * Created by huynhducthanhphong on 7/28/16.
@@ -29,7 +31,7 @@ public class ListMovieAdapter extends SmartFragmentStatePagerAdapter {
      * http://stackoverflow.com/questions/19339500/when-is-fragmentpageradapters-getitem-called
      */
     @Override
-    public android.support.v4.app.Fragment getItem(int position) {
+    public Fragment getItem(int position) {
         switch (position) {
             case MOST_POPULAR: // ListMovieItemFragment # 0 - This will show FirstFragment
                 return ListMovieItemFragment.newInstance(MOST_POPULAR);
