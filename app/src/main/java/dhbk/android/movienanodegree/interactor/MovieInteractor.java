@@ -23,6 +23,7 @@ public class MovieInteractor {
 
     // search a list of artist which equals to query
     public void performMovieSearch(String sort, @Nullable Integer page, MovieSearchServerCallback callback) {
+        // TODO: 8/1/16 save data to database before show it in a list.
         mApiService.discoverMovies(sort, page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

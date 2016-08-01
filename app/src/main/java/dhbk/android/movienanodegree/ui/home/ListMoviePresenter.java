@@ -61,12 +61,14 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
             @Override
             public void onMoviesFound(ArrayList<DiscoverMovie> artists) {
                 // TODO: 8/1/16 do something when found the artists
+                mListMovieView.loadDataToLists(artists);
                 Log.i("test", "onMoviesFound: " + artists.get(0).getOriginalTitle());
             }
 
             @Override
             public void onFailedSearch() {
                 Log.e("test", "onFailedSearch:");
+                mListMovieView.infoUserErrorFetchData();
             }
         });
     }

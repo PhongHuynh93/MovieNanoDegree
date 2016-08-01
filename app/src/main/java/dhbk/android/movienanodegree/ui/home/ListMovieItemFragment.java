@@ -103,4 +103,8 @@ public class ListMovieItemFragment extends BaseFragment {
     public void setThePullToRefreshAppear() {
         mSwiperefreshHome.setRefreshing(true);
     }
+
+    public void setThePullToRefreshDissappear() {
+        mSwiperefreshHome.setRefreshing(false);
+    }
 }
