@@ -23,7 +23,6 @@ import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieViewPagerAdapter;
 import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieViewComponent;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieActivityModule;
-import dhbk.android.movienanodegree.ui.home.module.ListMovieRecyclerViewAdapterModule;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieViewPagerAdapterModule;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -116,7 +115,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
                 .movieComponent(((MVPApp) getActivity().getApplication()).getMovieComponent())
                 .listMovieActivityModule(new ListMovieActivityModule(getActivity()))
                 .listMovieViewPagerAdapterModule(new ListMovieViewPagerAdapterModule())
-                .listMovieRecyclerViewAdapterModule(new ListMovieRecyclerViewAdapterModule())
                 .build()
                 .inject(this);
     }
@@ -176,7 +174,8 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
      */
     @Override
     public void loadDataToLists(ArrayList<DiscoverMovie> movies) {
-
+        // call the current fraagment to make the icon
+        ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).loadDataToLists(movies);
     }
 
     /**

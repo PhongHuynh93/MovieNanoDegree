@@ -8,9 +8,19 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import java.util.ArrayList;
+
+import javax.inject.Inject;
+
 import butterknife.BindView;
+import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
+import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
+import dhbk.android.movienanodegree.ui.home.adapter.EndlessRecyclerViewScrollListener;
+import dhbk.android.movienanodegree.ui.home.adapter.ListMovieRecyclerViewAdapter;
+import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieChildViewComponent;
+import dhbk.android.movienanodegree.ui.home.module.ListMovieRecyclerViewAdapterModule;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -21,6 +31,9 @@ import dhbk.android.movienanodegree.ui.base.BaseFragment;
  */
 public class ListMovieItemFragment extends BaseFragment {
     private static final String ARG_POSITION = "position";
+    @Inject
+    ListMovieRecyclerViewAdapter mListMovieRecyclerViewAdapter;
+
     @BindView(R.id.recyclerview_home_list_movies)
     RecyclerView mRecyclerviewHomeListMovies;
     @BindView(R.id.swiperefresh_home)
@@ -53,6 +66,13 @@ public class ListMovieItemFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        // Create adapter
+        DaggerListMovieChildViewComponent
+                .builder()
+                .movieComponent(((MVPApp) getActivity().getApplication()).getMovieComponent())
+                .listMovieRecyclerViewAdapterModule(new ListMovieRecyclerViewAdapterModule())
+                .build()
+                .inject(this);
     }
 
     @Override
@@ -87,9 +107,15 @@ public class ListMovieItemFragment extends BaseFragment {
                 android.R.color.holo_red_light);
 
         // TODO: 8/1/16 set adapter for recyclerview
+        mRecyclerviewHomeListMovies.setAdapter(mListMovieRecyclerViewAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerviewHomeListMovies.setLayoutManager(linearLayoutManager);
-//        mRecyclerviewHomeListMovies.addOnScrollListener();
+        mRecyclerviewHomeListMovies.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                // TODO: 8/1/16 implement this function
+            }
+        });
 
     }
 
@@ -113,5 +139,10 @@ public class ListMovieItemFragment extends BaseFragment {
 
     public void setThePullToRefreshDissappear() {
         mSwiperefreshHome.setRefreshing(false);
+    }
+
+
+    public void loadDataToLists(ArrayList<DiscoverMovie> movies) {
+        mListMovieRecyclerViewAdapter.replaceAnotherData(movies);
     }
 }

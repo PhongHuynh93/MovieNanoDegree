@@ -9,18 +9,23 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dhbk.android.movienanodegree.R;
+import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 
 /**
  * Created by huynhducthanhphong on 8/1/16.
  */
 public class ListMovieRecyclerViewAdapter extends RecyclerView.Adapter<ListMovieRecyclerViewAdapter.MovieViewHolder> {
     private final Context mContext;
+    private ArrayList<DiscoverMovie> mMovies;
 
     public ListMovieRecyclerViewAdapter(Context context) {
         mContext = context;
+        mMovies = new ArrayList<>(); // create an empty list
     }
 
     @Override
@@ -38,12 +43,19 @@ public class ListMovieRecyclerViewAdapter extends RecyclerView.Adapter<ListMovie
 
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
-
+        DiscoverMovie discoverMovie = mMovies.get(position);
+        holder.mTextviewListmovieNameofmovie.setText(discoverMovie.getOriginalTitle());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mMovies.isEmpty() ? 0 : mMovies.size();
+    }
+
+    // replace  data and notify change
+    public void replaceAnotherData(ArrayList<DiscoverMovie> movies) {
+        mMovies = movies;
+        notifyDataSetChanged();
     }
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
