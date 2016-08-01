@@ -4,11 +4,46 @@
     android:layout_width="match_parent"
     android:layout_height="187dp">
 
+    <!--movie  content-->
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:id="@+id/relativelayout_listmovie_maincontent"
+        android:layout_width="346dp"
         android:layout_height="155dp"
         android:layout_gravity="bottom|center_horizontal">
 
+        <TextView
+            android:id="@+id/textview_listmovie_nameofmovie"
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"/>
 
+        <TextView
+            android:id="@+id/textview_listmovie_typeofmovie"
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/textview_listmovie_nameofmovie"/>
+
+        <TextView
+            android:id="@+id/textview_listmovie_lengthofmovie"
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/textview_listmovie_typeofmovie"/>
+
+        <TextView
+            android:id="@+id/textview_listmovie_descriptionofmovie"
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/textview_listmovie_lengthofmovie"/>
     </RelativeLayout>
+
+    <!--movie image cover the content details-->
+    <ImageView
+        android:id="@+id/imageview_listmovie_imageofmovie"
+        android:layout_width="143dp"
+        android:layout_height="180dp"
+        android:scaleType="centerCrop"/>
 </FrameLayout>
