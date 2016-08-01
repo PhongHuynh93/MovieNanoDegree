@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -72,8 +71,6 @@ public class ListMovieRecyclerViewAdapter extends RecyclerView.Adapter<ListMovie
         TextView mTextviewListmovieLengthofmovie;
         @BindView(R.id.textview_listmovie_descriptionofmovie)
         TextView mTextviewListmovieDescriptionofmovie;
-        @BindView(R.id.relativelayout_listmovie_maincontent)
-        RelativeLayout mRelativelayoutListmovieMaincontent;
         @BindView(R.id.imageview_listmovie_imageofmovie)
         ImageView mImageviewListmovieImageofmovie;
 
