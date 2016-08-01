@@ -21,6 +21,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not injected
      * with {@code @Nullable} values.
      */
+    // FIXME: 8/1/16 not call presenter constructor
     @Inject
     ListMoviePresenter(ListMovieContract.View view, MovieInteractor movieInteractor) {
         mListMovieView = view;
