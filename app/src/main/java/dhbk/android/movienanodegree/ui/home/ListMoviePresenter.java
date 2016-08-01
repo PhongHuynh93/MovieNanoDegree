@@ -60,12 +60,13 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
         mMovieInteractor.performMovieSearch(sort, page, new MovieSearchServerCallback() {
             @Override
             public void onMoviesFound(ArrayList<DiscoverMovie> artists) {
+                // TODO: 8/1/16 do something when found the artists
                 Log.i("test", "onMoviesFound: " + artists.get(0).getOriginalTitle());
             }
 
             @Override
             public void onFailedSearch() {
-                Log.e("test", "onFailedSearch: FUCKKKKKKK");
+                Log.e("test", "onFailedSearch:");
             }
         });
     }

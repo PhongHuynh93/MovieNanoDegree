@@ -1,10 +1,10 @@
 package dhbk.android.movienanodegree.ui.home;
 
-import android.os.Bundle;
 import android.widget.FrameLayout;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.ui.base.BaseActivity;
@@ -19,6 +19,8 @@ public class ListMovieActivity extends BaseActivity {
     @BindView(R.id.framelayout_act_main_content)
     FrameLayout mFramelayoutActMainContent;
     private ListMovieViewPagerFragment mListMovieViewPagerFragment;
+    @Inject
+    ListMoviePresenter mListMoviePresenter;
 
     //    @Inject
 //    ListMoviePresenter mListMoviePresenter;
@@ -60,12 +62,5 @@ public class ListMovieActivity extends BaseActivity {
                 .listMoviePresenterModule(new ListMoviePresenterModule((ListMovieContract.View) mListMovieViewPagerFragment))
                 .build()
                 .inject(this);
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 }
