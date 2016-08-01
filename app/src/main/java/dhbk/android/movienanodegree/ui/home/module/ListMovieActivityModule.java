@@ -8,7 +8,7 @@ import dagger.Provides;
 
 /**
  * Created by phongdth.ky on 7/29/2016.
- * provide a FragmentManger for {@link ListMovieAdapterModule}
+ * provide a FragmentManger for {@link ListMovieViewPagerAdapterModule}
  */
 @Module
 public class ListMovieActivityModule {

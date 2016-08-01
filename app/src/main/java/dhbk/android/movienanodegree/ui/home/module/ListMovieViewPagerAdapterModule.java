@@ -14,7 +14,7 @@ import dhbk.android.movienanodegree.ui.home.adapter.ListMovieAdapter;
  */
 
 @Module
-public class ListMovieAdapterModule {
+public class ListMovieViewPagerAdapterModule {
 
     /**
      *     context from {@link MovieComponent}

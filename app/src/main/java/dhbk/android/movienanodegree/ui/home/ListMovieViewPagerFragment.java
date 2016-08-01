@@ -21,9 +21,9 @@ import dhbk.android.movienanodegree.interactor.MovieInteractor;
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieAdapter;
-import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieComponent;
+import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieViewComponent;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieActivityModule;
-import dhbk.android.movienanodegree.ui.home.module.ListMovieAdapterModule;
+import dhbk.android.movienanodegree.ui.home.module.ListMovieViewPagerAdapterModule;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -110,11 +110,11 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     @Override
     protected void injectDependencies() {
         // Create adapter
-        DaggerListMovieComponent
+        DaggerListMovieViewComponent
                 .builder()
                 .movieComponent(((MVPApp) getActivity().getApplication()).getMovieComponent())
                 .listMovieActivityModule(new ListMovieActivityModule(getActivity()))
-                .listMovieAdapterModule(new ListMovieAdapterModule())
+                .listMovieViewPagerAdapterModule(new ListMovieViewPagerAdapterModule())
                 .build()
                 .inject(this);
     }

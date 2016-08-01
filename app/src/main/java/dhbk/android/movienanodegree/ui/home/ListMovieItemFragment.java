@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import butterknife.BindView;
@@ -84,6 +85,11 @@ public class ListMovieItemFragment extends BaseFragment {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
+
+        // TODO: 8/1/16 set adapter for recyclerview
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        mRecyclerviewHomeListMovies.setLayoutManager(linearLayoutManager);
+//        mRecyclerviewHomeListMovies.addOnScrollListener();
 
     }
 

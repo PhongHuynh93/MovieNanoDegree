@@ -5,7 +5,7 @@ import dhbk.android.movienanodegree.component.MovieComponent;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieAdapter;
 import dhbk.android.movienanodegree.ui.home.ListMovieViewPagerFragment;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieActivityModule;
-import dhbk.android.movienanodegree.ui.home.module.ListMovieAdapterModule;
+import dhbk.android.movienanodegree.ui.home.module.ListMovieViewPagerAdapterModule;
 import dhbk.android.movienanodegree.utils.ActivityScoped;
 
 /**
@@ -14,7 +14,7 @@ import dhbk.android.movienanodegree.utils.ActivityScoped;
  * contains adapter {@link ListMovieAdapter} module
  */
 @ActivityScoped
-@Component(dependencies = MovieComponent.class, modules = {ListMovieActivityModule.class, ListMovieAdapterModule.class})
-public interface ListMovieComponent {
+@Component(dependencies = MovieComponent.class, modules = {ListMovieActivityModule.class, ListMovieViewPagerAdapterModule.class})
+public interface ListMovieViewComponent {
     void inject(ListMovieViewPagerFragment fragment);
 }
