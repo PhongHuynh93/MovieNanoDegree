@@ -9,12 +9,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
+import dhbk.android.movienanodegree.ui.Constant;
 
 /**
  * Created by huynhducthanhphong on 8/1/16.
@@ -45,6 +48,8 @@ public class ListMovieRecyclerViewAdapter extends RecyclerView.Adapter<ListMovie
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         DiscoverMovie discoverMovie = mMovies.get(position);
         holder.mTextviewListmovieNameofmovie.setText(discoverMovie.getOriginalTitle());
+        String urlImage = Constant.POSTER_IMAGE_BASE_URL + Constant.POSTER_IMAGE_SIZE + discoverMovie.getPosterPath();
+        Picasso.with(mContext).load(urlImage).into(holder.mImageviewListmovieImageofmovie);
     }
 
     @Override

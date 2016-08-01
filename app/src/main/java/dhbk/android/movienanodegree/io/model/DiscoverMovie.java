@@ -40,4 +40,8 @@ public class DiscoverMovie {
     public String getOriginalTitle() {
         return originalTitle;
     }
+
+    public String getPosterPath() {
+        return posterPath;
+    }
 }
