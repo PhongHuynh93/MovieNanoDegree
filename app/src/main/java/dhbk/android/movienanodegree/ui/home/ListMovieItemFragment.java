@@ -19,8 +19,10 @@ import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.home.adapter.EndlessRecyclerViewScrollListener;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieRecyclerViewAdapter;
+import dhbk.android.movienanodegree.ui.home.adapter.VerticalSpaceItemDecoration;
 import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieChildViewComponent;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieRecyclerViewAdapterModule;
+import dhbk.android.movienanodegree.utils.HelpUtils;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -110,6 +112,7 @@ public class ListMovieItemFragment extends BaseFragment {
         mRecyclerviewHomeListMovies.setAdapter(mListMovieRecyclerViewAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerviewHomeListMovies.setLayoutManager(linearLayoutManager);
+        mRecyclerviewHomeListMovies.addItemDecoration(new VerticalSpaceItemDecoration((int)HelpUtils.getPixelForDp(getContext(), 13)));
         mRecyclerviewHomeListMovies.setHasFixedSize(true);
         mRecyclerviewHomeListMovies.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
