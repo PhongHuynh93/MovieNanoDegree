@@ -1,11 +1,14 @@
 package dhbk.android.movienanodegree.ui.home;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import dhbk.android.movienanodegree.data.MovieReposition;
+import dhbk.android.movienanodegree.data.local.SortHelper;
 import dhbk.android.movienanodegree.interactor.MovieInteractor;
 import dhbk.android.movienanodegree.io.callback.MovieSearchServerCallback;
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
@@ -16,16 +19,27 @@ import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 public class ListMoviePresenter implements ListMovieContract.Presenter {
     private final ListMovieContract.View mListMovieView;
     private final MovieInteractor mMovieInteractor;
+    private final MovieReposition mMovieReposition;
+    private final Context mContext;
+    private volatile boolean loading = false;
+    private SortHelper mSortHelper;
 
     /**
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not injected
      * with {@code @Nullable} values.
      */
-    // FIXME: 8/1/16 not call presenter constructor
+    /**
+     *
+     * @param movieReposition {@link dhbk.android.movienanodegree.data.MovieReposition}
+     * @param view {@link ListMovieViewPagerFragment}
+     * @param movieInteractor {@link MovieInteractor}
+     */
     @Inject
-    ListMoviePresenter(ListMovieContract.View view, MovieInteractor movieInteractor) {
+    ListMoviePresenter(MovieReposition movieReposition, ListMovieContract.View view, MovieInteractor movieInteractor, Context context) {
+        mMovieReposition = movieReposition;
         mListMovieView = view;
         mMovieInteractor = movieInteractor;
+        mContext = context;
     }
 
     /**
@@ -34,9 +48,11 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
      */
     @Inject
     void setupListeners() {
+        mSortHelper = new SortHelper(mContext);
         mListMovieView.setPresenter(this);
     }
 
+    // fixme: 8/2/2016 not have call yet
     @Override
     public void start() {
         fetchMoviesAsync();
@@ -72,4 +88,19 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
             }
         });
     }
+
+    /**
+     * refresh by pulling new data
+     */
+    @Override
+    public void refreshMovies() {
+        if (loading) {
+            return;
+        }
+        loading = true;
+        String sort = mSortHelper.getSortByPreference().toString();
+        callDiscoverMovies(sort, null);
+    }
+
+
 }

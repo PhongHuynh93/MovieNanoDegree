@@ -38,6 +38,11 @@ public interface ListMovieContract {
     }
 
     interface Presenter extends Mvp.BasePresenter {
+        /**
+         * refresh screen with new data
+         */
+        void refreshMovies();
+
         // fetch the movie in the network
         void fetchMoviesAsync();
 
