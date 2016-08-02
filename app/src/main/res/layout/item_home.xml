@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/margin_top_home_activity_nameofmovie"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:textColor="@color/grey_dark"
@@ -68,4 +69,12 @@
         android:layout_marginStart="17dp"
         android:elevation="5dp"
         android:scaleType="centerCrop"/>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="13dp"
+        android:layout_marginStart="135dp"
+        android:elevation="6dp"/>
 </FrameLayout>
