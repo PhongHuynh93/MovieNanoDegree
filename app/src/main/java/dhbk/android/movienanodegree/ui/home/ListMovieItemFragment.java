@@ -110,6 +110,7 @@ public class ListMovieItemFragment extends BaseFragment {
         mRecyclerviewHomeListMovies.setAdapter(mListMovieRecyclerViewAdapter);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerviewHomeListMovies.setLayoutManager(linearLayoutManager);
+        mRecyclerviewHomeListMovies.setHasFixedSize(true);
         mRecyclerviewHomeListMovies.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
