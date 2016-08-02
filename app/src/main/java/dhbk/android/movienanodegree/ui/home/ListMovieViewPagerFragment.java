@@ -53,30 +53,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     }
 
     @Override
-    protected void doThingWhenCreateApp() {
-
-    }
-
-    @Override
-    protected void doThingWhenActivityCreated() {
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.home_activity_toolbar_title);
-    }
-
-    @Override
-    protected void doThingWhenResumeApp() {
-    }
-
-    @Override
-    protected void doThingWhenPauseApp() {
-
-    }
-
-    @Override
-    protected void doThingWhenDestroyApp() {
-
-    }
-
-    @Override
     public int getLayout() {
         return R.layout.fragment_item_list_movie;
     }
@@ -131,6 +107,32 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         mPresenter = presenter;
     }
 
+
+    @Override
+    protected void doThingWhenCreateApp() {
+
+    }
+
+    @Override
+    protected void doThingWhenActivityCreated() {
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.home_activity_toolbar_title);
+    }
+
+    @Override
+    protected void doThingWhenResumeApp() {
+    }
+
+    @Override
+    protected void doThingWhenPauseApp() {
+
+    }
+
+    @Override
+    protected void doThingWhenDestroyApp() {
+
+    }
+
+
     /**
      * connect to server to pull the data
      */
@@ -175,6 +177,7 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     public void loadDataToLists(ArrayList<DiscoverMovie> movies) {
         // call the current fraagment to make the icon
         ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).loadDataToLists(movies);
+        makePullToRefreshDissappear();
     }
 
     /**

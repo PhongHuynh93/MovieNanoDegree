@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -33,6 +34,7 @@ import dhbk.android.movienanodegree.utils.HelpUtils;
  */
 public class ListMovieItemFragment extends BaseFragment {
     private static final String ARG_POSITION = "position";
+    private static final String TAG = ListMovieItemFragment.class.getSimpleName();
     @Inject
     ListMovieRecyclerViewAdapter mListMovieRecyclerViewAdapter;
 
@@ -125,6 +127,7 @@ public class ListMovieItemFragment extends BaseFragment {
 
     @Override
     protected void doThingWhenResumeApp() {
+        Log.i(TAG, "doThingWhenResumeApp: ");
     }
 
     @Override
