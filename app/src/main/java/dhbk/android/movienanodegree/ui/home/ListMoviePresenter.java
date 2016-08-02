@@ -21,6 +21,7 @@ import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
 /**
  * Created by phongdth.ky on 7/29/2016.
  */
+// TODO: 8/2/16 refactor presenter and put code to reposition
 public class ListMoviePresenter implements ListMovieContract.Presenter {
     private static final int PAGE_SIZE = 20; // max page load of the list
     private static final String TAG = ListMoviePresenter.class.getSimpleName();
