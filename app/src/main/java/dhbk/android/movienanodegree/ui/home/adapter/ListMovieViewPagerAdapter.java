@@ -9,6 +9,7 @@ import dhbk.android.movienanodegree.ui.home.ListMovieItemFragment;
 
 /**
  * Created by huynhducthanhphong on 7/28/16.
+ * // TODO: 8/2/16 implement to save current tab in viewpager to sharef ref
  */
 public class ListMovieViewPagerAdapter extends SmartFragmentStatePagerAdapter {
     private static final int NUM_ITEMS = 3;

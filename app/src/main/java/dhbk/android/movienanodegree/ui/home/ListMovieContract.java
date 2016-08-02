@@ -1,8 +1,11 @@
 package dhbk.android.movienanodegree.ui.home;
 
+import android.net.Uri;
+
 import java.util.ArrayList;
 
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
+import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
 import dhbk.android.movienanodegree.ui.base.Mvp;
 
 /**
@@ -51,6 +54,33 @@ public interface ListMovieContract {
          * sort: is the way to get the movies from network
          */
         void callDiscoverMovies(String sort, Integer page);
+
+        /**
+         * determine whether the screen is fetching data or not
+         * @return
+         */
+        boolean isLoading();
+
+
+        /**
+         * load more movie
+         */
+        void loadMoreMovies();
+
+        /**
+         * get the current page in the list by spare uri
+         * @param uri data address that we want to query
+         * @return the last page in the list
+         */
+        int getCurrentPage(Uri uri);
+
+        void saveMovieReference(Long movieId);
+
+        Uri saveMovie(DiscoverMovie movie);
+
+        void logResponse(DiscoverMovieResponse discoverMoviesResponse);
+
+        void clearMoviesSortTableIfNeeded(DiscoverMovieResponse discoverMoviesResponse);
     }
 
 }
