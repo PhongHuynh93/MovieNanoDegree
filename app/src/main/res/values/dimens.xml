@@ -8,6 +8,7 @@
     <dimen name="z_app_bar">4dp</dimen>
 
     <dimen name="textsize_small">12sp</dimen>
+    <dimen name="textsize_small_15">15sp</dimen>
 
     <!--home activity-->
     <dimen name="height_home_activity_tablayout">20dp</dimen>
