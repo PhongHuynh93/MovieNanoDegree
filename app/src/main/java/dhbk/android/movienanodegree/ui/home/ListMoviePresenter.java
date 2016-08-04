@@ -94,6 +94,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
                 mListMovieView.infoUserErrorFetchData();
             }
         });
+
     }
 
     /**
