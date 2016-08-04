@@ -7,6 +7,9 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 
 /**
  * Created by huynhducthanhphong on 8/1/16.
+ * a abstract class for adding features in recyclerview that loads more data when scroll past the threshold.
+ * get this class from:
+ * @see <a href="http://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews-and-RecyclerView"></a>
  */
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
     // The minimum amount of items to have below your current scroll position
@@ -70,6 +73,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
 
         // If the total item count is zero and the previous isn't, assume the
         // list is invalidated and should be reset back to initial state
+        // TODO: 8/3/2016 reset lại vị trí của list về lại abn đầu.
         if (totalItemCount < previousTotalItemCount) {
             this.currentPage = this.startingPageIndex;
             this.previousTotalItemCount = totalItemCount;
@@ -89,6 +93,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         // the visibleThreshold and need to reload more data.
         // If we do need to reload some more data, we execute onLoadMore to fetch the data.
         // threshold should reflect how many total columns there are too
+        // TODO: 8/3/2016 khi đủ điều kiện thì gọi onLoadMore để load thêm data, tăng page hiện tại đang đứng lên
         if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
             currentPage++;
             onLoadMore(currentPage, totalItemCount);
@@ -96,7 +101,12 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         }
     }
 
-    // Defines the process for actually loading more data based on page
+    /**
+     * // Defines the process for actually loading more data based on page
+     // Returns true if more data is being loaded; returns false if there is no more data to load.
+     * @param page
+     * @param totalItemsCount
+     */
     public abstract void onLoadMore(int page, int totalItemsCount);
 
 }

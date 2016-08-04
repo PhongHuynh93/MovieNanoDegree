@@ -4,6 +4,12 @@ package dhbk.android.movienanodegree.data;
  * Created by phongdth.ky on 8/2/2016.
  */
 
+import android.net.Uri;
+import android.support.annotation.NonNull;
+
+import dhbk.android.movienanodegree.io.model.DiscoverMovie;
+import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
+
 /**
  * Main entry point for accessing tasks data.
  * <p>
@@ -14,4 +20,55 @@ package dhbk.android.movienanodegree.data;
  */
 public interface MoviesDataSource {
 
+    void logResponse(DiscoverMovieResponse discoverMoviesResponse);
+
+    interface GetCurrentPageCallback {
+
+        void onCurrentPageLoaded(String sort, int currentpage);
+
+        void onCurrentPageNotAvailable();
+    }
+
+
+    interface GetSortCallback {
+        void onGetSort(String sort);
+    }
+
+//
+//    interface GetUriForMovies {
+//        void onGetUri(Uri uri);
+//    }
+
+    /**
+     * @return the current page which has store in content provider
+     */
+    void getCurrentPage(@NonNull GetCurrentPageCallback callback);
+
+    /**
+     * save movie id in db
+     *
+     * @param movieId
+     */
+    void saveMovieReference(Long movieId);
+
+    /**
+     * get sort from db
+     *
+     * @param getSortCallback
+     */
+    void getSort(GetSortCallback getSortCallback);
+
+    /**
+     * save movies in db and return the uri for movies
+     *
+     * @param movie
+     */
+    Uri saveMovie(DiscoverMovie movie);
+
+    void clearMoviesSortTableIfNeeded(DiscoverMovieResponse discoverMoviesResponse);
+
+    /**
+     * delete movies depend on sort
+     */
+    void deleteMovies();
 }

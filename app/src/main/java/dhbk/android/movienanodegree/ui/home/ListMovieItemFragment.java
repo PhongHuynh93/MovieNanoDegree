@@ -70,6 +70,10 @@ public class ListMovieItemFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+    }
+
+    @Override
+    protected void injectDependencies() {
         // Create adapter
         DaggerListMovieChildViewComponent
                 .builder()
@@ -77,11 +81,6 @@ public class ListMovieItemFragment extends BaseFragment {
                 .listMovieRecyclerViewAdapterModule(new ListMovieRecyclerViewAdapterModule())
                 .build()
                 .inject(this);
-    }
-
-    @Override
-    protected void injectDependencies() {
-
     }
 
     // get data from intent
@@ -100,9 +99,9 @@ public class ListMovieItemFragment extends BaseFragment {
             Fragment parentFrag = getActivity().getSupportFragmentManager().findFragmentById(R.id.framelayout_act_main_content);
             if (parentFrag instanceof ListMovieViewPagerFragment){
                 ((ListMovieViewPagerFragment)parentFrag).showListOfMovies();
-
             }
         });
+
         // Configure the refreshing colors
         mSwiperefreshHome.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
@@ -110,10 +109,12 @@ public class ListMovieItemFragment extends BaseFragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
 
-        // TODO: 8/1/16 set adapter for recyclerview
+        // : 8/1/16 set adapter for recyclerview
         mRecyclerviewHomeListMovies.setAdapter(mListMovieRecyclerViewAdapter);
+        // make list show 1 vertical column of data
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerviewHomeListMovies.setLayoutManager(linearLayoutManager);
+        // add space between list
         mRecyclerviewHomeListMovies.addItemDecoration(new VerticalSpaceItemDecoration((int)HelpUtils.getPixelForDp(getContext(), 13)));
         mRecyclerviewHomeListMovies.setHasFixedSize(true);
         mRecyclerviewHomeListMovies.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
