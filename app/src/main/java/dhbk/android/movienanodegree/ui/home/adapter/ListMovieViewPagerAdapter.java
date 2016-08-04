@@ -9,15 +9,16 @@ import dhbk.android.movienanodegree.ui.home.ListMovieItemFragment;
 
 /**
  * Created by huynhducthanhphong on 7/28/16.
+ * // TODO: 8/2/16 implement to save current tab in viewpager to sharef ref
  */
-public class ListMovieAdapter extends SmartFragmentStatePagerAdapter {
+public class ListMovieViewPagerAdapter extends SmartFragmentStatePagerAdapter {
     private static final int NUM_ITEMS = 3;
-    private static final int MOST_POPULAR = 0;
-    private static final int HIGHEST_RATED = 1;
-    private static final int MOST_RATED = 2;
+    public static final int MOST_POPULAR = 0;
+    public static final int HIGHEST_RATED = 1;
+    public static final int MOST_RATED = 2;
     private final Context mContext;
 
-    public ListMovieAdapter(Context context, FragmentManager fm) {
+    public ListMovieViewPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
     }

@@ -8,9 +8,12 @@
     <dimen name="z_app_bar">4dp</dimen>
 
     <dimen name="textsize_small">12sp</dimen>
+    <dimen name="textsize_small_15">15sp</dimen>
 
     <!--home activity-->
     <dimen name="height_home_activity_tablayout">20dp</dimen>
     <dimen name="padding_top_home_activity_tablayout">0dp</dimen>
     <dimen name="padding_bottom_home_activity_tablayout">0dp</dimen>
+    <dimen name="margin_top_home_activity_nameofmovie">5.17dp</dimen>
+
 </resources>

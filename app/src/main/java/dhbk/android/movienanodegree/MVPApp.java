@@ -4,9 +4,9 @@ import android.app.Application;
 
 import dhbk.android.movienanodegree.component.DaggerMovieComponent;
 import dhbk.android.movienanodegree.component.MovieComponent;
+import dhbk.android.movienanodegree.data.MovieRepositionModule;
 import dhbk.android.movienanodegree.module.ApplicationModule;
 import dhbk.android.movienanodegree.module.MovieModule;
-import dhbk.android.movienanodegree.module.TasksRepositoryModule;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -28,7 +28,7 @@ public class MVPApp extends Application {
         mMovieComponent = DaggerMovieComponent
                 .builder()
                 .applicationModule(new ApplicationModule((getApplicationContext())))
-                .tasksRepositoryModule(new TasksRepositoryModule())
+                .movieRepositionModule(new MovieRepositionModule())
                 .movieModule(new MovieModule())
                 .build();
     }

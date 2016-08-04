@@ -9,16 +9,11 @@ package dhbk.android.movienanodegree.ui.base;
  *
  */
 public interface Mvp {
-
     public interface BaseView<T> {
-
         void setPresenter(T presenter);
-
     }
 
     public interface BasePresenter {
-
         void start();
-
     }
 }
