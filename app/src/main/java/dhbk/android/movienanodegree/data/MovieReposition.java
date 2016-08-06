@@ -7,11 +7,9 @@ import android.support.annotation.NonNull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import dhbk.android.movienanodegree.data.local.MoviesContract;
-import dhbk.android.movienanodegree.interactor.MovieInteractor;
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
-import rx.Subscriber;
+import rx.Observable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -68,7 +66,7 @@ public class MovieReposition implements MoviesDataSource {
 
 
     @Override
-    public rx.Observable<String> getSort() {
+    public Observable<String> getSort() {
         return mMoviesLocalDataSource.getSort();
     }
 
@@ -96,34 +94,35 @@ public class MovieReposition implements MoviesDataSource {
         mMoviesLocalDataSource.deleteMovies();
     }
 
-    public Uri getSortedMoviesUri() {
-        // get the sort string
-        getSort().subscribe(new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(String sort) {
-                switch (sort) {
-                    case MovieInteractor.MOST_POPULAR:
-                        return MoviesContract.MostPopularMovies.CONTENT_URI;
-                    case MovieInteractor.HIGHEST_RATED:
-                        return MoviesContract.HighestRatedMovies.CONTENT_URI;
-                    case MovieInteractor.MOST_RATED:
-                        return MoviesContract.MostRatedMovies.CONTENT_URI;
-                    default:
-                        throw new IllegalStateException("Unknown sort.");
-                }
-            }
-        });
-
-    }
+//    public Observable<Uri> getSortedMoviesUri() {
+//        // get the sort string
+//        getSort().subscribe(new Subscriber<String>() {
+//            @Override
+//            public void onCompleted() {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(String sort) {
+//                switch (sort) {
+//                    case MovieInteractor.MOST_POPULAR:
+//
+//                        return Observable.just(MoviesContract.MostPopularMovies.CONTENT_URI);
+//                    case MovieInteractor.HIGHEST_RATED:
+//                        return MoviesContract.HighestRatedMovies.CONTENT_URI;
+//                    case MovieInteractor.MOST_RATED:
+//                        return MoviesContract.MostRatedMovies.CONTENT_URI;
+//                    default:
+//                        throw new IllegalStateException("Unknown sort.");
+//                }
+//            }
+//        });
+//
+//    }
 
 }
