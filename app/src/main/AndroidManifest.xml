@@ -25,7 +25,7 @@
         <!--content provider-->
         <provider
             android:name=".data.local.MoviesProvider"
-            android:authorities="me.maxdev.popularmoviesapp"
+            android:authorities="me.maxdev.popularmoviesappp"
             android:exported="false"/>
     </application>
 

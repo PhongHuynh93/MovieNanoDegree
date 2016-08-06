@@ -6,7 +6,7 @@ import android.support.annotation.Nullable;
 import javax.inject.Inject;
 
 import dhbk.android.movienanodegree.MVPApp;
-import dhbk.android.movienanodegree.data.MoviesDataSource;
+import dhbk.android.movienanodegree.data.MovieReposition;
 import dhbk.android.movienanodegree.data.local.MoviesContract;
 import dhbk.android.movienanodegree.io.MovieApiService;
 import dhbk.android.movienanodegree.io.callback.MovieSearchServerCallback;
@@ -30,7 +30,7 @@ public class MovieInteractor {
     private final Context mContext;
 
     @Inject
-    MoviesDataSource mMoviesDataSource;
+    MovieReposition mMoviesDataSource;
 
     public MovieInteractor(Context context, MovieApiService apiService) {
         mContext = context;
