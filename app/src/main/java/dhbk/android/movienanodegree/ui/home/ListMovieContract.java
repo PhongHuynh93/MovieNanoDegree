@@ -1,7 +1,5 @@
 package dhbk.android.movienanodegree.ui.home;
 
-import android.net.Uri;
-
 import java.util.ArrayList;
 
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
@@ -28,7 +26,7 @@ public interface ListMovieContract {
 
         /**
          *         show para (movies list to recycler view)
-         * @param list movies that pull from network
+         * @param movies movies that pull from network
          * @return
          */
         void loadDataToLists(ArrayList<DiscoverMovie> movies);
@@ -38,6 +36,21 @@ public interface ListMovieContract {
          */
         void infoUserErrorFetchData();
 
+        /**
+         * make list (recyclerview) appear and remove empty list placeholder
+         */
+        void showList();
+
+        /**
+         * make list (recyclerview) dissappear and show empty list placeholder
+         */
+        void hideList();
+
+        /**
+         *
+         * @param b true: show list, false: hide list
+         */
+        void updateLayout(boolean b);
     }
 
     interface Presenter extends Mvp.BasePresenter {
@@ -68,15 +81,17 @@ public interface ListMovieContract {
         void loadMoreMovies();
 
         /**
-         * get the current page in the list by spare uri
-         * @param uri data address that we want to query
-         * @return the last page in the list
+         * save a id movies in db
+         * @param movieId
          */
-        int getCurrentPage(Uri uri);
-
         void saveMovieReference(Long movieId);
 
-        Uri saveMovie(DiscoverMovie movie);
+        /**
+         * save a movie in db
+         * @param movie
+         * @return
+         */
+        void saveMovie(DiscoverMovie movie);
 
         void logResponse(DiscoverMovieResponse discoverMoviesResponse);
 

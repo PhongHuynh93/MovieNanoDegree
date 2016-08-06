@@ -1,18 +1,12 @@
 package dhbk.android.movienanodegree.ui.home;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.util.Log;
-
-import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import dhbk.android.movienanodegree.data.MovieReposition;
-import dhbk.android.movienanodegree.data.local.MoviesContract;
-import dhbk.android.movienanodegree.data.local.SortHelper;
+import dhbk.android.movienanodegree.data.MoviesDataSource;
 import dhbk.android.movienanodegree.interactor.MovieInteractor;
 import dhbk.android.movienanodegree.io.callback.MovieSearchServerCallback;
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
@@ -23,14 +17,12 @@ import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
  */
 // TODO: 8/2/16 refactor presenter and put code to reposition
 public class ListMoviePresenter implements ListMovieContract.Presenter {
-    private static final int PAGE_SIZE = 20; // max page load of the list
     private static final String TAG = ListMoviePresenter.class.getSimpleName();
     private final ListMovieContract.View mListMovieView;
     private final MovieInteractor mMovieInteractor;
     private final MovieReposition mMovieReposition;
     private final Context mContext;
     private volatile boolean loading = false;
-    private SortHelper mSortHelper;
 
     /**
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not injected
@@ -55,7 +47,6 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
      */
     @Inject
     void setupListeners() {
-        mSortHelper = new SortHelper(mContext);
         mListMovieView.setPresenter(this);
     }
 
@@ -81,20 +72,49 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     public void callDiscoverMovies(String sort, Integer page) {
         // TODO: 7/31/16 call the interactor to perform search
         mMovieInteractor.performMovieSearch(sort, page, new MovieSearchServerCallback() {
+//            @Override
+//            public void onMoviesFound(ArrayList<DiscoverMovie> artists) {
+//                // TODO: 8/1/16 do something when found the artists
+//                mListMovieView.loadDataToLists(artists);
+//                Log.i("test", "onMoviesFound: " + artists.get(0).getOriginalTitle());
+//            }
+//
+//            @Override
+//            public void onFailedSearch() {
+//                Log.e("test", "onFailedSearch:");
+//                mListMovieView.infoUserErrorFetchData();
+//            }
+//
+
+            /**
+             * change state of loading
+             *
+             * @param b indicate the state of loading
+             */
             @Override
-            public void onMoviesFound(ArrayList<DiscoverMovie> artists) {
-                // TODO: 8/1/16 do something when found the artists
-                mListMovieView.loadDataToLists(artists);
-                Log.i("test", "onMoviesFound: " + artists.get(0).getOriginalTitle());
+            public void onSetLoading(boolean b) {
+                loading = b;
             }
 
+            /**
+             * a method indicate that we are successful to download and save datas to db.
+             * so what to do next.
+             */
             @Override
-            public void onFailedSearch() {
-                Log.e("test", "onFailedSearch:");
+            public void onDownloadAndSaveToDbSuccess() {
+                mListMovieView.updateLayout(true);
+            }
+
+            /**
+             * a method indicate that we are failed to download and save datas to db.
+             * so what to do next.
+             */
+            @Override
+            public void onDownloadAndSaveToDbFail() {
                 mListMovieView.infoUserErrorFetchData();
+                mListMovieView.updateLayout(false);
             }
         });
-
     }
 
     /**
@@ -106,8 +126,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
             return;
         }
         loading = true;
-        String sort = mSortHelper.getSortByPreference();
-        callDiscoverMovies(sort, null);
+        mMovieReposition.getSort(sort -> callDiscoverMovies(sort, null));
     }
 
     @Override
@@ -122,37 +141,29 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
             return;
         }
         loading = true;
-        String sort = mSortHelper.getSortByPreference();
-        Uri uri = mSortHelper.getSortedMoviesUri();
-        if (uri == null) {
-            return;
-        }
-        callDiscoverMovies(sort, getCurrentPage(uri) + 1);
-    }
+        mMovieReposition.getCurrentPage(new MoviesDataSource.GetCurrentPageCallback() {
+            @Override
+            public void onCurrentPageLoaded(String sort, int currentPage) {
+                callDiscoverMovies(sort, currentPage + 1);
+            }
 
-    @Override
-    public int getCurrentPage(Uri uri) {
-        Cursor movieCursor = mContext.getContentResolver().query(uri, null, null, null, null);
-
-        int currentPage = 1;
-        if (movieCursor != null) {
-            currentPage = (movieCursor.getCount() - 1) / PAGE_SIZE + 1;
-            movieCursor.close();
-        }
-        return currentPage;
+            @Override
+            public void onCurrentPageNotAvailable() {
+//                int currentPage = 1;
+//                callDiscoverMovies(sort, currentPage + 1);
+            }
+        });
     }
 
     @Override
     public void saveMovieReference(Long movieId) {
-        ContentValues entry = new ContentValues();
-        entry.put(MoviesContract.COLUMN_MOVIE_ID_KEY, movieId);
-        mContext.getContentResolver().insert(mSortHelper.getSortedMoviesUri(), entry);
+        mMovieReposition.saveMovieReference(movieId);
     }
 
 
     @Override
-    public Uri saveMovie(DiscoverMovie movie) {
-        return mContext.getContentResolver().insert(MoviesContract.MovieEntry.CONTENT_URI, movie.toContentValues());
+    public void saveMovie(DiscoverMovie movie) {
+        mMovieReposition.saveMovie(movie);
     }
 
     @Override
@@ -164,8 +175,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     @Override
     public void clearMoviesSortTableIfNeeded(DiscoverMovieResponse discoverMoviesResponse) {
         if (discoverMoviesResponse.getPage() == 1) {
-            mContext.getContentResolver().delete(mSortHelper.getSortedMoviesUri(), null, null
-            );
+            mMovieReposition.deleteMovies();
         }
     }
 

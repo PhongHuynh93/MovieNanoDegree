@@ -175,8 +175,9 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
      */
     @Override
     public void loadDataToLists(ArrayList<DiscoverMovie> movies) {
-        // call the current fraagment to make the icon
+        // show a list of new data
         ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).loadDataToLists(movies);
+        // remove the loading icon
         makePullToRefreshDissappear();
     }
 
@@ -185,7 +186,37 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
      */
     @Override
     public void infoUserErrorFetchData() {
-        // TODO: 8/1/16
+        // TODO: 8/1/16 implement this method
+    }
+
+    /**
+     * @param b true: show list, false: hide list
+     */
+    @Override
+    public void updateLayout(boolean isShowList) {
+        if (isShowList) {
+            showList();
+        } else {
+            hideList();
+        }
+    }
+
+    /**
+     * make list (recyclerview) appear and remove empty list placeholder
+     * todo make reyclerview visiable
+     */
+    @Override
+    public void showList() {
+
+    }
+
+    /**
+     * make list (recyclerview) dissappear and show empty list placeholder
+     * todo make reyclerview invisiable
+     */
+    @Override
+    public void hideList() {
+
     }
 }
 

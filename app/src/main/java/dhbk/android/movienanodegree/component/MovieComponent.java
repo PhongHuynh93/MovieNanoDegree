@@ -7,7 +7,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import dhbk.android.movienanodegree.data.MovieReposition;
 import dhbk.android.movienanodegree.data.MovieRepositionModule;
-import dhbk.android.movienanodegree.data.local.SortHelper;
+import dhbk.android.movienanodegree.data.local.MoviesLocalDataSource;
 import dhbk.android.movienanodegree.interactor.MovieInteractor;
 import dhbk.android.movienanodegree.module.ApplicationModule;
 import dhbk.android.movienanodegree.module.MovieModule;
@@ -23,5 +23,15 @@ public interface MovieComponent {
     Context getContext();
     MovieInteractor getMovieInteractor();
     MovieReposition getMovieReposition();
-    void inject(SortHelper sortHelper);
+
+    /**
+     * use shred preference in this class
+     * @param moviesLocalDataSource
+     */
+    void inject(MoviesLocalDataSource moviesLocalDataSource);
+
+    /**
+     * use {@link MoviesLocalDataSource}
+     */
+    void inject(MovieInteractor movieInteractor);
 }

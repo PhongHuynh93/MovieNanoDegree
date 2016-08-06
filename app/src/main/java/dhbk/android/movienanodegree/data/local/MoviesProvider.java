@@ -149,6 +149,12 @@ public class MoviesProvider extends ContentProvider {
         return cursor;
     }
 
+    /**
+     * insert movie values to appropriate table
+     * @param uri
+     * @param values
+     * @return
+     */
     @Override
     public Uri insert(@NonNull Uri uri, ContentValues values) {
         SQLiteDatabase db = mDbHelper.getWritableDatabase();

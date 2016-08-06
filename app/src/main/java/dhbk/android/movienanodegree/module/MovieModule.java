@@ -40,7 +40,7 @@ public class MovieModule {
      * @return
      */
     @Provides
-    public MovieInteractor provideArtistSearchInteractor(MovieApiService apiService) {
-        return new MovieInteractor(apiService);
+    public MovieInteractor provideArtistSearchInteractor(MovieApiService apiService, Context context) {
+        return new MovieInteractor(context, apiService);
     }
 }

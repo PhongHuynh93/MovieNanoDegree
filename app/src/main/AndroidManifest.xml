@@ -21,6 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!--content provider-->
+        <provider
+            android:name=".data.local.MoviesProvider"
+            android:authorities="me.maxdev.popularmoviesappp"
+            android:exported="false"/>
     </application>
 
 </manifest>

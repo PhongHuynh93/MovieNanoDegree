@@ -10,7 +10,7 @@ import android.provider.BaseColumns;
  */
 public final class MoviesContract {
 
-    public static final String CONTENT_AUTHORITY = "me.maxdev.popularmoviesapp";
+    public static final String CONTENT_AUTHORITY = "me.maxdev.popularmoviesappp";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     public static final String PATH_MOVIES = "movies";
@@ -69,11 +69,20 @@ public final class MoviesContract {
         private MovieEntry() {
         }
 
-        // get the specific movies by passing id
+        /**
+         *
+         * @param id là số thứ tự hàng sau của 1 items sau khi insert trong database
+         * @return ta gán id này vào uri địa chỉ -> để ra địa chỉ full access đến 1 movie đó
+         */
         public static Uri buildMovieUri(long id) {
             return ContentUris.withAppendedId(CONTENT_URI, id);
         }
 
+        /**
+         *
+         * @param uri uri chứa địa chỉ của 1 movie torng db -> với id được thêm vào cuối
+         * @return và parse địa chỉ đó thành số id.
+         */
         public static long getIdFromUri(Uri uri) {
             return ContentUris.parseId(uri);
         }
