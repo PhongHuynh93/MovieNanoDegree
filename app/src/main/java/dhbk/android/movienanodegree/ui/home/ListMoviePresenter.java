@@ -87,13 +87,15 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
 //
 
             /**
-             * change state of loading
-             *
+             * change state of loading -> turn on loading icon
+             * turn off litener for english scrolling
              * @param b indicate the state of loading
              */
             @Override
             public void onSetLoading(boolean b) {
                 loading = b;
+                mListMovieView.makePullToRefreshDissappear();
+                mListMovieView.stopEndlessListener();
             }
 
             /**

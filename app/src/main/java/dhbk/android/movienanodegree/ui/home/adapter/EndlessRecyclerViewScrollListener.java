@@ -5,6 +5,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
+import lombok.Setter;
+
 /**
  * Created by huynhducthanhphong on 8/1/16.
  * a abstract class for adding features in recyclerview that loads more data when scroll past the threshold.
@@ -20,6 +22,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     // The total number of items in the dataset after the last load
     private int previousTotalItemCount = 0;
     // True if we are still waiting for the last set of data to load.
+    @Setter
     private boolean loading = true;
     // Sets the starting page index
     private int startingPageIndex = 0;
@@ -108,5 +111,6 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
      * @param totalItemsCount
      */
     public abstract void onLoadMore(int page, int totalItemsCount);
+
 
 }
