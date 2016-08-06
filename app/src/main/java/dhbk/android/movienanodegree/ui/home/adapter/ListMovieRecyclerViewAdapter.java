@@ -62,6 +62,7 @@ public class ListMovieRecyclerViewAdapter extends RecyclerView.Adapter<ListMovie
         notifyDataSetChanged();
     }
 
+
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.textview_listmovie_nameofmovie)
         TextView mTextviewListmovieNameofmovie;

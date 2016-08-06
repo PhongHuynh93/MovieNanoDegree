@@ -9,7 +9,6 @@ import javax.inject.Singleton;
 
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
-import rx.Observable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -66,7 +65,7 @@ public class MovieReposition implements MoviesDataSource {
 
 
     @Override
-    public Observable<String> getSort() {
+    public String getSort() {
         return mMoviesLocalDataSource.getSort();
     }
 
@@ -94,7 +93,13 @@ public class MovieReposition implements MoviesDataSource {
         mMoviesLocalDataSource.deleteMovies();
     }
 
-//    public Observable<Uri> getSortedMoviesUri() {
+    @Override
+    public Uri getSortedMoviesUri() {
+        return mMoviesLocalDataSource.getSortedMoviesUri();
+    }
+
+
+    //    public Observable<Uri> getSortedMoviesUri() {
 //        // get the sort string
 //        getSort().subscribe(new Subscriber<String>() {
 //            @Override
@@ -111,7 +116,6 @@ public class MovieReposition implements MoviesDataSource {
 //            public void onNext(String sort) {
 //                switch (sort) {
 //                    case MovieInteractor.MOST_POPULAR:
-//
 //                        return Observable.just(MoviesContract.MostPopularMovies.CONTENT_URI);
 //                    case MovieInteractor.HIGHEST_RATED:
 //                        return MoviesContract.HighestRatedMovies.CONTENT_URI;

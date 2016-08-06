@@ -1,6 +1,7 @@
 package dhbk.android.movienanodegree.ui.home;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
 
 import javax.inject.Inject;
@@ -11,7 +12,6 @@ import dhbk.android.movienanodegree.interactor.MovieInteractor;
 import dhbk.android.movienanodegree.io.callback.MovieSearchServerCallback;
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
-import rx.Subscriber;
 
 /**
  * Created by phongdth.ky on 7/29/2016.
@@ -24,6 +24,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     private final MovieReposition mMovieReposition;
     private final Context mContext;
     private volatile boolean loading = false;
+    private Uri mContentUri;
 
     /**
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not injected
@@ -129,22 +130,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
             return;
         }
         loading = true;
-        mMovieReposition.getSort().subscribe(new Subscriber<String>() {
-            @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
-
-            @Override
-            public void onNext(String sort) {
-                callDiscoverMovies(sort, null);
-            }
-        });
+        callDiscoverMovies(mMovieReposition.getSort(), null);
     }
 
     @Override
@@ -195,6 +181,10 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
         if (discoverMoviesResponse.getPage() == 1) {
             mMovieReposition.deleteMovies();
         }
+    }
+
+    public Uri getContentUri() {
+        return mMovieReposition.getSortedMoviesUri();
     }
 
 }

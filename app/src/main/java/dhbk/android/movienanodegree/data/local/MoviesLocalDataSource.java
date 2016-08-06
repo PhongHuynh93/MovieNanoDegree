@@ -15,7 +15,6 @@ import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.data.MoviesDataSource;
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
-import rx.Observable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -78,8 +77,8 @@ public class MoviesLocalDataSource extends SortConstant implements MoviesDataSou
 
 
     @Override
-    public Observable<String> getSort() {
-        return Observable.just(getSortByPreference());
+    public String getSort() {
+        return getSortByPreference();
     }
 
     /**
@@ -125,7 +124,8 @@ public class MoviesLocalDataSource extends SortConstant implements MoviesDataSou
         return sort;
     }
 
-    private Uri getSortedMoviesUri() {
+    @Override
+    public Uri getSortedMoviesUri() {
         String sort = getSortByPreference();
         switch (sort) {
             case MOST_POPULAR:
