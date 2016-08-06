@@ -1,10 +1,10 @@
 package dhbk.android.movienanodegree.ui.home;
 
+import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.widget.FrameLayout;
 
 import javax.inject.Inject;
@@ -88,7 +88,6 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
          * CursorLoader: A loader that queries the ContentResolver and returns a Cursor.
          * -> must provide it with content provider uri
          */
-
         return new CursorLoader(this,
                 mListMoviePresenter.getContentUri(),
                 null,
@@ -106,7 +105,9 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
      */
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-
+        // update db with cursor data
+        mListMoviePresenter.onCursorLoaded(data);
+        updateGridLayout();
     }
 
     /**
@@ -118,7 +119,8 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
      */
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-
+        adapter.changeCursor(null);
+        updateGridLayout();
     }
 
 }
