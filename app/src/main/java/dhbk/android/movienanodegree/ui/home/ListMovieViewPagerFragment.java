@@ -218,5 +218,13 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     public void hideList() {
 
     }
+
+    /**
+     * stop the endless listener
+     */
+    @Override
+    public void stopEndlessListener() {
+        ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).stopEndlessListener();
+    }
 }
 

@@ -44,6 +44,7 @@ public class ListMovieItemFragment extends BaseFragment {
     SwipeRefreshLayout mSwiperefreshHome;
     // save the tab position of this view
     private int mTabLayoutPosition;
+    private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
 
     public ListMovieItemFragment() {
         // Required empty public constructor
@@ -117,12 +118,13 @@ public class ListMovieItemFragment extends BaseFragment {
         // add space between list
         mRecyclerviewHomeListMovies.addItemDecoration(new VerticalSpaceItemDecoration((int)HelpUtils.getPixelForDp(getContext(), 13)));
         mRecyclerviewHomeListMovies.setHasFixedSize(true);
-        mRecyclerviewHomeListMovies.addOnScrollListener(new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+        endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 // TODO: 8/1/16 implement this function
             }
-        });
+        };
+        mRecyclerviewHomeListMovies.addOnScrollListener(endlessRecyclerViewScrollListener);
 
     }
 
@@ -152,5 +154,11 @@ public class ListMovieItemFragment extends BaseFragment {
 
     public void loadDataToLists(ArrayList<DiscoverMovie> movies) {
         mListMovieRecyclerViewAdapter.replaceAnotherData(movies);
+    }
+
+
+    public void stopEndlessListener() {
+        // turn off loading for new news
+        endlessRecyclerViewScrollListener.setLoading(false);
     }
 }

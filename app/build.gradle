@@ -72,6 +72,10 @@ dependencies {
 //    picasso
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:cardview-v7:24.1.1'
+
+    //'compile' can be changed to 'compileOnly' for Gradle 2.12+
+// or 'provided' if using 'propdeps' plugin from SpringSource
+    compile "org.projectlombok:lombok:1.16.10"
 }
 
 

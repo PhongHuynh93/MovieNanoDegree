@@ -51,6 +51,11 @@ public interface ListMovieContract {
          * @param b true: show list, false: hide list
          */
         void updateLayout(boolean b);
+
+        /**
+         * stop the endless listener
+         */
+        void stopEndlessListener();
     }
 
     interface Presenter extends Mvp.BasePresenter {
