@@ -15,6 +15,7 @@ import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.data.MoviesDataSource;
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
+import rx.Observable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -75,12 +76,11 @@ public class MoviesLocalDataSource extends SortConstant implements MoviesDataSou
         mContext.getContentResolver().insert(getSortedMoviesUri(), entry);
     }
 
-    @Override
-    public void getSort(GetSortCallback getSortCallback) {
-        String sort = getSortByPreference();
-        getSortCallback.onGetSort(sort);
-    }
 
+    @Override
+    public Observable<String> getSort() {
+        return Observable.just(getSortByPreference());
+    }
 
     /**
      * hàm toContentValues() chuyển từng field trong {@link DiscoverMovie} thành column chính xác trong {@link MoviesContract}

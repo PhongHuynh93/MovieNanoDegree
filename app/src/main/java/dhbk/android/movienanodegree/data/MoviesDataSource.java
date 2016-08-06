@@ -51,12 +51,8 @@ public interface MoviesDataSource {
      */
     void saveMovieReference(Long movieId);
 
-    /**
-     * get sort from db
-     *
-     * @param getSortCallback
-     */
-    void getSort(GetSortCallback getSortCallback);
+
+    rx.Observable<String> getSort();
 
     /**
      * save movies in db and return the uri for movies

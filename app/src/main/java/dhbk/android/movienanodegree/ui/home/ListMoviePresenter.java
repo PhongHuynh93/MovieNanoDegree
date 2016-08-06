@@ -11,6 +11,7 @@ import dhbk.android.movienanodegree.interactor.MovieInteractor;
 import dhbk.android.movienanodegree.io.callback.MovieSearchServerCallback;
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
+import rx.Subscriber;
 
 /**
  * Created by phongdth.ky on 7/29/2016.
@@ -128,7 +129,22 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
             return;
         }
         loading = true;
-        mMovieReposition.getSort(sort -> callDiscoverMovies(sort, null));
+        mMovieReposition.getSort().subscribe(new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String sort) {
+                callDiscoverMovies(sort, null);
+            }
+        });
     }
 
     @Override

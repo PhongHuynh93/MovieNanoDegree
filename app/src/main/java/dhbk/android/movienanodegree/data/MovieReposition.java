@@ -7,8 +7,11 @@ import android.support.annotation.NonNull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import dhbk.android.movienanodegree.data.local.MoviesContract;
+import dhbk.android.movienanodegree.interactor.MovieInteractor;
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
+import rx.Subscriber;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -63,12 +66,13 @@ public class MovieReposition implements MoviesDataSource {
         mMoviesLocalDataSource.saveMovieReference(movieId);
     }
 
+
     @Override
-    public void getSort(GetSortCallback getSortCallback) {
-        mMoviesLocalDataSource.getSort(sort -> {
-            getSortCallback.onGetSort(sort);
-        });
+    public rx.Observable<String> getSort() {
+        return mMoviesLocalDataSource.getSort();
     }
+
+
 
     @Override
     public Uri saveMovie(DiscoverMovie movie) {
@@ -91,4 +95,35 @@ public class MovieReposition implements MoviesDataSource {
         // delete in db
         mMoviesLocalDataSource.deleteMovies();
     }
+
+    public Uri getSortedMoviesUri() {
+        // get the sort string
+        getSort().subscribe(new Subscriber<String>() {
+            @Override
+            public void onCompleted() {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(String sort) {
+                switch (sort) {
+                    case MovieInteractor.MOST_POPULAR:
+                        return MoviesContract.MostPopularMovies.CONTENT_URI;
+                    case MovieInteractor.HIGHEST_RATED:
+                        return MoviesContract.HighestRatedMovies.CONTENT_URI;
+                    case MovieInteractor.MOST_RATED:
+                        return MoviesContract.MostRatedMovies.CONTENT_URI;
+                    default:
+                        throw new IllegalStateException("Unknown sort.");
+                }
+            }
+        });
+
+    }
+
 }
