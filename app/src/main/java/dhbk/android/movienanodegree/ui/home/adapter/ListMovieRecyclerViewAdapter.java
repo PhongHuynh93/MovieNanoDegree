@@ -3,6 +3,7 @@ package dhbk.android.movienanodegree.ui.home.adapter;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,10 +26,15 @@ import dhbk.android.movienanodegree.ui.Constant;
  */
 public class ListMovieRecyclerViewAdapter extends CursorRecyclerViewAdapter<ListMovieRecyclerViewAdapter.MovieViewHolder> {
     private final Context mContext;
+    private OnItemClickListener onItemClickListener;
 
     public ListMovieRecyclerViewAdapter(Context context, Cursor cursor) {
         super(cursor);
         this.mContext = context;
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.onItemClickListener = listener;
     }
 
     @Override
@@ -40,22 +46,9 @@ public class ListMovieRecyclerViewAdapter extends CursorRecyclerViewAdapter<List
         View contactView = inflater.inflate(R.layout.item_home, parent, false);
 
         // Return a new holder instance
-        MovieViewHolder viewHolder = new MovieViewHolder(contactView);
+        MovieViewHolder viewHolder = new MovieViewHolder(contactView, onItemClickListener);
         return viewHolder;
     }
-
-//    @Override
-//    public void onBindViewHolder(MovieViewHolder holder, int position) {
-//        DiscoverMovie discoverMovie = mMovies.get(position);
-//        holder.mTextviewListmovieNameofmovie.setText(discoverMovie.getOriginalTitle());
-//        String urlImage = Constant.POSTER_IMAGE_BASE_URL + Constant.POSTER_IMAGE_SIZE + discoverMovie.getPosterPath();
-//        Picasso.with(mContext).load(urlImage).into(holder.mImageviewListmovieImageofmovie);
-//    }
-
-//    @Override
-//    public int getItemCount() {
-//        return mMovies.isEmpty() ? 0 : mMovies.size();
-//    }
 
     @Override
     public void onBindViewHolder(MovieViewHolder viewHolder, Cursor cursor) {
@@ -75,7 +68,9 @@ public class ListMovieRecyclerViewAdapter extends CursorRecyclerViewAdapter<List
         }
     }
 
-    public static class MovieViewHolder extends RecyclerView.ViewHolder {
+
+    public static class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private OnItemClickListener onItemClickListener;
         @BindView(R.id.textview_listmovie_nameofmovie)
         TextView mTextviewListmovieNameofmovie;
         @BindView(R.id.textview_listmovie_typeofmovie)
@@ -87,10 +82,35 @@ public class ListMovieRecyclerViewAdapter extends CursorRecyclerViewAdapter<List
         @BindView(R.id.imageview_listmovie_imageofmovie)
         ImageView mImageviewListmovieImageofmovie;
 
-        public MovieViewHolder(View itemView) {
+        public MovieViewHolder(View itemView, OnItemClickListener onItemClickListener) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            this.onItemClickListener = onItemClickListener;
+            itemView.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View view) {
+            if (onItemClickListener != null) {
+                onItemClickListener.onItemClick(view, getAdapterPosition());
+            }
         }
     }
+
+    @Nullable
+    public DiscoverMovie getItem(int position) {
+        Cursor cursor = getCursor();
+        if (cursor == null) {
+            return null;
+        }
+        if (position < 0 || position > cursor.getCount()) {
+            return null;
+        }
+        cursor.moveToFirst();
+        for (int i = 0; i < position; i++) {
+            cursor.moveToNext();
+        }
+        return DiscoverMovie.fromCursor(cursor);
+    }
+
 }
