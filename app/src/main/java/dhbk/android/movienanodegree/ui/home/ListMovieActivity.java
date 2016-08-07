@@ -20,7 +20,7 @@ import dhbk.android.movienanodegree.utils.ActivityUtils;
 /**
  * contains a viewpager, which also contains a fragment {@link ListMovieItemFragment}:
  */
-public class ListMovieActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ListMovieActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>, ListMovieViewPagerFragment.OnFragInteract {
     private static final int LOADER_ID = 0;
 
     @BindView(R.id.framelayout_act_main_content)
@@ -123,4 +123,11 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
         mListMoviePresenter.updateListWithCursordata(null);
     }
 
+    /**
+     * restart the loader to save movie again
+     */
+    @Override
+    public void restartLoader() {
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
 }

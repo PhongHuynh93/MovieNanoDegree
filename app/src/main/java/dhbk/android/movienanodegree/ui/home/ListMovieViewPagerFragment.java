@@ -1,6 +1,7 @@
 package dhbk.android.movienanodegree.ui.home;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.design.widget.TabLayout;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
+import dhbk.android.movienanodegree.data.local.SortConstant;
 import dhbk.android.movienanodegree.interactor.MovieInteractor;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieViewPagerAdapter;
@@ -41,6 +43,7 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     private ListMovieContract.Presenter mPresenter;
+    private OnFragInteract mListener;
 
 
     public ListMovieViewPagerFragment() {
@@ -110,8 +113,24 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
             // todo save this current position to refrence
             @Override
             public void onPageSelected(int position) {
+                String sort;
+                switch (position) {
+                    case ListMovieViewPagerAdapter.MOST_POPULAR:
+                        sort = SortConstant.MOST_POPULAR;
+                        break;
+                    case ListMovieViewPagerAdapter.HIGHEST_RATED:
+                        sort = SortConstant.HIGHEST_RATED;
+                        break;
+                    case ListMovieViewPagerAdapter.MOST_RATED:
+                        sort = SortConstant.MOST_RATED;
+                        break;
+                    default:
+                        //It will never reach here, just to make compiler happy
+                        throw new IllegalArgumentException("Something strange happend");
+                }
 
-//                mPresenter.saveSortByPreference(position)
+                mPresenter.saveSortByPreference(sort);
+                mListener.restartLoader();
 
             }
 
@@ -131,6 +150,15 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        if (context instanceof Activity) {
+            mListener = (ListMovieActivity) context;
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     @Override
@@ -185,7 +213,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     }
 
 
-
     // connect to network
     @Override
     public void getMoviesFromNetwork() {
@@ -216,11 +243,17 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
     /**
      * para with data from cursor after getting from db
+     *
      * @param data
      */
     @Override
     public void onCursorLoaded(Cursor data) {
         ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).onCursorLoaded(data);
+    }
+
+    public interface OnFragInteract {
+
+        void restartLoader();
     }
 }
 

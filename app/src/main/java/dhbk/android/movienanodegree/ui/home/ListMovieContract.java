@@ -81,6 +81,9 @@ public interface ListMovieContract {
         void clearMoviesSortTableIfNeeded(DiscoverMovieResponse discoverMoviesResponse);
 
         void updateListWithCursordata(Cursor data);
+
+
+        void saveSortByPreference(String sort);
     }
 
 }

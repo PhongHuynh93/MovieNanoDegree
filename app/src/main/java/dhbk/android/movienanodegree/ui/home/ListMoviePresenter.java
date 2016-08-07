@@ -181,4 +181,13 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
         }
         mListMovieView.updateLayout();
     }
+
+    /**
+     * save sort into shared preference
+     * @param sort
+     */
+    @Override
+    public void saveSortByPreference(String sort) {
+        mMovieReposition.saveSortByPreference(sort);
+    }
 }
