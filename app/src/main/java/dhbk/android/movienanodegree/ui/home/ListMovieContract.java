@@ -1,5 +1,7 @@
 package dhbk.android.movienanodegree.ui.home;
 
+import android.database.Cursor;
+
 import java.util.ArrayList;
 
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
@@ -36,26 +38,14 @@ public interface ListMovieContract {
          */
         void infoUserErrorFetchData();
 
-        /**
-         * make list (recyclerview) appear and remove empty list placeholder
-         */
-        void showList();
-
-        /**
-         * make list (recyclerview) dissappear and show empty list placeholder
-         */
-        void hideList();
-
-        /**
-         *
-         * @param b true: show list, false: hide list
-         */
-        void updateLayout(boolean b);
+        void updateLayout();
 
         /**
          * stop the endless listener
          */
         void stopEndlessListener();
+
+        void onCursorLoaded(Cursor data);
     }
 
     interface Presenter extends Mvp.BasePresenter {
@@ -101,6 +91,8 @@ public interface ListMovieContract {
         void logResponse(DiscoverMovieResponse discoverMoviesResponse);
 
         void clearMoviesSortTableIfNeeded(DiscoverMovieResponse discoverMoviesResponse);
+
+        void updateListWithCursordata(Cursor data);
     }
 
 }

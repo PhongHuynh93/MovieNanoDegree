@@ -1,6 +1,7 @@
 package dhbk.android.movienanodegree.ui.home;
 
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -163,5 +165,23 @@ public class ListMovieItemFragment extends BaseFragment {
         endlessRecyclerViewScrollListener.setLoading(false);
     }
 
+    /**
+     * update layout depend on adapter items
+     */
+    public void updateLayout() {
+        if (mListMovieRecyclerViewAdapter.getItemCount() == 0) {
+            mRecyclerviewHomeListMovies.setVisibility(View.GONE);
+//            noMoviesView.setVisibility(View.VISIBLE);
+        } else {
+            mRecyclerviewHomeListMovies.setVisibility(View.VISIBLE);
+//            noMoviesView.setVisibility(View.GONE);
+        }
+    }
 
+    public void onCursorLoaded(Cursor data) {
+        mListMovieRecyclerViewAdapter.changeCursor(data);
+        if (data == null || data.getCount() == 0) {
+            refreshMovies();
+        }
+    }
 }

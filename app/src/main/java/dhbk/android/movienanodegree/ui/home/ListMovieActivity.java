@@ -106,8 +106,7 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // update db with cursor data
-        mListMoviePresenter.onCursorLoaded(data);
-        updateGridLayout();
+        mListMoviePresenter.updateListWithCursordata(data);
     }
 
     /**

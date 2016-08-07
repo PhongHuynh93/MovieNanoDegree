@@ -1,6 +1,7 @@
 package dhbk.android.movienanodegree.ui.home;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
@@ -106,7 +107,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
              */
             @Override
             public void onDownloadAndSaveToDbSuccess() {
-                mListMovieView.updateLayout(true);
+                mListMovieView.updateLayout();
             }
 
             /**
@@ -116,7 +117,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
             @Override
             public void onDownloadAndSaveToDbFail() {
                 mListMovieView.infoUserErrorFetchData();
-                mListMovieView.updateLayout(false);
+                mListMovieView.updateLayout();
             }
         });
     }
@@ -187,4 +188,9 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
         return mMovieReposition.getSortedMoviesUri();
     }
 
+    @Override
+    public void updateListWithCursordata(Cursor data) {
+        mListMovieView.onCursorLoaded(data);
+        mListMovieView.updateLayout();
+    }
 }

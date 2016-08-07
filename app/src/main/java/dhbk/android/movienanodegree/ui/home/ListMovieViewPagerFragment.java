@@ -1,6 +1,7 @@
 package dhbk.android.movienanodegree.ui.home;
 
 
+import android.database.Cursor;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -193,30 +194,8 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
      * @param b true: show list, false: hide list
      */
     @Override
-    public void updateLayout(boolean isShowList) {
-        if (isShowList) {
-            showList();
-        } else {
-            hideList();
-        }
-    }
-
-    /**
-     * make list (recyclerview) appear and remove empty list placeholder
-     * todo make reyclerview visiable
-     */
-    @Override
-    public void showList() {
-
-    }
-
-    /**
-     * make list (recyclerview) dissappear and show empty list placeholder
-     * todo make reyclerview invisiable
-     */
-    @Override
-    public void hideList() {
-
+    public void updateLayout() {
+        ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).updateLayout();
     }
 
     /**
@@ -225,6 +204,15 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     @Override
     public void stopEndlessListener() {
         ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).stopEndlessListener();
+    }
+
+    /**
+     * para with data from cursor after getting from db
+     * @param data
+     */
+    @Override
+    public void onCursorLoaded(Cursor data) {
+        ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).onCursorLoaded(data);
     }
 }
 
