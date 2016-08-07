@@ -25,6 +25,7 @@ import dhbk.android.movienanodegree.ui.home.adapter.ListMovieViewPagerAdapter;
 import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieViewComponent;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieActivityModule;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieViewPagerAdapterModule;
+import hugo.weaving.DebugLog;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -84,6 +85,7 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         return super.onOptionsItemSelected(item);
     }
 
+    @DebugLog
     @Override
     protected void injectDependencies() {
         // Create adapter
@@ -246,6 +248,8 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
      *
      * @param data
      */
+
+    @DebugLog
     @Override
     public void onCursorLoaded(Cursor data) {
         ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).onCursorLoaded(data);

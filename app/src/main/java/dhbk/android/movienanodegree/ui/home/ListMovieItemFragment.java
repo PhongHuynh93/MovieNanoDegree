@@ -25,6 +25,7 @@ import dhbk.android.movienanodegree.ui.home.adapter.VerticalSpaceItemDecoration;
 import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieChildViewComponent;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieRecyclerViewAdapterModule;
 import dhbk.android.movienanodegree.utils.HelpUtils;
+import hugo.weaving.DebugLog;
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -180,6 +181,7 @@ public class ListMovieItemFragment extends BaseFragment {
         }
     }
 
+    @DebugLog
     public void onCursorLoaded(Cursor data) {
         mListMovieRecyclerViewAdapter.changeCursor(data);
     }

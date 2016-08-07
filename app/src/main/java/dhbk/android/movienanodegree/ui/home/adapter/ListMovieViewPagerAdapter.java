@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.ui.home.ListMovieItemFragment;
+import hugo.weaving.DebugLog;
 
 /**
  * Created by huynhducthanhphong on 7/28/16.
@@ -18,6 +19,7 @@ public class ListMovieViewPagerAdapter extends SmartFragmentStatePagerAdapter {
     public static final int MOST_RATED = 2;
     private final Context mContext;
 
+    @DebugLog
     public ListMovieViewPagerAdapter(Context context, FragmentManager fm) {
         super(fm);
         mContext = context;
@@ -31,6 +33,7 @@ public class ListMovieViewPagerAdapter extends SmartFragmentStatePagerAdapter {
      * @return
      * http://stackoverflow.com/questions/19339500/when-is-fragmentpageradapters-getitem-called
      */
+    @DebugLog
     @Override
     public Fragment getItem(int position) {
         switch (position) {
