@@ -58,9 +58,6 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
         }
         // TODO set up nav
 
-        // set up loader
-        // init loader
-        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     // call after initVIew()
@@ -73,6 +70,10 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
                 .listMoviePresenterModule(new ListMoviePresenterModule((ListMovieContract.View) mListMovieViewPagerFragment))
                 .build()
                 .inject(this);
+
+        // set up loader
+        // init loader
+        getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
     /**
