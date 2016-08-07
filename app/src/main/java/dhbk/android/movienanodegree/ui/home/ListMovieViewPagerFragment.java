@@ -1,6 +1,7 @@
 package dhbk.android.movienanodegree.ui.home;
 
 
+import android.content.Context;
 import android.database.Cursor;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -97,6 +98,28 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         // set up viewpager
         mViewpagerFragListMovieContent.setAdapter(mListMovieViewPagerAdapter);
         mTablayoutFraglistmovie.setupWithViewPager(mViewpagerFragListMovieContent);
+        // listen for pages change, and save the current tab of viewpager
+        mViewpagerFragListMovieContent.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            // This method will be invoked when a new page becomes selected.
+            // change the content movie
+            // todo save this current position to refrence
+            @Override
+            public void onPageSelected(int position) {
+
+//                mPresenter.saveSortByPreference(position)
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -105,6 +128,10 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         mPresenter = presenter;
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 
     @Override
     protected void doThingWhenCreateApp() {

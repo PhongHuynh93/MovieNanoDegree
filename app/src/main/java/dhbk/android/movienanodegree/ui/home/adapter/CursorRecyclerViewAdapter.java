@@ -69,6 +69,8 @@ public abstract class CursorRecyclerViewAdapter<VH extends RecyclerView.ViewHold
     /**
      * Change the underlying cursor to a new cursor. If there is an existing cursor it will be
      * closed.
+     *
+     * fixme when we set this to null, we can garbage collection this cursor
      */
     public void changeCursor(Cursor cursor) {
         Cursor old = swapCursor(cursor);
