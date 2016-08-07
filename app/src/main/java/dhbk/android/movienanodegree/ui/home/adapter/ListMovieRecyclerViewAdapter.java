@@ -2,8 +2,8 @@ package dhbk.android.movienanodegree.ui.home.adapter;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Movie;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,11 +25,10 @@ import dhbk.android.movienanodegree.ui.Constant;
  */
 public class ListMovieRecyclerViewAdapter extends CursorRecyclerViewAdapter<ListMovieRecyclerViewAdapter.MovieViewHolder> {
     private final Context mContext;
-    private ArrayList<DiscoverMovie> mMovies;
 
-    public ListMovieRecyclerViewAdapter(Context context) {
-        mContext = context;
-        mMovies = new ArrayList<>(); // create an empty list
+    public ListMovieRecyclerViewAdapter(Context context, Cursor cursor) {
+        super(cursor);
+        this.mContext = context;
     }
 
     @Override
@@ -46,31 +44,34 @@ public class ListMovieRecyclerViewAdapter extends CursorRecyclerViewAdapter<List
         return viewHolder;
     }
 
-    @Override
-    public void onBindViewHolder(MovieViewHolder holder, int position) {
-        DiscoverMovie discoverMovie = mMovies.get(position);
-        holder.mTextviewListmovieNameofmovie.setText(discoverMovie.getOriginalTitle());
-        String urlImage = Constant.POSTER_IMAGE_BASE_URL + Constant.POSTER_IMAGE_SIZE + discoverMovie.getPosterPath();
-        Picasso.with(mContext).load(urlImage).into(holder.mImageviewListmovieImageofmovie);
-    }
+//    @Override
+//    public void onBindViewHolder(MovieViewHolder holder, int position) {
+//        DiscoverMovie discoverMovie = mMovies.get(position);
+//        holder.mTextviewListmovieNameofmovie.setText(discoverMovie.getOriginalTitle());
+//        String urlImage = Constant.POSTER_IMAGE_BASE_URL + Constant.POSTER_IMAGE_SIZE + discoverMovie.getPosterPath();
+//        Picasso.with(mContext).load(urlImage).into(holder.mImageviewListmovieImageofmovie);
+//    }
 
-    @Override
-    public int getItemCount() {
-        return mMovies.isEmpty() ? 0 : mMovies.size();
-    }
+//    @Override
+//    public int getItemCount() {
+//        return mMovies.isEmpty() ? 0 : mMovies.size();
+//    }
 
     @Override
     public void onBindViewHolder(MovieViewHolder viewHolder, Cursor cursor) {
         if (cursor != null) {
-            Movie movie = Movie.fromCursor(cursor);
-            viewHolder.moviePoster.setContentDescription(movie.getTitle());
-            Glide.with(context)
-                    .load(POSTER_IMAGE_BASE_URL + POSTER_IMAGE_SIZE + movie.getPosterPath())
-                    .placeholder(new ColorDrawable(context.getResources().getColor(R.color.accent_material_light)))
+            DiscoverMovie movie = DiscoverMovie.fromCursor(cursor);
+
+            viewHolder.mTextviewListmovieNameofmovie.setText(movie.getOriginalTitle());
+            String urlImage = Constant.POSTER_IMAGE_BASE_URL + Constant.POSTER_IMAGE_SIZE + movie.getPosterPath();
+
+            Glide.with(mContext)
+                    .load(urlImage)
+                    .placeholder(new ColorDrawable(ContextCompat.getColor(mContext, R.color.accent_material_light)))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .fitCenter()
                     .crossFade()
-                    .into(viewHolder.moviePoster);
+                    .into(viewHolder.mImageviewListmovieImageofmovie);
         }
     }
 
