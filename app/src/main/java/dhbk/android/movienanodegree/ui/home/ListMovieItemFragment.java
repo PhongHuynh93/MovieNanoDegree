@@ -19,6 +19,7 @@ import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.home.adapter.EndlessRecyclerViewScrollListener;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieRecyclerViewAdapter;
+import dhbk.android.movienanodegree.ui.home.adapter.OnItemClickListener;
 import dhbk.android.movienanodegree.ui.home.adapter.VerticalSpaceItemDecoration;
 import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieChildViewComponent;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieRecyclerViewAdapterModule;
@@ -110,6 +111,7 @@ public class ListMovieItemFragment extends BaseFragment {
                 android.R.color.holo_red_light);
 
         // : 8/1/16 set adapter for recyclerview
+        mListMovieRecyclerViewAdapter.setOnItemClickListener((itemView, position) -> onItemSelectedListener.onItemSelected(adapter.getItem(position)));
         mRecyclerviewHomeListMovies.setAdapter(mListMovieRecyclerViewAdapter);
         // make list show 1 vertical column of data
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
