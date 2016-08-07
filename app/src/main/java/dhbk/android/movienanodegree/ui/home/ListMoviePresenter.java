@@ -17,7 +17,6 @@ import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
 /**
  * Created by phongdth.ky on 7/29/2016.
  */
-// TODO: 8/2/16 refactor presenter and put code to reposition
 public class ListMoviePresenter implements ListMovieContract.Presenter {
     private static final String TAG = ListMoviePresenter.class.getSimpleName();
     private final ListMovieContract.View mListMovieView;
@@ -75,20 +74,6 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     public void callDiscoverMovies(String sort, Integer page) {
         // TODO: 7/31/16 call the interactor to perform search
         mMovieInteractor.performMovieSearch(sort, page, new MovieSearchServerCallback() {
-//            @Override
-//            public void onMoviesFound(ArrayList<DiscoverMovie> artists) {
-//                // TODO: 8/1/16 do something when found the artists
-//                mListMovieView.loadDataToLists(artists);
-//                Log.i("test", "onMoviesFound: " + artists.get(0).getOriginalTitle());
-//            }
-//
-//            @Override
-//            public void onFailedSearch() {
-//                Log.e("test", "onFailedSearch:");
-//                mListMovieView.infoUserErrorFetchData();
-//            }
-//
-
             /**
              * change state of loading -> turn on loading icon
              * turn off litener for english scrolling
@@ -195,5 +180,14 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
             refreshMovies();
         }
         mListMovieView.updateLayout();
+    }
+
+    /**
+     * save sort into shared preference
+     * @param sort
+     */
+    @Override
+    public void saveSortByPreference(String sort) {
+        mMovieReposition.saveSortByPreference(sort);
     }
 }

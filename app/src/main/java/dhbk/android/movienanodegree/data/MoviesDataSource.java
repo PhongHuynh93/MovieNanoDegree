@@ -24,6 +24,8 @@ public interface MoviesDataSource {
 
     Uri getSortedMoviesUri();
 
+    void saveSortByPreference(String sort);
+
     interface GetCurrentPageCallback {
 
         void onCurrentPageLoaded(String sort, int currentpage);

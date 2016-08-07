@@ -20,7 +20,7 @@ import dhbk.android.movienanodegree.utils.ActivityUtils;
 /**
  * contains a viewpager, which also contains a fragment {@link ListMovieItemFragment}:
  */
-public class ListMovieActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ListMovieActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>, ListMovieViewPagerFragment.OnFragInteract {
     private static final int LOADER_ID = 0;
 
     @BindView(R.id.framelayout_act_main_content)
@@ -76,9 +76,10 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
         getLoaderManager().initLoader(LOADER_ID, null, this);
     }
 
+    // FIXME: 8/7/16 load data trong reposition to listview
     /**
      * Instantiate and return a new Loader for the given ID.
-     *
+     * called from method initLoader() and restartLoader()
      * @param id   The ID whose loader is to be created.
      * @param args Any arguments supplied by the caller.
      * @return Return a new Loader instance that is ready to start loading.
@@ -114,7 +115,7 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
      * Called when a previously created loader is being reset, and thus
      * making its data unavailable.  The application should at this point
      * remove any references it has to the Loader's data.
-     *
+     * call from reset(): xóa bỏ tất cả reference để chtr có thể garbage collection
      * @param loader The Loader that is being reset.
      */
     @Override
@@ -122,4 +123,11 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
         mListMoviePresenter.updateListWithCursordata(null);
     }
 
+    /**
+     * restart the loader to save movie again
+     */
+    @Override
+    public void restartLoader() {
+        getLoaderManager().restartLoader(LOADER_ID, null, this);
+    }
 }

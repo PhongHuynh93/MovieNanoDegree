@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import dhbk.android.movienanodegree.data.local.SortConstant;
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
 
@@ -98,35 +99,8 @@ public class MovieReposition implements MoviesDataSource {
         return mMoviesLocalDataSource.getSortedMoviesUri();
     }
 
-
-    //    public Observable<Uri> getSortedMoviesUri() {
-//        // get the sort string
-//        getSort().subscribe(new Subscriber<String>() {
-//            @Override
-//            public void onCompleted() {
-//
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//
-//            }
-//
-//            @Override
-//            public void onNext(String sort) {
-//                switch (sort) {
-//                    case MovieInteractor.MOST_POPULAR:
-//                        return Observable.just(MoviesContract.MostPopularMovies.CONTENT_URI);
-//                    case MovieInteractor.HIGHEST_RATED:
-//                        return MoviesContract.HighestRatedMovies.CONTENT_URI;
-//                    case MovieInteractor.MOST_RATED:
-//                        return MoviesContract.MostRatedMovies.CONTENT_URI;
-//                    default:
-//                        throw new IllegalStateException("Unknown sort.");
-//                }
-//            }
-//        });
-//
-//    }
-
+    @Override
+    public void saveSortByPreference(@SortConstant.NavigationMode String sort) {
+        mMoviesLocalDataSource.saveSortByPreference(sort);
+    }
 }

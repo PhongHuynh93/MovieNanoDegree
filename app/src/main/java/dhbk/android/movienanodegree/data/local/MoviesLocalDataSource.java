@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.util.Log;
 
 import javax.inject.Inject;
@@ -112,7 +111,8 @@ public class MoviesLocalDataSource extends SortConstant implements MoviesDataSou
 
 
     // save sort type to pref
-    private void saveSortByPreference(@SortConstant.NavigationMode StringRes sort) {
+    @Override
+    public void saveSortByPreference(@SortConstant.NavigationMode String sort) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(PREF_SORT_BY_KEY, String.valueOf(sort));
         editor.apply();
