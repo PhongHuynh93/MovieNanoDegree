@@ -21,7 +21,7 @@ public class ListMovieViewPagerAdapter extends SmartFragmentStatePagerAdapter {
 
     @DebugLog
     public ListMovieViewPagerAdapter(Context context, FragmentManager fm) {
-        super(fm);
+        super(context, fm);
         mContext = context;
     }
 

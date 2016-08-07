@@ -176,10 +176,10 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     @Override
     public void updateListWithCursordata(Cursor data) {
         mListMovieView.onCursorLoaded(data);
-        if (data == null || data.getCount() == 0) {
-            refreshMovies();
-        }
-        mListMovieView.updateLayout();
+//        if (data == null || data.getCount() == 0) {
+//            refreshMovies();
+//        }
+//        mListMovieView.updateLayout();
     }
 
     /**

@@ -2,10 +2,14 @@ package dhbk.android.movienanodegree.ui.home;
 
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.Cursor;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +24,7 @@ import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.data.local.SortConstant;
 import dhbk.android.movienanodegree.interactor.MovieInteractor;
+import dhbk.android.movienanodegree.ui.Constant;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieViewPagerAdapter;
 import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieViewComponent;
@@ -45,6 +50,20 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     Toolbar mToolbar;
     private ListMovieContract.Presenter mPresenter;
     private OnFragInteract mListener;
+    private Cursor mCursorData;
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(Constant.BROADCAST_CREATE_VIEWPAGER_ITEM_FRAG)) {
+                ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).onCursorLoaded(mCursorData);
+                if (mCursorData == null || mCursorData.getCount() == 0) {
+                    mPresenter.refreshMovies();
+                }
+                updateLayout();
+            }
+        }
+    };
 
 
     public ListMovieViewPagerFragment() {
@@ -175,11 +194,13 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
     @Override
     protected void doThingWhenResumeApp() {
+        IntentFilter intentFilter = new IntentFilter(Constant.BROADCAST_CREATE_VIEWPAGER_ITEM_FRAG);
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(broadcastReceiver, intentFilter);
     }
 
     @Override
     protected void doThingWhenPauseApp() {
-
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(broadcastReceiver);
     }
 
     @Override
@@ -194,6 +215,7 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     @Override
     public void showListOfMovies() {
         mPresenter.fetchMoviesAsync();
+        mListener.restartLoader();
     }
 
     /**
@@ -252,8 +274,15 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     @DebugLog
     @Override
     public void onCursorLoaded(Cursor data) {
+        // exception 1: (first open app -> )save data because we cannnt get fragment to populate the data.
+        if ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem()) == null) {
+            mCursorData = data;
+        } else {
+            // exception 2: if we have frag, show it now
         ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).onCursorLoaded(data);
+        }
     }
+
 
     public interface OnFragInteract {
 

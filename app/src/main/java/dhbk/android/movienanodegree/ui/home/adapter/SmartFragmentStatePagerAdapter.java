@@ -1,22 +1,29 @@
 package dhbk.android.movienanodegree.ui.home.adapter;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
+import dhbk.android.movienanodegree.ui.Constant;
 import hugo.weaving.DebugLog;
 
 /**
  * Created by phongdth.ky on 7/29/2016.
  */
 public abstract class SmartFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
+    private final Context mContext;
     // Sparse array to keep track of registered fragments in memory
     private SparseArray<Fragment> registeredFragments = new SparseArray<Fragment>();
+    private boolean mFirst = true; // send broadcast that the fragment has create for the first time
 
-    public SmartFragmentStatePagerAdapter(FragmentManager fragmentManager) {
+    public SmartFragmentStatePagerAdapter(Context context, FragmentManager fragmentManager) {
         super(fragmentManager);
+        mContext = context;
     }
 
     // Register the fragment when the item is instantiated
@@ -33,6 +40,12 @@ public abstract class SmartFragmentStatePagerAdapter extends FragmentStatePagerA
     public Object instantiateItem(ViewGroup container, int position) {
         Fragment fragment = (Fragment) super.instantiateItem(container, position);
         registeredFragments.put(position, fragment);
+        // sent intent
+        if (mFirst) {
+            mFirst = false;
+            Intent intent = new Intent(Constant.BROADCAST_CREATE_VIEWPAGER_ITEM_FRAG);
+            LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+        }
         return fragment;
     }
 
