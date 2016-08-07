@@ -11,15 +11,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.interactor.MovieInteractor;
-import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieViewPagerAdapter;
 import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieViewComponent;
@@ -176,9 +173,7 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         // TODO: 8/1/16 implement this method
     }
 
-    /**
-     * @param b true: show list, false: hide list
-     */
+
     @Override
     public void updateLayout() {
         ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).updateLayout();

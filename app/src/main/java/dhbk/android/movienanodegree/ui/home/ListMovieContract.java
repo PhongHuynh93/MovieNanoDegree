@@ -40,11 +40,6 @@ public interface ListMovieContract {
     }
 
     interface Presenter extends Mvp.BasePresenter {
-        /**
-         * refresh screen with new data
-         */
-        void refreshMovies();
-
         // fetch the movie in the network
         void fetchMoviesAsync();
 
@@ -53,6 +48,8 @@ public interface ListMovieContract {
          * sort: is the way to get the movies from network
          */
         void callDiscoverMovies(String sort, Integer page);
+
+        void refreshMovies();
 
         /**
          * determine whether the screen is fetching data or not

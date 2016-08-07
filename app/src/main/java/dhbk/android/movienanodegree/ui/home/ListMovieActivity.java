@@ -118,8 +118,7 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
      */
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.changeCursor(null);
-        updateGridLayout();
+        mListMoviePresenter.updateListWithCursordata(null);
     }
 
 }

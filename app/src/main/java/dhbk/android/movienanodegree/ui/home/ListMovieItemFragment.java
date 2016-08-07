@@ -11,14 +11,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
-import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.home.adapter.EndlessRecyclerViewScrollListener;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieRecyclerViewAdapter;
@@ -44,9 +41,9 @@ public class ListMovieItemFragment extends BaseFragment {
     RecyclerView mRecyclerviewHomeListMovies;
     @BindView(R.id.swiperefresh_home)
     SwipeRefreshLayout mSwiperefreshHome;
-    // save the tab position of this view
-    private int mTabLayoutPosition;
+
     private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
+    private int mTabLayoutPosition;
 
     public ListMovieItemFragment() {
         // Required empty public constructor
@@ -174,8 +171,6 @@ public class ListMovieItemFragment extends BaseFragment {
 
     public void onCursorLoaded(Cursor data) {
         mListMovieRecyclerViewAdapter.changeCursor(data);
-        if (data == null || data.getCount() == 0) {
-            refreshMovies();
-        }
     }
+
 }
