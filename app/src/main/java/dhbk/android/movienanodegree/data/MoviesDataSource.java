@@ -22,6 +22,8 @@ public interface MoviesDataSource {
 
     void logResponse(DiscoverMovieResponse discoverMoviesResponse);
 
+    Uri getSortedMoviesUri();
+
     interface GetCurrentPageCallback {
 
         void onCurrentPageLoaded(String sort, int currentpage);
@@ -51,12 +53,8 @@ public interface MoviesDataSource {
      */
     void saveMovieReference(Long movieId);
 
-    /**
-     * get sort from db
-     *
-     * @param getSortCallback
-     */
-    void getSort(GetSortCallback getSortCallback);
+
+    String getSort();
 
     /**
      * save movies in db and return the uri for movies

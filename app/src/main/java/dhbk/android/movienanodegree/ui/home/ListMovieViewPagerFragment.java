@@ -1,6 +1,7 @@
 package dhbk.android.movienanodegree.ui.home;
 
 
+import android.database.Cursor;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -10,15 +11,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import java.util.ArrayList;
-
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.interactor.MovieInteractor;
-import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieViewPagerAdapter;
 import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieViewComponent;
@@ -168,20 +166,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     }
 
     /**
-     * show para (movies list to recycler view)
-     *
-     * @param movies
-     * @return
-     */
-    @Override
-    public void loadDataToLists(ArrayList<DiscoverMovie> movies) {
-        // show a list of new data
-        ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).loadDataToLists(movies);
-        // remove the loading icon
-        makePullToRefreshDissappear();
-    }
-
-    /**
      * show a snackbar to info user that cannot get the movie
      */
     @Override
@@ -189,34 +173,10 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         // TODO: 8/1/16 implement this method
     }
 
-    /**
-     * @param b true: show list, false: hide list
-     */
+
     @Override
-    public void updateLayout(boolean isShowList) {
-        if (isShowList) {
-            showList();
-        } else {
-            hideList();
-        }
-    }
-
-    /**
-     * make list (recyclerview) appear and remove empty list placeholder
-     * todo make reyclerview visiable
-     */
-    @Override
-    public void showList() {
-
-    }
-
-    /**
-     * make list (recyclerview) dissappear and show empty list placeholder
-     * todo make reyclerview invisiable
-     */
-    @Override
-    public void hideList() {
-
+    public void updateLayout() {
+        ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).updateLayout();
     }
 
     /**
@@ -225,6 +185,15 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     @Override
     public void stopEndlessListener() {
         ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).stopEndlessListener();
+    }
+
+    /**
+     * para with data from cursor after getting from db
+     * @param data
+     */
+    @Override
+    public void onCursorLoaded(Cursor data) {
+        ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).onCursorLoaded(data);
     }
 }
 

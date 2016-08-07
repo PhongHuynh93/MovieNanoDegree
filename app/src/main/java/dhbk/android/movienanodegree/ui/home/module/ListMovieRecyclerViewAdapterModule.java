@@ -14,6 +14,6 @@ public class ListMovieRecyclerViewAdapterModule {
     // return adapter for this view, context from parent component
     @Provides
     public ListMovieRecyclerViewAdapter provideAdapter(Context context) {
-        return new ListMovieRecyclerViewAdapter(context);
+        return new ListMovieRecyclerViewAdapter(context, null);
     }
 }

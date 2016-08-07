@@ -1,6 +1,8 @@
 package dhbk.android.movienanodegree.ui.home;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.util.Log;
 
 import javax.inject.Inject;
@@ -23,6 +25,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     private final MovieReposition mMovieReposition;
     private final Context mContext;
     private volatile boolean loading = false;
+    private Uri mContentUri;
 
     /**
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not injected
@@ -104,7 +107,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
              */
             @Override
             public void onDownloadAndSaveToDbSuccess() {
-                mListMovieView.updateLayout(true);
+                mListMovieView.updateLayout();
             }
 
             /**
@@ -114,7 +117,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
             @Override
             public void onDownloadAndSaveToDbFail() {
                 mListMovieView.infoUserErrorFetchData();
-                mListMovieView.updateLayout(false);
+                mListMovieView.updateLayout();
             }
         });
     }
@@ -128,7 +131,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
             return;
         }
         loading = true;
-        mMovieReposition.getSort(sort -> callDiscoverMovies(sort, null));
+        callDiscoverMovies(mMovieReposition.getSort(), null);
     }
 
     @Override
@@ -181,4 +184,16 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
         }
     }
 
+    public Uri getContentUri() {
+        return mMovieReposition.getSortedMoviesUri();
+    }
+
+    @Override
+    public void updateListWithCursordata(Cursor data) {
+        mListMovieView.onCursorLoaded(data);
+        if (data == null || data.getCount() == 0) {
+            refreshMovies();
+        }
+        mListMovieView.updateLayout();
+    }
 }

@@ -1,6 +1,7 @@
 package dhbk.android.movienanodegree.ui.home;
 
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -8,18 +9,18 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-
-import java.util.ArrayList;
+import android.view.View;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
-import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.home.adapter.EndlessRecyclerViewScrollListener;
 import dhbk.android.movienanodegree.ui.home.adapter.ListMovieRecyclerViewAdapter;
+import dhbk.android.movienanodegree.ui.home.adapter.OnItemClickListener;
+import dhbk.android.movienanodegree.ui.home.adapter.OnItemSelectedListener;
 import dhbk.android.movienanodegree.ui.home.adapter.VerticalSpaceItemDecoration;
 import dhbk.android.movienanodegree.ui.home.component.DaggerListMovieChildViewComponent;
 import dhbk.android.movienanodegree.ui.home.module.ListMovieRecyclerViewAdapterModule;
@@ -42,9 +43,11 @@ public class ListMovieItemFragment extends BaseFragment {
     RecyclerView mRecyclerviewHomeListMovies;
     @BindView(R.id.swiperefresh_home)
     SwipeRefreshLayout mSwiperefreshHome;
-    // save the tab position of this view
-    private int mTabLayoutPosition;
+
     private EndlessRecyclerViewScrollListener endlessRecyclerViewScrollListener;
+    private int mTabLayoutPosition;
+    private OnItemSelectedListener onItemSelectedListener;
+
 
     public ListMovieItemFragment() {
         // Required empty public constructor
@@ -111,6 +114,13 @@ public class ListMovieItemFragment extends BaseFragment {
                 android.R.color.holo_red_light);
 
         // : 8/1/16 set adapter for recyclerview
+        mListMovieRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                // TODO: 8/7/16 when click, go to another activity to show detail
+
+            }
+        });
         mRecyclerviewHomeListMovies.setAdapter(mListMovieRecyclerViewAdapter);
         // make list show 1 vertical column of data
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -125,6 +135,7 @@ public class ListMovieItemFragment extends BaseFragment {
             }
         };
         mRecyclerviewHomeListMovies.addOnScrollListener(endlessRecyclerViewScrollListener);
+
 
     }
 
@@ -151,14 +162,26 @@ public class ListMovieItemFragment extends BaseFragment {
         mSwiperefreshHome.setRefreshing(false);
     }
 
-
-    public void loadDataToLists(ArrayList<DiscoverMovie> movies) {
-        mListMovieRecyclerViewAdapter.replaceAnotherData(movies);
-    }
-
-
     public void stopEndlessListener() {
         // turn off loading for new news
         endlessRecyclerViewScrollListener.setLoading(false);
     }
+
+    /**
+     * update layout depend on adapter items
+     */
+    public void updateLayout() {
+        if (mListMovieRecyclerViewAdapter.getItemCount() == 0) {
+            mRecyclerviewHomeListMovies.setVisibility(View.GONE);
+//            noMoviesView.setVisibility(View.VISIBLE);
+        } else {
+            mRecyclerviewHomeListMovies.setVisibility(View.VISIBLE);
+//            noMoviesView.setVisibility(View.GONE);
+        }
+    }
+
+    public void onCursorLoaded(Cursor data) {
+        mListMovieRecyclerViewAdapter.changeCursor(data);
+    }
+
 }

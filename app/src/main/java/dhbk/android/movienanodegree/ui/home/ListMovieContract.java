@@ -1,6 +1,6 @@
 package dhbk.android.movienanodegree.ui.home;
 
-import java.util.ArrayList;
+import android.database.Cursor;
 
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
@@ -25,45 +25,21 @@ public interface ListMovieContract {
         void getMoviesFromNetwork();
 
         /**
-         *         show para (movies list to recycler view)
-         * @param movies movies that pull from network
-         * @return
-         */
-        void loadDataToLists(ArrayList<DiscoverMovie> movies);
-
-        /**
          *         show a snackbar to info user that cannot get the movie
          */
         void infoUserErrorFetchData();
 
-        /**
-         * make list (recyclerview) appear and remove empty list placeholder
-         */
-        void showList();
-
-        /**
-         * make list (recyclerview) dissappear and show empty list placeholder
-         */
-        void hideList();
-
-        /**
-         *
-         * @param b true: show list, false: hide list
-         */
-        void updateLayout(boolean b);
+        void updateLayout();
 
         /**
          * stop the endless listener
          */
         void stopEndlessListener();
+
+        void onCursorLoaded(Cursor data);
     }
 
     interface Presenter extends Mvp.BasePresenter {
-        /**
-         * refresh screen with new data
-         */
-        void refreshMovies();
-
         // fetch the movie in the network
         void fetchMoviesAsync();
 
@@ -72,6 +48,8 @@ public interface ListMovieContract {
          * sort: is the way to get the movies from network
          */
         void callDiscoverMovies(String sort, Integer page);
+
+        void refreshMovies();
 
         /**
          * determine whether the screen is fetching data or not
@@ -101,6 +79,8 @@ public interface ListMovieContract {
         void logResponse(DiscoverMovieResponse discoverMoviesResponse);
 
         void clearMoviesSortTableIfNeeded(DiscoverMovieResponse discoverMoviesResponse);
+
+        void updateListWithCursordata(Cursor data);
     }
 
 }

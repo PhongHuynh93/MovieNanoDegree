@@ -75,12 +75,11 @@ public class MoviesLocalDataSource extends SortConstant implements MoviesDataSou
         mContext.getContentResolver().insert(getSortedMoviesUri(), entry);
     }
 
-    @Override
-    public void getSort(GetSortCallback getSortCallback) {
-        String sort = getSortByPreference();
-        getSortCallback.onGetSort(sort);
-    }
 
+    @Override
+    public String getSort() {
+        return getSortByPreference();
+    }
 
     /**
      * hàm toContentValues() chuyển từng field trong {@link DiscoverMovie} thành column chính xác trong {@link MoviesContract}
@@ -125,7 +124,8 @@ public class MoviesLocalDataSource extends SortConstant implements MoviesDataSou
         return sort;
     }
 
-    private Uri getSortedMoviesUri() {
+    @Override
+    public Uri getSortedMoviesUri() {
         String sort = getSortByPreference();
         switch (sort) {
             case MOST_POPULAR:
