@@ -1,6 +1,9 @@
 package dhbk.android.movienanodegree.ui.home.adapter;
 
 import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Movie;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +24,7 @@ import dhbk.android.movienanodegree.ui.Constant;
 /**
  * Created by huynhducthanhphong on 8/1/16.
  */
-public class ListMovieRecyclerViewAdapter extends RecyclerView.Adapter<ListMovieRecyclerViewAdapter.MovieViewHolder> {
+public class ListMovieRecyclerViewAdapter extends CursorRecyclerViewAdapter<ListMovieRecyclerViewAdapter.MovieViewHolder> {
     private final Context mContext;
     private ArrayList<DiscoverMovie> mMovies;
 
@@ -56,12 +59,20 @@ public class ListMovieRecyclerViewAdapter extends RecyclerView.Adapter<ListMovie
         return mMovies.isEmpty() ? 0 : mMovies.size();
     }
 
-    // replace  data and notify change
-    public void replaceAnotherData(ArrayList<DiscoverMovie> movies) {
-        mMovies = movies;
-        notifyDataSetChanged();
+    @Override
+    public void onBindViewHolder(MovieViewHolder viewHolder, Cursor cursor) {
+        if (cursor != null) {
+            Movie movie = Movie.fromCursor(cursor);
+            viewHolder.moviePoster.setContentDescription(movie.getTitle());
+            Glide.with(context)
+                    .load(POSTER_IMAGE_BASE_URL + POSTER_IMAGE_SIZE + movie.getPosterPath())
+                    .placeholder(new ColorDrawable(context.getResources().getColor(R.color.accent_material_light)))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .fitCenter()
+                    .crossFade()
+                    .into(viewHolder.moviePoster);
+        }
     }
-
 
     public static class MovieViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.textview_listmovie_nameofmovie)

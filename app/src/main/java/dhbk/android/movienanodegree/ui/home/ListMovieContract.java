@@ -2,8 +2,6 @@ package dhbk.android.movienanodegree.ui.home;
 
 import android.database.Cursor;
 
-import java.util.ArrayList;
-
 import dhbk.android.movienanodegree.io.model.DiscoverMovie;
 import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
 import dhbk.android.movienanodegree.ui.base.Mvp;
@@ -25,13 +23,6 @@ public interface ListMovieContract {
 
         // connect to server to pull datas
         void getMoviesFromNetwork();
-
-        /**
-         *         show para (movies list to recycler view)
-         * @param movies movies that pull from network
-         * @return
-         */
-        void loadDataToLists(ArrayList<DiscoverMovie> movies);
 
         /**
          *         show a snackbar to info user that cannot get the movie

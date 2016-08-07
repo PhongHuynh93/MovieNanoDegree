@@ -169,20 +169,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     }
 
     /**
-     * show para (movies list to recycler view)
-     *
-     * @param movies
-     * @return
-     */
-    @Override
-    public void loadDataToLists(ArrayList<DiscoverMovie> movies) {
-        // show a list of new data
-        ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).loadDataToLists(movies);
-        // remove the loading icon
-        makePullToRefreshDissappear();
-    }
-
-    /**
      * show a snackbar to info user that cannot get the movie
      */
     @Override

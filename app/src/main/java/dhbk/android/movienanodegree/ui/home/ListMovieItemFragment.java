@@ -154,12 +154,6 @@ public class ListMovieItemFragment extends BaseFragment {
         mSwiperefreshHome.setRefreshing(false);
     }
 
-
-    public void loadDataToLists(ArrayList<DiscoverMovie> movies) {
-        mListMovieRecyclerViewAdapter.replaceAnotherData(movies);
-    }
-
-
     public void stopEndlessListener() {
         // turn off loading for new news
         endlessRecyclerViewScrollListener.setLoading(false);
