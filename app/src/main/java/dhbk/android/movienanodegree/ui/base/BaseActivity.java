@@ -33,6 +33,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        doThingWhenResumeApp();
+    }
+
+    // when app is on resume, add listener, start the presenter
+    protected abstract void doThingWhenResumeApp();
+
+
+    @Override
     protected void attachBaseContext(Context newBase) {
         if (hasUseCustomeFont()) {
             super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -49,7 +59,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     // init view object in view
     protected abstract void initView();
-
 
     /**
      * use to inject presenter so, put it after initView

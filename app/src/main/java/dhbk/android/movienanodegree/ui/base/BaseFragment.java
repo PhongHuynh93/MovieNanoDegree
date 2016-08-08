@@ -18,13 +18,6 @@ import dhbk.android.movienanodegree.R;
  * Created by huynhducthanhphong on 7/16/16.
  */
 public abstract class BaseFragment extends Fragment {
-    /**
-     * put         injectDependencies() before initView() so we can make adapter after already initview
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
     // inject view and dependance
     @Nullable
     @Override

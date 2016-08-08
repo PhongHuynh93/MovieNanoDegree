@@ -2,11 +2,12 @@ package dhbk.android.movienanodegree;
 
 import android.app.Application;
 
-import dhbk.android.movienanodegree.component.DaggerMovieComponent;
-import dhbk.android.movienanodegree.component.MovieComponent;
-import dhbk.android.movienanodegree.data.MovieRepositionModule;
-import dhbk.android.movienanodegree.module.ApplicationModule;
-import dhbk.android.movienanodegree.module.MovieModule;
+import dhbk.android.movienanodegree.dagger.app.ApplicationModule;
+import dhbk.android.movienanodegree.dagger.app.DaggerMovieComponent;
+import dhbk.android.movienanodegree.dagger.app.MovieApiServiceModule;
+import dhbk.android.movienanodegree.dagger.app.MovieComponent;
+import dhbk.android.movienanodegree.dagger.app.RepositionModule;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
@@ -28,8 +29,8 @@ public class MVPApp extends Application {
         mMovieComponent = DaggerMovieComponent
                 .builder()
                 .applicationModule(new ApplicationModule((getApplicationContext())))
-                .movieRepositionModule(new MovieRepositionModule())
-                .movieModule(new MovieModule())
+                .repositionModule(new RepositionModule())
+                .movieApiServiceModule(new MovieApiServiceModule())
                 .build();
     }
 

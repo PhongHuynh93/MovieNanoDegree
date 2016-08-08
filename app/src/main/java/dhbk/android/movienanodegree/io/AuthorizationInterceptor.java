@@ -1,5 +1,11 @@
 package dhbk.android.movienanodegree.io;
 
+/**
+ * Created by phongdth.ky on 8/8/2016.
+ */
+
+import dhbk.android.movienanodegree.util.Constant;
+
 import java.io.IOException;
 
 import okhttp3.HttpUrl;
@@ -20,7 +26,7 @@ public class AuthorizationInterceptor implements Interceptor {
 
         HttpUrl originalHttpUrl = originalRequest.url();
         HttpUrl newHttpUrl = originalHttpUrl.newBuilder()
-                .setQueryParameter(API_KEY_PARAM, MovieRequestConstants.THE_MOVIE_DB_API_KEY)
+                .setQueryParameter(API_KEY_PARAM, Constant.THE_MOVIE_DB_API_KEY)
                 .build();
 
         // add api key to request

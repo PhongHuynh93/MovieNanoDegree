@@ -13,7 +13,7 @@
         android:name=".MVPApp">
 
         <activity
-            android:name=".ui.home.ListMovieActivity"
+            android:name=".ui.listmovie.ListMovieActivity"
             android:label="@string/app_name"
             android:theme="@style/Movie.Home">
             <intent-filter>
@@ -24,7 +24,7 @@
 
         <!--content provider-->
         <provider
-            android:name=".data.local.MoviesProvider"
+            android:name="dhbk.android.movienanodegree.data.local.MoviesProvider"
             android:authorities="me.maxdev.popularmoviesappp"
             android:exported="false"/>
     </application>

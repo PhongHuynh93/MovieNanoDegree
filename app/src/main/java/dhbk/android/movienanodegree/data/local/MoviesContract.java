@@ -60,7 +60,7 @@ public final class MoviesContract {
                         + COLUMN_AVERAGE_VOTE + " REAL, "
                         + COLUMN_VOTE_COUNT + " INTEGER,"
                         + COLUMN_BACKDROP_PATH + " TEXT "
-                        +" );";
+                        + " );";
 
         private static final String[] COLUMNS = {_ID, COLUMN_ORIGINAL_TITLE, COLUMN_OVERVIEW,
                 COLUMN_RELEASE_DATE, COLUMN_POSTER_PATH, COLUMN_POPULARITY, COLUMN_TITLE,
@@ -70,7 +70,6 @@ public final class MoviesContract {
         }
 
         /**
-         *
          * @param id là số thứ tự hàng sau của 1 items sau khi insert trong database
          * @return ta gán id này vào uri địa chỉ -> để ra địa chỉ full access đến 1 movie đó
          */
@@ -79,7 +78,6 @@ public final class MoviesContract {
         }
 
         /**
-         *
          * @param uri uri chứa địa chỉ của 1 movie torng db -> với id được thêm vào cuối
          * @return và parse địa chỉ đó thành số id.
          */
