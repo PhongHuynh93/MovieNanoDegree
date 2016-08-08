@@ -24,6 +24,7 @@ import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.dagger.listmovie.DaggerListMovieViewComponent;
 import dhbk.android.movienanodegree.dagger.listmovie.ListMovieActivityModule;
 import dhbk.android.movienanodegree.dagger.listmovie.ListMovieViewPagerAdapterModule;
+import dhbk.android.movienanodegree.io.MovieInteractor;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.util.Constant;
 
@@ -137,6 +138,7 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
                 }
 
                 mPresenter.saveSortByPreference(sort);
+                // load the data again
                 mListener.restartLoader();
             }
 
@@ -164,12 +166,14 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
     @Override
     public void showListOfMovies() {
-
+        mPresenter.fetchMoviesAsync();
+        mListener.restartLoader();
     }
 
     @Override
     public void makePullToRefreshAppear() {
-
+// call the current fraagment to make the icon
+        ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).setThePullToRefreshAppear();
     }
 
     /**
@@ -177,12 +181,13 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
      */
     @Override
     public void makePullToRefreshDissappear() {
-
+        // call the current fraagment to make the icon
+        ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).setThePullToRefreshDissappear();
     }
 
     @Override
     public void getMoviesFromNetwork() {
-
+        mPresenter.callDiscoverMovies(MovieInteractor.MOST_POPULAR, null);
     }
 
     /**
@@ -195,7 +200,7 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
     @Override
     public void updateLayout() {
-
+        ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).updateLayout();
     }
 
     /**
@@ -203,7 +208,7 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
      */
     @Override
     public void stopEndlessListener() {
-
+        ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).stopEndlessListener();
     }
 
     @Override

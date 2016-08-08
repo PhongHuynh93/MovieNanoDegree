@@ -54,7 +54,7 @@ public interface ListMovieContract {
          * @param sort
          * @param page
          */
-        void callDiscoverMovies(String sort, int page);
+        void callDiscoverMovies(String sort, Integer page);
 
         void refreshMovies();
 
