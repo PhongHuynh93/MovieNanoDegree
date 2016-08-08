@@ -1,4 +1,4 @@
-package dhbk.android.movienanodegree;
+package dhbk.android.movienanodegree.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import butterknife.ButterKnife;
+import dhbk.android.movienanodegree.R;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 /**
@@ -27,9 +28,19 @@ public abstract class BaseActivity extends AppCompatActivity {
             ab.setHomeAsUpIndicator(R.drawable.toolbar_open_drawer);
             ab.setDisplayHomeAsUpEnabled(true); // set the left arrow in toolbar
         }
-
         initView();
+        injectDependencies();
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        doThingWhenResumeApp();
+    }
+
+    // when app is on resume, add listener, start the presenter
+    protected abstract void doThingWhenResumeApp();
+
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -46,6 +57,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
     }
 
+    // init view object in view
+    protected abstract void initView();
+
+    /**
+     * use to inject presenter so, put it after initView
+     */
+    protected abstract void injectDependencies();
 
     // if a activity want to use the custome font, return true
     protected abstract boolean hasUseCustomeFont();
@@ -57,7 +75,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     // check a view has toolbar or not
     protected abstract boolean hasToolbar();
 
-    // init view object in view
-    protected abstract void initView();
 
 }

@@ -6,41 +6,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.home.HomeActivity"
+    tools:context=".ui.home.ListMovieActivity"
     tools:ignore="MissingPrefix">
 
-
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Movie.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:popupTheme="@style/Movie.PopupOverlay"/>
-
-        <!-- change the default size and position of tab layout-->
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tablayout"
-            style="@style/MyCustomTabLayout"
-            fontPath="fonts/Helvetica.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/height_home_activity_tablayout"
-            android:layout_gravity="center_vertical"
-            android:background="@color/grey_dark"
-            android:paddingBottom="@dimen/padding_bottom_home_activity_tablayout"
-            android:paddingTop="@dimen/padding_top_home_activity_tablayout"
-            app:layout_scrollFlags="scroll"/>
-    </android.support.design.widget.AppBarLayout>
-
     <!--main content-->
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager_main_contain"
+    <FrameLayout
+        android:id="@+id/framelayout_act_main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    </FrameLayout>
 
 
 </android.support.design.widget.CoordinatorLayout>

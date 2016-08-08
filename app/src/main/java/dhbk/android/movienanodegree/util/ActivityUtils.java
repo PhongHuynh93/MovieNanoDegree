@@ -1,4 +1,4 @@
-package dhbk.android.movienanodegree.utils;
+package dhbk.android.movienanodegree.util;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
