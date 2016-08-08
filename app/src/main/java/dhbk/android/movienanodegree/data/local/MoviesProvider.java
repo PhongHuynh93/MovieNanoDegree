@@ -22,7 +22,6 @@ public class MoviesProvider extends ContentProvider {
 
     private static final int MOST_POPULAR_MOVIES = 201;
     private static final int HIGHEST_RATED_MOVIES = 202;
-
     private static final int MOST_RATED_MOVIES = 203;
     private static final int FAVORITES = 300;
 

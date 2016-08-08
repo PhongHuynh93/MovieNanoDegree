@@ -1,74 +1,40 @@
 package dhbk.android.movienanodegree.data;
 
 /**
- * Created by phongdth.ky on 8/2/2016.
+ * Created by phongdth.ky on 8/8/2016.
  */
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-import dhbk.android.movienanodegree.io.model.DiscoverMovie;
-import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
+import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
 
 /**
  * Main entry point for accessing tasks data.
- * <p>
- * For simplicity, only getTasks() and getTask() have callbacks. Consider adding callbacks to other
- * methods to inform the user of network/database errors or successful operations.
- * For example, when a new task is created, it's synchronously stored in cache but usually every
- * operation on database or network should be executed in a different thread.
  */
 public interface MoviesDataSource {
 
-    void logResponse(DiscoverMovieResponse discoverMoviesResponse);
+    void logResponse(@NonNull DiscoverMovieResponse discoverMoviesResponse);
 
+    @NonNull
     Uri getSortedMoviesUri();
 
-    void saveSortByPreference(String sort);
+    void saveSortByPreference(@NonNull String sort);
 
-    interface GetCurrentPageCallback {
+    int getCurrentPage();
 
-        void onCurrentPageLoaded(String sort, int currentpage);
+     //save movie id in db
+    void saveMovieReference(@NonNull Long movieId);
 
-        void onCurrentPageNotAvailable();
-    }
-
-
-    interface GetSortCallback {
-        void onGetSort(String sort);
-    }
-
-//
-//    interface GetUriForMovies {
-//        void onGetUri(Uri uri);
-//    }
-
-    /**
-     * @return the current page which has store in content provider
-     */
-    void getCurrentPage(@NonNull GetCurrentPageCallback callback);
-
-    /**
-     * save movie id in db
-     *
-     * @param movieId
-     */
-    void saveMovieReference(Long movieId);
-
-
+    @NonNull
     String getSort();
 
-    /**
-     * save movies in db and return the uri for movies
-     *
-     * @param movie
-     */
-    Uri saveMovie(DiscoverMovie movie);
+     // save movies in db and return the uri for movies
+    Uri saveMovie(@NonNull DiscoverMovieResponse.DiscoverMovie movie);
 
-    void clearMoviesSortTableIfNeeded(DiscoverMovieResponse discoverMoviesResponse);
+    void clearMoviesSortTableIfNeeded(@NonNull DiscoverMovieResponse discoverMoviesResponse);
 
-    /**
-     * delete movies depend on sort
-     */
+     // delete movies depend on sort
     void deleteMovies();
 }
+

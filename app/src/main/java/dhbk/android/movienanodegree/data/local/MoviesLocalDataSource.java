@@ -6,67 +6,62 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.util.Log;
-
-import javax.inject.Inject;
 
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.data.MoviesDataSource;
-import dhbk.android.movienanodegree.io.model.DiscoverMovie;
-import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
+import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
+import dhbk.android.movienanodegree.util.Constant;
+
+import javax.inject.Inject;
+
+import hugo.weaving.DebugLog;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by phongdth.ky on 8/2/2016.
  */
-public class MoviesLocalDataSource extends SortConstant implements MoviesDataSource {
-    private static final String TAG = MoviesLocalDataSource.class.getSimpleName();
+public class MoviesLocalDataSource implements MoviesDataSource {
     private final Context mContext;
     private static final int PAGE_SIZE = 20; // max page load of the list
     /**
      * name for pref follow this link @see <a href="http://docs.themoviedb.apiary.io/#reference/discover/discovermovie/get"></a>
      */
     private static final String PREF_SORT_BY_KEY = "sortBy";
-    private static final String PREF_SORT_BY_DEFAULT_VALUE = "popularity.desc";
+    private static final String PREF_SORT_BY_DEFAULT_VALUE = Constant.MOST_POPULAR;
 
     @Inject
     SharedPreferences mSharedPreferences;
 
+    // get context and sharepreference
     public MoviesLocalDataSource(@NonNull Context context) {
         checkNotNull(context);
         mContext = context;
-        // get the sharepreference
-        ((MVPApp)context).getMovieComponent().inject(this);
+        ((MVPApp) context).getMovieComponent().inject(this);
     }
 
-    /**
-     * @param callback
-     * @return the current page which has store in content provider
-     */
+//    get the last page of movies in local db
     @Override
-    public void getCurrentPage(@NonNull GetCurrentPageCallback callback) {
-
-        String sort = getSortByPreference();
+    public int getCurrentPage() {
         Uri uri = getSortedMoviesUri();
-        if (uri == null) {
-            callback.onCurrentPageNotAvailable();
-        }
+        Cursor movies = mContext.getContentResolver().query(
+                uri,
+                null,
+                null,
+                null,
+                null
+        );
 
-        Cursor movieCursor = mContext.getContentResolver().query(uri, null, null, null, null);
         int currentPage = 1;
-        if (movieCursor != null) {
-            currentPage = (movieCursor.getCount() - 1) / PAGE_SIZE + 1;
-            movieCursor.close();
+        // close cursor to avoid memory leaks
+        if (movies != null) {
+            currentPage = (movies.getCount() - 1) / PAGE_SIZE + 1;
+            movies.close();
         }
-        callback.onCurrentPageLoaded(sort, currentPage);
+        return currentPage;
     }
 
-    /**
-     * save movie id in db
-     *
-     * @param movieId
-     */
+    // save the movie id to table depend on sort
     @Override
     public void saveMovieReference(Long movieId) {
         ContentValues entry = new ContentValues();
@@ -74,22 +69,19 @@ public class MoviesLocalDataSource extends SortConstant implements MoviesDataSou
         mContext.getContentResolver().insert(getSortedMoviesUri(), entry);
     }
 
-
+//    save movie summary to table
     @Override
-    public String getSort() {
-        return getSortByPreference();
-    }
-
-    /**
-     * hàm toContentValues() chuyển từng field trong {@link DiscoverMovie} thành column chính xác trong {@link MoviesContract}
-     * @param movie
-     * @return
-     */
-    @Override
-    public Uri saveMovie(DiscoverMovie movie) {
+    public Uri saveMovie(DiscoverMovieResponse.DiscoverMovie movie) {
         Uri uriMovie = mContext.getContentResolver().insert(MoviesContract.MovieEntry.CONTENT_URI, movie.toContentValues());
         return uriMovie;
     }
+
+//    delete movie id depend of sort
+    @Override
+    public void deleteMovies() {
+        mContext.getContentResolver().delete(getSortedMoviesUri(), null, null);
+    }
+
 
     @Override
     public void clearMoviesSortTableIfNeeded(DiscoverMovieResponse discoverMoviesResponse) {
@@ -98,41 +90,36 @@ public class MoviesLocalDataSource extends SortConstant implements MoviesDataSou
         }
     }
 
-    @Override
-    public void deleteMovies() {
-        mContext.getContentResolver().delete(getSortedMoviesUri(), null, null);
-    }
-
+//    print movie reponse to logcat
+    @DebugLog
     @Override
     public void logResponse(DiscoverMovieResponse discoverMoviesResponse) {
-        Log.d(TAG, "page == " + discoverMoviesResponse.getPage() + " " +
-                discoverMoviesResponse.getMovies().toString());
     }
-
 
     // save sort type to pref
     @Override
-    public void saveSortByPreference(@SortConstant.NavigationMode String sort) {
+    public void saveSortByPreference(@Constant.NavigationMode String sort) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
         editor.putString(PREF_SORT_BY_KEY, String.valueOf(sort));
         editor.apply();
     }
 
     // get sort type from pref
-    private String getSortByPreference() {
-        String sort = mSharedPreferences.getString(PREF_SORT_BY_KEY, PREF_SORT_BY_DEFAULT_VALUE);
-        return sort;
+    @Override
+    public String getSort() {
+        return mSharedPreferences.getString(PREF_SORT_BY_KEY, PREF_SORT_BY_DEFAULT_VALUE);
     }
 
+    // get uri for sort type from pref
     @Override
     public Uri getSortedMoviesUri() {
-        String sort = getSortByPreference();
+        String sort = getSort();
         switch (sort) {
-            case MOST_POPULAR:
+            case Constant.MOST_POPULAR:
                 return MoviesContract.MostPopularMovies.CONTENT_URI;
-            case HIGHEST_RATED:
+            case Constant.HIGHEST_RATED:
                 return MoviesContract.HighestRatedMovies.CONTENT_URI;
-            case MOST_RATED:
+            case Constant.MOST_RATED:
                 return MoviesContract.MostRatedMovies.CONTENT_URI;
             default:
                 // Signals that a method has been invoked at an illegal or inappropriate time.

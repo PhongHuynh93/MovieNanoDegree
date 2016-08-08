@@ -2,23 +2,21 @@ package dhbk.android.movienanodegree.data;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.NonNull;
+
+import dhbk.android.movienanodegree.data.local.MoviesLocalDataSource;
+import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
+import dhbk.android.movienanodegree.util.Constant;
+import dhbk.android.movienanodegree.util.Local;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
-
-import dhbk.android.movienanodegree.data.local.SortConstant;
-import dhbk.android.movienanodegree.io.model.DiscoverMovie;
-import dhbk.android.movienanodegree.io.model.DiscoverMovieResponse;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * Created by phongdth.ky on 8/2/2016.
- * control local {@link dhbk.android.movienanodegree.data.local.MoviesLocalDataSource}and remote reposition
+ * Created by phongdth.ky on 8/8/2016.
+ * control local {@link MoviesLocalDataSource} and remote reposition
  */
-@Singleton
-public class MovieReposition implements MoviesDataSource {
+public class MovieReposition implements MoviesDataSource{
     private final MoviesDataSource mMoviesLocalDataSource;
     private final Context mContext;
 
@@ -28,39 +26,14 @@ public class MovieReposition implements MoviesDataSource {
         mContext = context;
     }
 
-    /**
-     * @param callback
-     * @return the current page which has store in content provider
-     */
     @Override
-    public void getCurrentPage(@NonNull GetCurrentPageCallback callback) {
-        checkNotNull(callback);
-
-        // check from local db
-        mMoviesLocalDataSource.getCurrentPage(new GetCurrentPageCallback() {
-            @Override
-            public void onCurrentPageLoaded(String sort, int current) {
-                callback.onCurrentPageLoaded(sort, current);
-            }
-
-            @Override
-            public void onCurrentPageNotAvailable() {
-
-            }
-        });
-
-        // check from network db
+    public int getCurrentPage() {
+        return mMoviesLocalDataSource.getCurrentPage();
     }
 
-    /**
-     * save movie id in db
-     *
-     * @param movieId
-     */
     @Override
     public void saveMovieReference(Long movieId) {
         checkNotNull(movieId);
-        // save movieid in local and remote db
         mMoviesLocalDataSource.saveMovieReference(movieId);
     }
 
@@ -70,27 +43,26 @@ public class MovieReposition implements MoviesDataSource {
         return mMoviesLocalDataSource.getSort();
     }
 
-
-
     @Override
-    public Uri saveMovie(DiscoverMovie movie) {
-        // save db in local
+    public Uri saveMovie(DiscoverMovieResponse.DiscoverMovie movie) {
+        checkNotNull(movie);
         return mMoviesLocalDataSource.saveMovie(movie);
     }
 
     @Override
     public void logResponse(DiscoverMovieResponse discoverMoviesResponse) {
+        checkNotNull(discoverMoviesResponse);
         mMoviesLocalDataSource.logResponse(discoverMoviesResponse);
     }
 
     @Override
     public void clearMoviesSortTableIfNeeded(DiscoverMovieResponse discoverMoviesResponse) {
+        checkNotNull(discoverMoviesResponse);
         mMoviesLocalDataSource.clearMoviesSortTableIfNeeded(discoverMoviesResponse);
     }
 
     @Override
     public void deleteMovies() {
-        // delete in db
         mMoviesLocalDataSource.deleteMovies();
     }
 
@@ -100,7 +72,8 @@ public class MovieReposition implements MoviesDataSource {
     }
 
     @Override
-    public void saveSortByPreference(@SortConstant.NavigationMode String sort) {
+    public void saveSortByPreference(@Constant.NavigationMode String sort) {
+        checkNotNull(sort);
         mMoviesLocalDataSource.saveSortByPreference(sort);
     }
 }
