@@ -5,4 +5,6 @@ package dhbk.android.movienanodegree.ui.listmovie;
  */
 public interface OnFragInteract {
     void restartLoader();
+
+    void showListOfMovies();
 }

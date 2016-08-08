@@ -7,6 +7,8 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import javax.inject.Inject;
+
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.dagger.listmovie.DaggerListMovieComponent;
@@ -14,9 +16,6 @@ import dhbk.android.movienanodegree.dagger.listmovie.ListMoviePresenterModule;
 import dhbk.android.movienanodegree.ui.base.BaseActivity;
 import dhbk.android.movienanodegree.util.ActivityUtils;
 import dhbk.android.movienanodegree.util.Constant;
-
-import javax.inject.Inject;
-
 import hugo.weaving.DebugLog;
 
 public class ListMovieActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>, OnFragInteract {
@@ -126,5 +125,11 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
     @Override
     protected boolean hasToolbar() {
         return false;
+    }
+
+    @DebugLog
+    @Override
+    public void showListOfMovies() {
+        mView.showListOfMovies();
     }
 }

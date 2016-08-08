@@ -6,11 +6,12 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import javax.inject.Inject;
+
 import dhbk.android.movienanodegree.data.MovieReposition;
 import dhbk.android.movienanodegree.io.MovieInteractor;
+import dhbk.android.movienanodegree.io.MovieSearchServerCallback;
 import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
-
-import javax.inject.Inject;
 
 /**
  * Created by phongdth.ky on 8/8/2016.
@@ -49,18 +50,52 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
 
     @Override
     public void fetchMoviesAsync() {
-
+        mListMovieView.makePullToRefreshAppear();
+        mListMovieView.getMoviesFromNetwork();
     }
 
+
     /**
-     * make the network call to get the list of movie depend on type of sort and the integer
+     * make the network call to get the list of movie
      *
-     * @param sort
-     * @param page
+     * @param sort is the way to get the movies from network
+     * @param page page of the movie on server
      */
     @Override
-    public void callDiscoverMovies(String sort, int page) {
+    public void callDiscoverMovies(String sort, Integer page) {
+        // : 7/31/16 call the interactor to perform search
+        mMovieInteractor.performMovieSearch(sort, page, new MovieSearchServerCallback() {
+            /**
+             * change state of loading -> turn on loading icon
+             * turn off litener for english scrolling
+             * @param b indicate the state of loading
+             */
+            @Override
+            public void onSetLoading(boolean b) {
+//                implement this todo
+                mListMovieView.makePullToRefreshDissappear();
+                mListMovieView.stopEndlessListener();
+            }
 
+            /**
+             * a method indicate that we are successful to download and save datas to db.
+             * so what to do next.
+             */
+            @Override
+            public void onDownloadAndSaveToDbSuccess() {
+                mListMovieView.updateLayout();
+            }
+
+            /**
+             * a method indicate that we are failed to download and save datas to db.
+             * so what to do next.
+             */
+            @Override
+            public void onDownloadAndSaveToDbFail() {
+                mListMovieView.infoUserErrorFetchData();
+                mListMovieView.updateLayout();
+            }
+        });
     }
 
     @Override
