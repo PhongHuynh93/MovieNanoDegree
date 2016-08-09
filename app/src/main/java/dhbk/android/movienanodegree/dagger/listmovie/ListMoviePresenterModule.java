@@ -5,6 +5,7 @@ package dhbk.android.movienanodegree.dagger.listmovie;
  */
 
 import dhbk.android.movienanodegree.ui.listmovie.ListMovieContract;
+import dhbk.android.movienanodegree.ui.listmovie.presenter.ListMoviePresenter;
 import dhbk.android.movienanodegree.util.ActivityScoped;
 
 import dagger.Module;
@@ -12,7 +13,7 @@ import dagger.Provides;
 
 /**
  * This is a Dagger module. We use this to pass in the View dependency to the
- * {@link dhbk.android.movienanodegree.ui.listmovie.ListMoviePresenter}.
+ * {@link ListMoviePresenter}.
  * provide views
  */
 @Module

@@ -1,7 +1,8 @@
 package dhbk.android.movienanodegree.dagger.listmovie;
 
 import dhbk.android.movienanodegree.dagger.app.MovieComponent;
-import dhbk.android.movienanodegree.ui.listmovie.ListMovieActivity;
+import dhbk.android.movienanodegree.ui.listmovie.view.ListMovieActivity;
+import dhbk.android.movienanodegree.ui.listmovie.presenter.ListMoviePresenter;
 import dhbk.android.movienanodegree.util.ActivityScoped;
 
 import dagger.Component;
@@ -13,7 +14,7 @@ import dagger.Component;
 /**
  * Created by phongdth.ky on 7/29/2016.
  * depend on {@link MovieComponent}
- * contains presenter {@link dhbk.android.movienanodegree.ui.listmovie.ListMoviePresenter} module
+ * contains presenter {@link ListMoviePresenter} module
  */
 @ActivityScoped
 @Component(dependencies = MovieComponent.class, modules = {ListMoviePresenterModule.class})

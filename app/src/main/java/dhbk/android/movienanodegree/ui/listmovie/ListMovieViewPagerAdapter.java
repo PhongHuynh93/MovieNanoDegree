@@ -6,10 +6,12 @@ import android.support.v4.app.FragmentManager;
 
 import dhbk.android.movienanodegree.R;
 
+import dhbk.android.movienanodegree.ui.listmovie.view.ListMovieItemFragment;
 import hugo.weaving.DebugLog;
 
 /**
  * Created by huynhducthanhphong on 7/28/16.
+ * FragmentStatePagerAdapter: can destroy view which have not seen, so every time a page changes, load data again
  */
 public class ListMovieViewPagerAdapter extends SmartFragmentStatePagerAdapter {
     private static final int NUM_ITEMS = 3;

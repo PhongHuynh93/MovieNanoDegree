@@ -1,4 +1,4 @@
-package dhbk.android.movienanodegree.ui.listmovie;
+package dhbk.android.movienanodegree.ui.listmovie.view;
 
 
 import android.app.Activity;
@@ -21,12 +21,18 @@ import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.dagger.listmovie.DaggerListMovieChildViewComponent;
 import dhbk.android.movienanodegree.dagger.listmovie.ListMovieRecyclerViewAdapterModule;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
+import dhbk.android.movienanodegree.ui.listmovie.EndlessRecyclerViewScrollListener;
+import dhbk.android.movienanodegree.ui.listmovie.ListMovieRecyclerViewAdapter;
+import dhbk.android.movienanodegree.ui.listmovie.OnFragInteract;
+import dhbk.android.movienanodegree.ui.listmovie.OnItemSelectedListener;
+import dhbk.android.movienanodegree.ui.listmovie.VerticalSpaceItemDecoration;
 import dhbk.android.movienanodegree.util.HelpUtils;
 import hugo.weaving.DebugLog;
 
 /**
  * A simple {@link Fragment} subclass.
  */
+// TODO: 8/9/2016 set the adapter in dagger
 public class ListMovieItemFragment extends BaseFragment {
     private static final String ARG_POSITION = "position";
     @Inject

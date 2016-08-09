@@ -2,12 +2,14 @@ package dhbk.android.movienanodegree.models;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import dhbk.android.movienanodegree.data.local.MoviesContract;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+import dhbk.android.movienanodegree.data.local.MoviesContract;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,13 +35,14 @@ public class DiscoverMovieResponse {
     @SerializedName("total_results")
     private long totalResults;
 
-    public DiscoverMovieResponse(int page) {
-        this.page = page;
-    }
+//    public DiscoverMovieResponse(int page) {
+//        this.page = page;
+//    }
+
 
     // define a constructor for each field
     @AllArgsConstructor
-    public static class DiscoverMovie {
+    public static class DiscoverMovie implements Parcelable {
         @Getter
         @Setter
         @SerializedName("id")
@@ -90,6 +93,31 @@ public class DiscoverMovieResponse {
         @SerializedName("backdrop_path")
         private String backdropPath;
 
+        protected DiscoverMovie(Parcel in) {
+            id = in.readLong();
+            originalTitle = in.readString();
+            overview = in.readString();
+            releaseDate = in.readString();
+            posterPath = in.readString();
+            popularity = in.readDouble();
+            title = in.readString();
+            averageVote = in.readDouble();
+            voteCount = in.readLong();
+            backdropPath = in.readString();
+        }
+
+        public static final Creator<DiscoverMovie> CREATOR = new Creator<DiscoverMovie>() {
+            @Override
+            public DiscoverMovie createFromParcel(Parcel in) {
+                return new DiscoverMovie(in);
+            }
+
+            @Override
+            public DiscoverMovie[] newArray(int size) {
+                return new DiscoverMovie[size];
+            }
+        };
+
         /**
          * get the field to one object
          *
@@ -131,6 +159,30 @@ public class DiscoverMovieResponse {
             String backdropPath =
                     cursor.getString(cursor.getColumnIndex(MoviesContract.MovieEntry.COLUMN_BACKDROP_PATH));
             return new DiscoverMovie(id, originalTitle, overview, releaseDate, posterPath, popularity, title, averageVote, voteCount, backdropPath);
+        }
+
+        /**
+         * watch parcel tutorial
+         * http://guides.codepath.com/android/Using-Parcelable
+         * @return
+         */
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeLong(id);
+            parcel.writeString(originalTitle);
+            parcel.writeString(overview);
+            parcel.writeString(releaseDate);
+            parcel.writeString(posterPath);
+            parcel.writeDouble(popularity);
+            parcel.writeString(title);
+            parcel.writeDouble(averageVote);
+            parcel.writeLong(voteCount);
+            parcel.writeString(backdropPath);
         }
     }
 }

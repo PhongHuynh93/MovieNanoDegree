@@ -1,4 +1,4 @@
-package dhbk.android.movienanodegree.ui.listmovie;
+package dhbk.android.movienanodegree.ui.listmovie.view;
 
 
 import android.app.Activity;
@@ -20,6 +20,9 @@ import dhbk.android.movienanodegree.dagger.listmovie.DaggerListMovieViewComponen
 import dhbk.android.movienanodegree.dagger.listmovie.ListMovieActivityModule;
 import dhbk.android.movienanodegree.dagger.listmovie.ListMovieViewPagerAdapterModule;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
+import dhbk.android.movienanodegree.ui.listmovie.ListMovieContract;
+import dhbk.android.movienanodegree.ui.listmovie.ListMovieViewPagerAdapter;
+import dhbk.android.movienanodegree.ui.listmovie.OnFragInteract;
 import dhbk.android.movienanodegree.util.Constant;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -47,7 +50,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         return new ListMovieViewPagerFragment();
     }
 
-    // FIXME: 8/9/16 get data from database everytime page change
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -65,12 +67,13 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
     @Override
     protected void doThingWhenCreateApp() {
-
     }
 
     @Override
     protected void doThingWhenActivityCreated() {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.home_activity_toolbar_title);
+        // every change in page, restart the loader to load datas from local data again.
+        mListener.restartLoader();
     }
 
     @Override
@@ -134,11 +137,14 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
                         throw new IllegalArgumentException("Something strange happend");
                 }
                 // FIXME: 8/9/2016 watch this - why this called make pull to refresh appear again
+                // force loading data from network the first time
                 boolean firstLoad = ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).getFirstload();
                 if (firstLoad) {
                     mPresenter.loadTask(false, firstLoad, sort);
                     ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).setFirstload(false);
                 }
+                // every change in page, restart the loader to load datas from local data again.
+                mListener.restartLoader();
             }
 
             @Override

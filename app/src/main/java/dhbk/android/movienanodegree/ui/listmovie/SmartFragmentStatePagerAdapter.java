@@ -7,10 +7,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 
-import hugo.weaving.DebugLog;
-
 /**
- * Created by phongdth.ky on 7/29/2016.
+ * Created by phongdth.ky on 7/29/2016.FragmentStatePagerAdapter
+ * FragmentStatePagerAdapter:
  */
 public abstract class SmartFragmentStatePagerAdapter extends FragmentStatePagerAdapter {
     private final Context mContext;
