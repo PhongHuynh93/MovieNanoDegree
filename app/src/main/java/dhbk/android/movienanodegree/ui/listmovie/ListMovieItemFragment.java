@@ -20,7 +20,6 @@ import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.dagger.listmovie.DaggerListMovieChildViewComponent;
 import dhbk.android.movienanodegree.dagger.listmovie.ListMovieRecyclerViewAdapterModule;
-import dhbk.android.movienanodegree.dagger.listmovie.OnItemClickListener;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.util.HelpUtils;
 import hugo.weaving.DebugLog;
@@ -42,7 +41,7 @@ public class ListMovieItemFragment extends BaseFragment {
     private int mTabLayoutPosition;
     private OnItemSelectedListener onItemSelectedListener;
     private OnFragInteract mListener;
-    private boolean mFirstLoad = true;
+    private boolean mFirstload = true;
 
 
     public ListMovieItemFragment() {
@@ -83,33 +82,19 @@ public class ListMovieItemFragment extends BaseFragment {
 
     @Override
     protected void doThingWhenActivityCreated() {
-//        first load on db
-        if (mFirstLoad) {
-//            call restart fragment the first time
-            mListener.restartLoader();
-        }
-
-        // fixme force to update the reposition
-        mSwiperefreshHome.setOnRefreshListener(() ->
-        {
-            mListener.showListOfMovies();
-        });
-
         // Configure the refreshing colors
         mSwiperefreshHome.setColorSchemeResources(
                 android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
+        mSwiperefreshHome.setOnRefreshListener(() ->{
+            mListener.setForceLoad(true);
+        });
 
         // : 8/1/16 set adapter for recyclerview
-        mListMovieRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(View itemView, int position) {
-                // TODO: 8/7/16 when click, go to another activity to show detail
-
-            }
+        mListMovieRecyclerViewAdapter.setOnItemClickListener((itemView, position) -> {
+            // TODO: 8/7/16 when click, go to another activity to show detail
         });
         mRecyclerviewHomeListMovies.setAdapter(mListMovieRecyclerViewAdapter);
         // make list show 1 vertical column of data
@@ -118,6 +103,7 @@ public class ListMovieItemFragment extends BaseFragment {
         // add space between list
         mRecyclerviewHomeListMovies.addItemDecoration(new VerticalSpaceItemDecoration((int) HelpUtils.getPixelForDp(getContext(), 13)));
         mRecyclerviewHomeListMovies.setHasFixedSize(true);
+
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
@@ -176,15 +162,12 @@ public class ListMovieItemFragment extends BaseFragment {
     @DebugLog
     public void onCursorLoaded(@Nullable Cursor data) {
         mListMovieRecyclerViewAdapter.changeCursor(data);
+        // update layout
+        // if adapter have data -> show it
+        // if adapter not have data -> hide the recyclerview, show a different layout to info user
+        updateLayout();
     }
 
-    /**
-     * @param firstload true: force load the content
-     *                  false: already load, so not load again
-     */
-    public void forceLoadFirstTime(boolean firstload) {
-        mFirstLoad = firstload;
-    }
 
     public void setThePullToRefreshAppear() {
         mSwiperefreshHome.setRefreshing(true);
@@ -207,5 +190,13 @@ public class ListMovieItemFragment extends BaseFragment {
             mRecyclerviewHomeListMovies.setVisibility(View.VISIBLE);
 //            noMoviesView.setVisibility(View.GONE);
         }
+    }
+
+    public boolean getFirstload() {
+        return mFirstload;
+    }
+
+    public void setFirstload(boolean firstload) {
+        mFirstload = firstload;
     }
 }

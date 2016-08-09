@@ -13,7 +13,7 @@ import dhbk.android.movienanodegree.ui.base.Mvp;
  */
 public interface ListMovieContract {
     interface View extends Mvp.BaseView<Presenter> {
-        void showListOfMovies();
+
 
         // make the icon appear
         void makePullToRefreshAppear();
@@ -23,11 +23,8 @@ public interface ListMovieContract {
          */
         void makePullToRefreshDissappear();
 
-        // connect to server to pull datas
-        void getMoviesFromNetwork();
-
         /**
-         *         show a snackbar to info user that cannot get the movie
+         * show a snackbar to info user that cannot get the movie
          */
         void infoUserErrorFetchData();
 
@@ -39,11 +36,13 @@ public interface ListMovieContract {
         void stopEndlessListener();
 
         void onCursorLoaded(@Nullable Cursor data);
+
+        void callRestartLoader();
+
+        void setForceload(boolean forceLoad);
     }
 
     interface Presenter extends Mvp.BasePresenter {
-        // fetch the movie in the network
-        void fetchMoviesAsync();
 
         /**
          * make the network call to get the list of movie
@@ -51,6 +50,7 @@ public interface ListMovieContract {
          */
         /**
          * make the network call to get the list of movie depend on type of sort and the integer
+         *
          * @param sort
          * @param page
          */
@@ -71,12 +71,14 @@ public interface ListMovieContract {
 
         /**
          * save a id movies in db
+         *
          * @param movieId
          */
         void saveMovieReference(long movieId);
 
         /**
          * save a movie in db
+         *
          * @param movie
          * @return
          */
@@ -95,5 +97,7 @@ public interface ListMovieContract {
          */
         @NonNull
         Uri getContentUri();
+
+        void loadTask(boolean forceUpdate, boolean firstLoad, String sort);
     }
 }

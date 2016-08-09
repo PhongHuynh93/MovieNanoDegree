@@ -97,6 +97,7 @@ public abstract class BaseFragment extends Fragment {
     // init view object in view
     protected abstract void initView();
 
+
     /**
      * Setup the object graph and inject the dependencies needed on this fragment.
      */

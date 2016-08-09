@@ -51,7 +51,7 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
                 .build()
                 .inject(this);
         // set up loader to load the database
-        getLoaderManager().initLoader(Constant.LOADER_ID, null, this);
+//        getLoaderManager().initLoader(Constant.LOADER_ID, null, this);
     }
 
     // make sure viewfragment is create
@@ -127,9 +127,8 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
         return false;
     }
 
-    @DebugLog
     @Override
-    public void showListOfMovies() {
-        mView.showListOfMovies();
+    public void setForceLoad(boolean forceLoad) {
+        mView.setForceload(forceLoad);
     }
 }

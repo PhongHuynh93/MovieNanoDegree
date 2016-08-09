@@ -4,27 +4,21 @@ package dhbk.android.movienanodegree.ui.listmovie;
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.dagger.listmovie.DaggerListMovieViewComponent;
 import dhbk.android.movienanodegree.dagger.listmovie.ListMovieActivityModule;
 import dhbk.android.movienanodegree.dagger.listmovie.ListMovieViewPagerAdapterModule;
-import dhbk.android.movienanodegree.io.MovieInteractor;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.util.Constant;
 
@@ -118,9 +112,11 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
             // This method will be invoked when a new page becomes selected.
             // change the content movie
-            //  save this current position to refrence
+            //  save this current position to refrence.
+            // when page select, force load in the first time
             @Override
             public void onPageSelected(int position) {
+                // change the sort type
                 String sort;
                 switch (position) {
                     case ListMovieViewPagerAdapter.MOST_POPULAR:
@@ -136,10 +132,11 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
                         //It will never reach here, just to make compiler happy
                         throw new IllegalArgumentException("Something strange happend");
                 }
-
-                mPresenter.saveSortByPreference(sort);
-                // load the data again
-                mListener.restartLoader();
+                boolean firstLoad = ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).getFirstload();
+                if (firstLoad) {
+                    mPresenter.loadTask(false, firstLoad, sort);
+                    ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).setFirstload(false);
+                }
             }
 
             @Override
@@ -147,6 +144,29 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
             }
         });
+    }
+
+    // call when a pull to refresh, so alway force load -> set para 2nd to true
+    @Override
+    public void setForceload(boolean forceLoad) {
+        // change the sort type
+        String sort;
+        switch (mViewpagerFragListMovieContent.getCurrentItem()) {
+            case ListMovieViewPagerAdapter.MOST_POPULAR:
+                sort = Constant.MOST_POPULAR;
+                break;
+            case ListMovieViewPagerAdapter.HIGHEST_RATED:
+                sort = Constant.HIGHEST_RATED;
+                break;
+            case ListMovieViewPagerAdapter.MOST_RATED:
+                sort = Constant.MOST_RATED;
+                break;
+            default:
+                //It will never reach here, just to make compiler happy
+                throw new IllegalArgumentException("Something strange happend");
+        }
+
+        mPresenter.loadTask(forceLoad, true, sort);
     }
 
     /**
@@ -164,11 +184,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
                 .inject(this);
     }
 
-    @Override
-    public void showListOfMovies() {
-        mPresenter.fetchMoviesAsync();
-        mListener.restartLoader();
-    }
 
     @Override
     public void makePullToRefreshAppear() {
@@ -183,11 +198,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     public void makePullToRefreshDissappear() {
         // call the current fraagment to make the icon
         ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).setThePullToRefreshDissappear();
-    }
-
-    @Override
-    public void getMoviesFromNetwork() {
-        mPresenter.callDiscoverMovies(MovieInteractor.MOST_POPULAR, null);
     }
 
     /**
@@ -213,10 +223,8 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
     @Override
     public void onCursorLoaded(@Nullable Cursor data) {
-        // TODO: 8/8/2016 notice the page if it has not been loaded yet.
-        if (!(mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem()) == null)) {
+        if ((mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem()) != null)) {
             // if we have frag, show it now
-            ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).forceLoadFirstTime(false);
             ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).onCursorLoaded(data);
         }
     }
@@ -227,11 +235,9 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         mPresenter = presenter;
     }
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
+    public void callRestartLoader() {
+        mListener.restartLoader();
     }
 }

@@ -3,12 +3,11 @@ package dhbk.android.movienanodegree.io;
 import android.content.Context;
 import android.support.annotation.Nullable;
 
+import javax.inject.Inject;
+
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.data.MovieReposition;
 import dhbk.android.movienanodegree.data.local.MoviesContract;
-
-import javax.inject.Inject;
-
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -19,9 +18,6 @@ import rx.schedulers.Schedulers;
  *  contain methods to interact with Movie Api
  */
 public class MovieInteractor {
-    public static final String MOST_POPULAR = "popularity.asc";
-    public static final String HIGHEST_RATE = "vote_average.asc";
-    public static final String MOST_RATE = "vote_count.asc";
     private static final String TAG = MovieInteractor.class.getSimpleName();
     private final MovieRetrofitEndpoint mApiService;
     private final Context mContext;
@@ -95,4 +91,6 @@ public class MovieInteractor {
                     }
                 });
     }
+
+    // TODO: 8/9/16 add unsubscript this
 }
