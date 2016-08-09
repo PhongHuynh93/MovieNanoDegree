@@ -13,6 +13,8 @@
     <!--basic color-->
     <color name="yellow">#FFCD00</color>
     <color name="grey_dark">#333338</color>
+    <color name="grey">#2D2D2D</color>
+    <color name="grey_light">#9BA39E</color>
     <color name="white">#F0F4F4</color>
     <color name="white_solid">#FFFFFF</color>
 
