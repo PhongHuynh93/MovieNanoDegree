@@ -1,7 +1,7 @@
 package dhbk.android.movienanodegree.dagger.listmovie;
 
 import dhbk.android.movienanodegree.dagger.app.MovieComponent;
-import dhbk.android.movienanodegree.ui.listmovie.ListMovieItemFragment;
+import dhbk.android.movienanodegree.ui.listmovie.view.ListMovieItemFragment;
 import dhbk.android.movienanodegree.util.ActivityScoped;
 
 import dagger.Component;

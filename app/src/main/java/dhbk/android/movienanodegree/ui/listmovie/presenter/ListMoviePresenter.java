@@ -1,6 +1,5 @@
-package dhbk.android.movienanodegree.ui.listmovie;
+package dhbk.android.movienanodegree.ui.listmovie.presenter;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -11,6 +10,8 @@ import javax.inject.Inject;
 import dhbk.android.movienanodegree.data.MovieReposition;
 import dhbk.android.movienanodegree.io.MovieInteractor;
 import dhbk.android.movienanodegree.io.MovieSearchServerCallback;
+import dhbk.android.movienanodegree.ui.listmovie.ListMovieContract;
+import dhbk.android.movienanodegree.ui.listmovie.view.ListMovieViewPagerFragment;
 
 /**
  * Created by phongdth.ky on 8/8/2016.
@@ -19,7 +20,6 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     private final MovieReposition mMovieReposition;
     private final ListMovieContract.View mListMovieView;
     private final MovieInteractor mMovieInteractor;
-    private final Context mContext;
 
     /**
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not injected
@@ -31,11 +31,10 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
      * @param movieInteractor {@link MovieInteractor}
      */
     @Inject
-    ListMoviePresenter(MovieReposition movieReposition, ListMovieContract.View view, MovieInteractor movieInteractor, Context context) {
+    ListMoviePresenter(MovieReposition movieReposition, ListMovieContract.View view, MovieInteractor movieInteractor) {
         mMovieReposition = movieReposition;
         mListMovieView = view;
         mMovieInteractor = movieInteractor;
-        mContext = context;
     }
 
     /**
