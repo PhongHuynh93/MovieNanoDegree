@@ -15,5 +15,12 @@
     <dimen name="padding_top_home_activity_tablayout">0dp</dimen>
     <dimen name="padding_bottom_home_activity_tablayout">0dp</dimen>
     <dimen name="margin_top_home_activity_nameofmovie">5.17dp</dimen>
+    <dimen name="height_detail_activity_appbar">180dp</dimen>
+    <dimen name="margin_top_detail_activity_nestedscollview">0dp</dimen>
+    <dimen name="padding_left_detail_activity_framelayout_content">0dp</dimen>
+    <dimen name="padding_right_detail_activity_framelayout_content">0dp</dimen>
+    <dimen name="spacing_small">4dp</dimen>
+    <dimen name="movie_detail_cards_margin_left_right">0dp</dimen>
+    <dimen name="spacing_medium">8dp</dimen>
 
 </resources>
