@@ -57,6 +57,10 @@ public class ListMovieRecyclerViewAdapter extends CursorRecyclerViewAdapter<List
             DiscoverMovie movie = DiscoverMovie.fromCursor(cursor);
 
             viewHolder.mTextviewListmovieNameofmovie.setText(movie.getOriginalTitle());
+            viewHolder.mTextviewListmovieTypeofmovie.setText(movie.getOriginalTitle());
+            viewHolder.mTextviewListmovieLengthofmovie.setText(movie.getOriginalTitle());
+            viewHolder.mTextviewListmovieDescriptionofmovie.setText(movie.getOverview());
+
             String urlImage = Constant.POSTER_IMAGE_BASE_URL + Constant.POSTER_IMAGE_SIZE + movie.getPosterPath();
 
             /**
