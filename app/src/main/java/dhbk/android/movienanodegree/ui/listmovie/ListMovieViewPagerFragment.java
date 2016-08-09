@@ -47,6 +47,7 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         return new ListMovieViewPagerFragment();
     }
 
+    // FIXME: 8/9/16 get data from database everytime page change
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
