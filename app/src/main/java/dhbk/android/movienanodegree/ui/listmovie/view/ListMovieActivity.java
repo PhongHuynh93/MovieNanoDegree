@@ -1,4 +1,4 @@
-package dhbk.android.movienanodegree.ui.listmovie;
+package dhbk.android.movienanodegree.ui.listmovie.view;
 
 import android.app.LoaderManager;
 import android.content.Context;
@@ -14,6 +14,9 @@ import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.dagger.listmovie.DaggerListMovieComponent;
 import dhbk.android.movienanodegree.dagger.listmovie.ListMoviePresenterModule;
 import dhbk.android.movienanodegree.ui.base.BaseActivity;
+import dhbk.android.movienanodegree.ui.listmovie.ListMovieContract;
+import dhbk.android.movienanodegree.ui.listmovie.OnFragInteract;
+import dhbk.android.movienanodegree.ui.listmovie.presenter.ListMoviePresenter;
 import dhbk.android.movienanodegree.util.ActivityUtils;
 import dhbk.android.movienanodegree.util.Constant;
 import hugo.weaving.DebugLog;
@@ -51,7 +54,7 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
                 .build()
                 .inject(this);
         // set up loader to load the database
-        getLoaderManager().initLoader(Constant.LOADER_ID, null, this);
+//        getLoaderManager().initLoader(Constant.LOADER_ID, null, this);
     }
 
     // make sure viewfragment is create
@@ -127,9 +130,8 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
         return false;
     }
 
-    @DebugLog
     @Override
-    public void showListOfMovies() {
-        mView.showListOfMovies();
+    public void setForceLoad() {
+        mView.setForceload();
     }
 }

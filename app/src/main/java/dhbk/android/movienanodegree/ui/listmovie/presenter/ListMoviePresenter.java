@@ -1,6 +1,5 @@
-package dhbk.android.movienanodegree.ui.listmovie;
+package dhbk.android.movienanodegree.ui.listmovie.presenter;
 
-import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -11,7 +10,8 @@ import javax.inject.Inject;
 import dhbk.android.movienanodegree.data.MovieReposition;
 import dhbk.android.movienanodegree.io.MovieInteractor;
 import dhbk.android.movienanodegree.io.MovieSearchServerCallback;
-import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
+import dhbk.android.movienanodegree.ui.listmovie.ListMovieContract;
+import dhbk.android.movienanodegree.ui.listmovie.view.ListMovieViewPagerFragment;
 
 /**
  * Created by phongdth.ky on 8/8/2016.
@@ -20,7 +20,6 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     private final MovieReposition mMovieReposition;
     private final ListMovieContract.View mListMovieView;
     private final MovieInteractor mMovieInteractor;
-    private final Context mContext;
 
     /**
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not injected
@@ -32,11 +31,10 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
      * @param movieInteractor {@link MovieInteractor}
      */
     @Inject
-    ListMoviePresenter(MovieReposition movieReposition, ListMovieContract.View view, MovieInteractor movieInteractor, Context context) {
+    ListMoviePresenter(MovieReposition movieReposition, ListMovieContract.View view, MovieInteractor movieInteractor) {
         mMovieReposition = movieReposition;
         mListMovieView = view;
         mMovieInteractor = movieInteractor;
-        mContext = context;
     }
 
     /**
@@ -46,12 +44,6 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     @Inject
     void setupListeners() {
         mListMovieView.setPresenter(this);
-    }
-
-    @Override
-    public void fetchMoviesAsync() {
-        mListMovieView.makePullToRefreshAppear();
-        mListMovieView.getMoviesFromNetwork();
     }
 
 
@@ -72,7 +64,6 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
              */
             @Override
             public void onSetLoading(boolean b) {
-//                implement this todo
                 mListMovieView.makePullToRefreshDissappear();
                 mListMovieView.stopEndlessListener();
             }
@@ -83,7 +74,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
              */
             @Override
             public void onDownloadAndSaveToDbSuccess() {
-                mListMovieView.updateLayout();
+                mListMovieView.callRestartLoader();
             }
 
             /**
@@ -92,64 +83,12 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
              */
             @Override
             public void onDownloadAndSaveToDbFail() {
-                mListMovieView.infoUserErrorFetchData();
-                mListMovieView.updateLayout();
+                mListMovieView.callRestartLoader();
             }
         });
     }
 
-    @Override
-    public void refreshMovies() {
-
-    }
-
-    /**
-     * determine whether the screen is fetching data or not
-     */
-    @Override
-    public boolean isLoading() {
-        return false;
-    }
-
-    /**
-     * load more movie
-     */
-    @Override
-    public void loadMoreMovies() {
-
-    }
-
-    /**
-     * save a id movies in db
-     *
-     * @param movieId
-     */
-    @Override
-    public void saveMovieReference(long movieId) {
-
-    }
-
-    /**
-     * save a movie in db
-     *
-     * @param movie
-     * @return
-     */
-    @Override
-    public void saveMovie(DiscoverMovieResponse.DiscoverMovie movie) {
-
-    }
-
-    @Override
-    public void logResponse(DiscoverMovieResponse discoverMoviesResponse) {
-
-    }
-
-    @Override
-    public void clearMoviesSortTableIfNeeded(DiscoverMovieResponse discoverMoviesResponse) {
-
-    }
-
+    // when cursor change, update old with new cursor
     @Override
     public void updateListWithCursordata(@Nullable Cursor data) {
         mListMovieView.onCursorLoaded(data);
@@ -172,5 +111,26 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     @Override
     public Uri getContentUri() {
         return mMovieReposition.getSortedMoviesUri();
+    }
+
+    @Override
+    public void loadTask(boolean forceUpdate, boolean firstLoad, String sort) {
+        // Simplification for sample: a network reload will be forced on first load.
+        loadTasks(forceUpdate || firstLoad, sort);
+    }
+
+    /**
+     * @param forceUpdate   Pass in true to refresh the data in the {@link MovieReposition}
+     */
+    private void loadTasks(boolean forceUpdate, String sort) {
+        // save the sort
+        saveSortByPreference(sort);
+
+        // force to update
+        if (forceUpdate) {
+            mListMovieView.makePullToRefreshAppear();
+            callDiscoverMovies(sort, null);
+        }
+
     }
 }

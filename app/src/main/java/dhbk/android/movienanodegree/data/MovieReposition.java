@@ -3,12 +3,12 @@ package dhbk.android.movienanodegree.data;
 import android.content.Context;
 import android.net.Uri;
 
+import javax.inject.Inject;
+
 import dhbk.android.movienanodegree.data.local.MoviesLocalDataSource;
 import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
 import dhbk.android.movienanodegree.util.Constant;
 import dhbk.android.movienanodegree.util.Local;
-
-import javax.inject.Inject;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 

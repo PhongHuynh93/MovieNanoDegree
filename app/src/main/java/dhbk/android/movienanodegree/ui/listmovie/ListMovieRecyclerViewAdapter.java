@@ -57,8 +57,16 @@ public class ListMovieRecyclerViewAdapter extends CursorRecyclerViewAdapter<List
             DiscoverMovie movie = DiscoverMovie.fromCursor(cursor);
 
             viewHolder.mTextviewListmovieNameofmovie.setText(movie.getOriginalTitle());
+            viewHolder.mTextviewListmovieTypeofmovie.setText(movie.getOriginalTitle());
+            viewHolder.mTextviewListmovieLengthofmovie.setText(movie.getOriginalTitle());
+            viewHolder.mTextviewListmovieDescriptionofmovie.setText(movie.getOverview());
+
             String urlImage = Constant.POSTER_IMAGE_BASE_URL + Constant.POSTER_IMAGE_SIZE + movie.getPosterPath();
 
+            /**
+             * diskCacheStrategy.ALL cache full size of image and then resize it.
+             * Use for resize image for detail list movie activity.
+             */
             Glide.with(mContext)
                     .load(urlImage)
                     .placeholder(new ColorDrawable(ContextCompat.getColor(mContext, R.color.accent_material_light)))

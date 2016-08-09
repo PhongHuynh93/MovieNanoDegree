@@ -15,5 +15,24 @@
     <dimen name="padding_top_home_activity_tablayout">0dp</dimen>
     <dimen name="padding_bottom_home_activity_tablayout">0dp</dimen>
     <dimen name="margin_top_home_activity_nameofmovie">5.17dp</dimen>
-
+    <dimen name="height_detail_activity_appbar">180dp</dimen>
+    <dimen name="margin_top_detail_activity_nestedscollview">0dp</dimen>
+    <dimen name="padding_left_detail_activity_framelayout_content">0dp</dimen>
+    <dimen name="padding_right_detail_activity_framelayout_content">0dp</dimen>
+    <dimen name="spacing_small">4dp</dimen>
+    <dimen name="movie_detail_cards_margin_left_right">0dp</dimen>
+    <dimen name="spacing_medium">8dp</dimen>
+    <dimen name="padding_start_item_home_relativelayout">180dp</dimen>
+    <dimen name="padding_end_item_home_relativelayout">8.75dp</dimen>
+    <dimen name="height_item_home_framelayout">187dp</dimen>
+    <dimen name="width_item_home_cardview">346dp</dimen>
+    <dimen name="height_item_home_cardview">155dp</dimen>
+    <dimen name="textsize_small_7">7sp</dimen>
+    <dimen name="textsize_small_10">10sp</dimen>
+    <dimen name="width_item_home_imageview">143dp</dimen>
+    <dimen name="height_item_home_imageview">180dp</dimen>
+    <dimen name="margin_start_item_home_imageview">17dp</dimen>
+    <dimen name="size_item_home_fab">36dp</dimen>
+    <dimen name="margin_bottom_item_home_fab">13dp</dimen>
+    <dimen name="margin_start_item_home_fab">142dp</dimen>
 </resources>

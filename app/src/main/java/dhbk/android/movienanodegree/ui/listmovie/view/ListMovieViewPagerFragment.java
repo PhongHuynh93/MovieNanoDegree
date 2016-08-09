@@ -1,31 +1,28 @@
-package dhbk.android.movienanodegree.ui.listmovie;
+package dhbk.android.movienanodegree.ui.listmovie.view;
 
 
 import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.dagger.listmovie.DaggerListMovieViewComponent;
 import dhbk.android.movienanodegree.dagger.listmovie.ListMovieActivityModule;
 import dhbk.android.movienanodegree.dagger.listmovie.ListMovieViewPagerAdapterModule;
-import dhbk.android.movienanodegree.io.MovieInteractor;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
+import dhbk.android.movienanodegree.ui.listmovie.ListMovieContract;
+import dhbk.android.movienanodegree.ui.listmovie.ListMovieViewPagerAdapter;
+import dhbk.android.movienanodegree.ui.listmovie.OnFragInteract;
 import dhbk.android.movienanodegree.util.Constant;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -70,12 +67,13 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
     @Override
     protected void doThingWhenCreateApp() {
-
     }
 
     @Override
     protected void doThingWhenActivityCreated() {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(R.string.home_activity_toolbar_title);
+        // every change in page, restart the loader to load datas from local data again.
+        mListener.restartLoader();
     }
 
     @Override
@@ -118,9 +116,11 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
             // This method will be invoked when a new page becomes selected.
             // change the content movie
-            //  save this current position to refrence
+            //  save this current position to refrence.
+            // when page select, force load in the first time
             @Override
             public void onPageSelected(int position) {
+                // change the sort type
                 String sort;
                 switch (position) {
                     case ListMovieViewPagerAdapter.MOST_POPULAR:
@@ -136,9 +136,10 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
                         //It will never reach here, just to make compiler happy
                         throw new IllegalArgumentException("Something strange happend");
                 }
-
-                mPresenter.saveSortByPreference(sort);
-                // load the data again
+                // FIXME: 8/9/2016 watch this - why this called make pull to refresh appear again
+                // force loading data from network the first time
+                mPresenter.loadTask(false, true, sort);
+                // every change in page, restart the loader to load datas from local data again.
                 mListener.restartLoader();
             }
 
@@ -147,6 +148,28 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
             }
         });
+    }
+
+    @Override
+    public void setForceload() {
+        // change the sort type
+        String sort;
+        switch (mViewpagerFragListMovieContent.getCurrentItem()) {
+            case ListMovieViewPagerAdapter.MOST_POPULAR:
+                sort = Constant.MOST_POPULAR;
+                break;
+            case ListMovieViewPagerAdapter.HIGHEST_RATED:
+                sort = Constant.HIGHEST_RATED;
+                break;
+            case ListMovieViewPagerAdapter.MOST_RATED:
+                sort = Constant.MOST_RATED;
+                break;
+            default:
+                //It will never reach here, just to make compiler happy
+                throw new IllegalArgumentException("Something strange happend");
+        }
+        // call when a pull to refresh, so alway force load -> set para 1st to true
+        mPresenter.loadTask(true, false, sort);
     }
 
     /**
@@ -164,11 +187,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
                 .inject(this);
     }
 
-    @Override
-    public void showListOfMovies() {
-        mPresenter.fetchMoviesAsync();
-        mListener.restartLoader();
-    }
 
     @Override
     public void makePullToRefreshAppear() {
@@ -185,18 +203,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).setThePullToRefreshDissappear();
     }
 
-    @Override
-    public void getMoviesFromNetwork() {
-        mPresenter.callDiscoverMovies(MovieInteractor.MOST_POPULAR, null);
-    }
-
-    /**
-     * show a snackbar to info user that cannot get the movie
-     */
-    @Override
-    public void infoUserErrorFetchData() {
-
-    }
 
     @Override
     public void updateLayout() {
@@ -213,10 +219,8 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
     @Override
     public void onCursorLoaded(@Nullable Cursor data) {
-        // TODO: 8/8/2016 notice the page if it has not been loaded yet.
-        if (!(mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem()) == null)) {
+        if ((mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem()) != null)) {
             // if we have frag, show it now
-            ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).forceLoadFirstTime(false);
             ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).onCursorLoaded(data);
         }
     }
@@ -227,11 +231,9 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         mPresenter = presenter;
     }
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
+    public void callRestartLoader() {
+        mListener.restartLoader();
     }
 }

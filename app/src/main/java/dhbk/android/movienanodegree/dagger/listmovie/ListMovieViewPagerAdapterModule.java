@@ -3,7 +3,7 @@ package dhbk.android.movienanodegree.dagger.listmovie;
 import android.content.Context;
 import android.support.v4.app.FragmentManager;
 
-import dhbk.android.movienanodegree.ui.listmovie.ListMovieActivity;
+import dhbk.android.movienanodegree.ui.listmovie.view.ListMovieActivity;
 import dhbk.android.movienanodegree.ui.listmovie.ListMovieViewPagerAdapter;
 
 import dagger.Module;

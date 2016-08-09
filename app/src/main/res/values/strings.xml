@@ -12,6 +12,12 @@
     <string name="home_adapter_pager_highest_rated">HIGHEST RATED</string>
     <string name="home_adapter_pager_most_rated">MOST RATED</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank listMovieItemFragment</string>
+    <!--detail activity-->
+    <string name="detail_activity_backdrop_image">Movie backdrop image</string>
+    <string name="content_description_movie_poster">Movie poster image</string>
+    <string name="movie_detail_overview_title">Overview</string>
+    <string name="movie_detail_videos_title">Videos</string>
+    <string name="movie_detail_reviews_title">Reviews</string>
+    <string name="content_description_movie_video">Movie video thumbnail</string>
+    <string name="movie_detail_release_date">Release date: %s</string>
 </resources>

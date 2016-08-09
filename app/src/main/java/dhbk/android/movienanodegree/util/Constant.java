@@ -3,11 +3,11 @@ package dhbk.android.movienanodegree.util;
 import android.content.Context;
 import android.support.annotation.StringDef;
 
-import dhbk.android.movienanodegree.io.MovieRetrofitInstance;
-import dhbk.android.movienanodegree.ui.listmovie.ListMovieRecyclerViewAdapter;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+
+import dhbk.android.movienanodegree.io.MovieRetrofitInstance;
+import dhbk.android.movienanodegree.ui.listmovie.ListMovieRecyclerViewAdapter;
 
 /**
  * Created by phongdth.ky on 8/8/2016.
@@ -57,5 +57,15 @@ public class Constant {
      */
     public static final String POSTER_IMAGE_BASE_URL = "https://image.tmdb.org/t/p/";
     public static final String POSTER_IMAGE_SIZE = "w780";
+
+    public static final String MOVIE_VIDEOS_KEY = "MovieVideos";
+    public static final String MOVIE_REVIEWS_KEY = "MovieReviews";
+
+    public static final double VOTE_PERFECT = 9.0;
+    public static final double VOTE_GOOD = 7.0;
+    public static final double VOTE_NORMAL = 5.0;
+
+    public static final String SITE_YOUTUBE = "YouTube";
+    public static final String YOUTUBE_THUMBNAIL = "https://img.youtube.com/vi/%s/mqdefault.jpg";
 
 }
