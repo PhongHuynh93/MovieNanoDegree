@@ -138,11 +138,7 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
                 }
                 // FIXME: 8/9/2016 watch this - why this called make pull to refresh appear again
                 // force loading data from network the first time
-                boolean firstLoad = ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).getFirstload();
-                if (firstLoad) {
-                    mPresenter.loadTask(false, firstLoad, sort);
-                    ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).setFirstload(false);
-                }
+                mPresenter.loadTask(false, true, sort);
                 // every change in page, restart the loader to load datas from local data again.
                 mListener.restartLoader();
             }
