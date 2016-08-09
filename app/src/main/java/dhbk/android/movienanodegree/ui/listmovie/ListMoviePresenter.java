@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import dhbk.android.movienanodegree.data.MovieReposition;
 import dhbk.android.movienanodegree.io.MovieInteractor;
 import dhbk.android.movienanodegree.io.MovieSearchServerCallback;
-import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
 
 /**
  * Created by phongdth.ky on 8/8/2016.
@@ -21,7 +20,6 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     private final ListMovieContract.View mListMovieView;
     private final MovieInteractor mMovieInteractor;
     private final Context mContext;
-    private boolean mFirstLoad = true;
 
     /**
      * Dagger strictly enforces that arguments not marked with {@code @Nullable} are not injected
@@ -67,7 +65,6 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
              */
             @Override
             public void onSetLoading(boolean b) {
-//                implement this todo
                 mListMovieView.makePullToRefreshDissappear();
                 mListMovieView.stopEndlessListener();
             }
@@ -78,7 +75,6 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
              */
             @Override
             public void onDownloadAndSaveToDbSuccess() {
-//                mListMovieView.updateLayout();
                 mListMovieView.callRestartLoader();
             }
 
@@ -88,63 +84,9 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
              */
             @Override
             public void onDownloadAndSaveToDbFail() {
-//                mListMovieView.infoUserErrorFetchData();
                 mListMovieView.callRestartLoader();
-//                mListMovieView.updateLayout();
             }
         });
-    }
-
-    @Override
-    public void refreshMovies() {
-
-    }
-
-    /**
-     * determine whether the screen is fetching data or not
-     */
-    @Override
-    public boolean isLoading() {
-        return false;
-    }
-
-    /**
-     * load more movie
-     */
-    @Override
-    public void loadMoreMovies() {
-
-    }
-
-    /**
-     * save a id movies in db
-     *
-     * @param movieId
-     */
-    @Override
-    public void saveMovieReference(long movieId) {
-
-    }
-
-    /**
-     * save a movie in db
-     *
-     * @param movie
-     * @return
-     */
-    @Override
-    public void saveMovie(DiscoverMovieResponse.DiscoverMovie movie) {
-
-    }
-
-    @Override
-    public void logResponse(DiscoverMovieResponse discoverMoviesResponse) {
-
-    }
-
-    @Override
-    public void clearMoviesSortTableIfNeeded(DiscoverMovieResponse discoverMoviesResponse) {
-
     }
 
     // when cursor change, update old with new cursor
@@ -176,7 +118,6 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     public void loadTask(boolean forceUpdate, boolean firstLoad, String sort) {
         // Simplification for sample: a network reload will be forced on first load.
         loadTasks(forceUpdate || firstLoad, sort);
-        mFirstLoad = false;
     }
 
     /**

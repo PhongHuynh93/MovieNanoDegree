@@ -89,7 +89,7 @@ public class ListMovieItemFragment extends BaseFragment {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
         mSwiperefreshHome.setOnRefreshListener(() ->{
-            mListener.setForceLoad(true);
+            mListener.setForceLoad();
         });
 
         // : 8/1/16 set adapter for recyclerview

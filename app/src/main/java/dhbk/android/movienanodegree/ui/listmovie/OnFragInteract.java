@@ -6,5 +6,6 @@ package dhbk.android.movienanodegree.ui.listmovie;
 public interface OnFragInteract {
     void restartLoader();
 
-    void setForceLoad(boolean forceLoad);
+    // force to update the database
+    void setForceLoad();
 }

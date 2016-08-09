@@ -132,6 +132,7 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
                         //It will never reach here, just to make compiler happy
                         throw new IllegalArgumentException("Something strange happend");
                 }
+                // FIXME: 8/9/2016 watch this - why this called make pull to refresh appear again
                 boolean firstLoad = ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).getFirstload();
                 if (firstLoad) {
                     mPresenter.loadTask(false, firstLoad, sort);
@@ -146,9 +147,8 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         });
     }
 
-    // call when a pull to refresh, so alway force load -> set para 2nd to true
     @Override
-    public void setForceload(boolean forceLoad) {
+    public void setForceload() {
         // change the sort type
         String sort;
         switch (mViewpagerFragListMovieContent.getCurrentItem()) {
@@ -165,8 +165,8 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
                 //It will never reach here, just to make compiler happy
                 throw new IllegalArgumentException("Something strange happend");
         }
-
-        mPresenter.loadTask(forceLoad, true, sort);
+        // call when a pull to refresh, so alway force load -> set para 1st to true
+        mPresenter.loadTask(true, false, sort);
     }
 
     /**
@@ -200,13 +200,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         ((ListMovieItemFragment) mListMovieViewPagerAdapter.getRegisteredFragment(mViewpagerFragListMovieContent.getCurrentItem())).setThePullToRefreshDissappear();
     }
 
-    /**
-     * show a snackbar to info user that cannot get the movie
-     */
-    @Override
-    public void infoUserErrorFetchData() {
-
-    }
 
     @Override
     public void updateLayout() {

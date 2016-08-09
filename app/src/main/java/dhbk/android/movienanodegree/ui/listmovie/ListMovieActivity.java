@@ -128,7 +128,7 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void setForceLoad(boolean forceLoad) {
-        mView.setForceload(forceLoad);
+    public void setForceLoad() {
+        mView.setForceload();
     }
 }

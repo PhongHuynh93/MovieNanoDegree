@@ -66,6 +66,7 @@ public class MovieInteractor {
                 // save movie vừa tải về vào content provider, và return uri địa chỉ ứng với movie vừa add
                 // NOTE: đã save movie vừa tải về tại đây rồi nên ko cần pass về nữa
                 .map(movie -> mMoviesDataSource.saveMovie(movie))
+                // TODO: 8/9/2016 save movie to cache
                 // chuyển uri địa chỉ của 1 movie thành 1 số id (số này là thứ tự trong 1 hàng trong db mà movies đó đang nằm đó)
                 .map(movieUri -> MoviesContract.MovieEntry.getIdFromUri(movieUri))
                 // save movies id to db
