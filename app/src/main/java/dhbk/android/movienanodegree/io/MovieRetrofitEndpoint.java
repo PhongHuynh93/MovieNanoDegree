@@ -42,4 +42,13 @@ public interface MovieRetrofitEndpoint {
      */
     @GET("discover/movie")
     Observable<DiscoverMovieResponse> discoverMovies(@Query("sort_by") String sortBy, @Query("page") Integer page);
+
+    /**
+     * get genres models
+     * http://api.themoviedb.org/3/genre/movie/list?api_key=53470b56a60668274e1dd9f84d882564
+     * // TODO: 8/10/16 add genres
+     */
+    @GET("genre/movie/list")
+    Observable<DiscoverMovieResponse> discoverMovies(@Query("api_key") String key);
+
 }
