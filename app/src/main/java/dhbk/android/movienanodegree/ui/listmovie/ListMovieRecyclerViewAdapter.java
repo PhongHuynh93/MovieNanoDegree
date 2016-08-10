@@ -60,6 +60,7 @@ public class ListMovieRecyclerViewAdapter extends CursorRecyclerViewAdapter<List
 //            viewHolder.mTextviewListmovieTypeofmovie.setText(movie.getOriginalTitle());
 //            viewHolder.mTextviewListmovieLengthofmovie.setText(movie.getOriginalTitle());
             viewHolder.mfabVoteAverate.setText("" + movie.getAverageVote());
+            viewHolder.mTextViewListMovieViewCount.setText("" + movie.getVoteCount());
             viewHolder.mTextviewListmovieDescriptionofmovie.setText(movie.getOverview());
 
             String urlImage = Constant.POSTER_IMAGE_BASE_URL + Constant.POSTER_IMAGE_SIZE + movie.getPosterPath();
@@ -93,6 +94,9 @@ public class ListMovieRecyclerViewAdapter extends CursorRecyclerViewAdapter<List
         ImageView mImageviewListmovieImageofmovie;
         @BindView(R.id.textview_listmovie_vote)
         TextView mfabVoteAverate;
+        @BindView(R.id.textview_listmovie_viewcount)
+        TextView mTextViewListMovieViewCount;
+
 
         public MovieViewHolder(View itemView, OnItemClickListener onItemClickListener) {
             super(itemView);
