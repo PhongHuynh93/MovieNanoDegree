@@ -55,7 +55,7 @@ public class MovieDetailActivity extends BaseActivity {
      */
     @Override
     protected void injectDependencies() {
-
+        // TODO: 8/10/16 inject presenter in here
     }
 
     @Override
