@@ -136,7 +136,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
                         //It will never reach here, just to make compiler happy
                         throw new IllegalArgumentException("Something strange happend");
                 }
-                // FIXME: 8/9/2016 watch this - why this called make pull to refresh appear again
                 // force loading data from network the first time
                 mPresenter.loadTask(false, true, sort);
                 // every change in page, restart the loader to load datas from local data again.

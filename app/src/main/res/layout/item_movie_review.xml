@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/spacing_medium">
+
+    <!--content of review    -->
+    <TextView
+        android:id="@+id/textview_review_adapter_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:singleLine="false"
+        tools:src="Review content"/>
+
+    <!--author of review-->
+    <TextView
+        android:id="@+id/textview_review_adapter_author"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/textview_review_adapter_content"
+        android:gravity="end"
+        android:paddingTop="@dimen/spacing_small"
+        tools:src="Author"/>
+
+</RelativeLayout>
