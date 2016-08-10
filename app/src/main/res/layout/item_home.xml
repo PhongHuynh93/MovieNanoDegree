@@ -82,8 +82,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@+id/imageview_listmovie_hearticon"
                 android:layout_toEndOf="@+id/imageview_listmovie_hearticon"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/margin_bottom_item_home_vote_count"
                 android:layout_marginStart="3dp"
                 android:id="@+id/textview_listmovie_viewcount"
                 android:textColor="@color/grey"
