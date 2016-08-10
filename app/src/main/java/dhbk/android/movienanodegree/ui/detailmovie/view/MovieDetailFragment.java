@@ -22,6 +22,7 @@ import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.detailmovie.DetailMovieContract;
 import dhbk.android.movienanodegree.util.Constant;
+import hugo.weaving.DebugLog;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -64,6 +65,7 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
     }
 
     // : 8/9/2016 5 set the fragment  with movie
+    @DebugLog
     public static MovieDetailFragment newInstance(@NonNull DiscoverMovieResponse.DiscoverMovie movie) {
         checkNotNull(movie);
         MovieDetailFragment fragment = new MovieDetailFragment();
@@ -83,6 +85,7 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
     protected boolean hasToolbar() {
         return false;
     }
+
 
     @Override
     protected void initView() {
@@ -158,6 +161,7 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
 
     }
 
+    @DebugLog
     @Override
     public void setPresenter(DetailMovieContract.Presenter presenter) {
         checkNotNull(presenter, "Presenter in MovieDetailFragment not be null");

@@ -13,7 +13,9 @@ import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.dagger.listmovie.DaggerListMovieComponent;
 import dhbk.android.movienanodegree.dagger.listmovie.ListMoviePresenterModule;
+import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
 import dhbk.android.movienanodegree.ui.base.BaseActivity;
+import dhbk.android.movienanodegree.ui.detailmovie.view.MovieDetailActivity;
 import dhbk.android.movienanodegree.ui.listmovie.ListMovieContract;
 import dhbk.android.movienanodegree.ui.listmovie.OnFragInteract;
 import dhbk.android.movienanodegree.ui.listmovie.presenter.ListMoviePresenter;
@@ -133,5 +135,10 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
     @Override
     public void setForceLoad() {
         mView.setForceload();
+    }
+
+    @Override
+    public void gotoDetailActivity(DiscoverMovieResponse.DiscoverMovie movie) {
+        MovieDetailActivity.newIntent(this, movie);
     }
 }

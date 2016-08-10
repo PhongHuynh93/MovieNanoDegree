@@ -101,6 +101,7 @@ public class ListMovieItemFragment extends BaseFragment {
         // : 8/1/16 set adapter for recyclerview
         mListMovieRecyclerViewAdapter.setOnItemClickListener((itemView, position) -> {
             // TODO: 8/7/16 when click, go to another activity to show detail
+            mListener.gotoDetailActivity(mListMovieRecyclerViewAdapter.getItem(position));
         });
         mRecyclerviewHomeListMovies.setAdapter(mListMovieRecyclerViewAdapter);
         // make list show 1 vertical column of data
