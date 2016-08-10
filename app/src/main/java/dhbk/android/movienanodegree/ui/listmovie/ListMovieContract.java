@@ -50,5 +50,10 @@ public interface ListMovieContract {
         Uri getContentUri();
 
         void loadTask(boolean forceUpdate, boolean firstLoad, String sort);
+
+        /**
+         * get the current page depend on data in local database.
+         */
+        int getCurrentPageFromDb();
     }
 }

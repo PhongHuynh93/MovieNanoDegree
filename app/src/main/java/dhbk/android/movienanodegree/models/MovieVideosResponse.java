@@ -63,6 +63,7 @@ public class MovieVideosResponse {
         @SerializedName("iso_3166_1")
         private String countryCode;
 
+        // declare the key to go to exactly where the video will be played
         @Getter
         @SerializedName("key")
         private String key;
@@ -71,6 +72,7 @@ public class MovieVideosResponse {
         @SerializedName("name")
         private String name;
 
+        // declare which site contains this video clip
         @Getter
         @SerializedName("site")
         private String site;
@@ -83,6 +85,7 @@ public class MovieVideosResponse {
         @SerializedName("type")
         private String type;
 
+        // find out the site of movies whether it if from youtube or not.
         public boolean isYoutubeVideo() {
             return site.toLowerCase(Locale.US).equals(Constant.SITE_YOUTUBE.toLowerCase(Locale.US));
         }

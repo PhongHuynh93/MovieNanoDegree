@@ -20,6 +20,7 @@ import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.dagger.listmovie.OnItemClickListener;
 import dhbk.android.movienanodegree.models.MovieVideosResponse;
 import dhbk.android.movienanodegree.util.Constant;
+import lombok.Getter;
 import lombok.Setter;
 
 /**
@@ -27,7 +28,10 @@ import lombok.Setter;
  */
 public class MovieVideosAdapter extends RecyclerView.Adapter<MovieVideosAdapter.MovieVideoViewHolder>{
     private final Context mContext;
+
+    @Getter
     private ArrayList<MovieVideosResponse.MovieVideo> mMovieVideoList;
+
     @Setter
     private OnItemClickListener mOnItemClickListener;
 
@@ -68,19 +72,11 @@ public class MovieVideosAdapter extends RecyclerView.Adapter<MovieVideosAdapter.
         return mMovieVideoList.size();
     }
 
-
-
     // change the data in adapter and notify it.
     public void setMovieVideos(@Nullable ArrayList<MovieVideosResponse.MovieVideo> movieVideos) {
         mMovieVideoList = movieVideos;
         notifyDataSetChanged();
     }
-
-    // get the video data
-    public ArrayList<MovieVideosResponse.MovieVideo> getMovieVideos() {
-        return mMovieVideoList;
-    }
-
     /**
      * get a video from list
      * @param position the videos position in list

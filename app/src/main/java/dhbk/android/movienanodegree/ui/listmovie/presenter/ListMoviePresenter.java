@@ -129,8 +129,17 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
         // force to update
         if (forceUpdate) {
             mListMovieView.makePullToRefreshAppear();
-            callDiscoverMovies(sort, null);
+            // : 8/10/2016 3 change page from null to use function to calculate the current page from databse
+            callDiscoverMovies(sort, getCurrentPageFromDb() + 1);
         }
 
+    }
+
+    /**
+     * get the current page depend on data in local database.
+     */
+    @Override
+    public int getCurrentPageFromDb() {
+        return mMovieReposition.getCurrentPage();
     }
 }

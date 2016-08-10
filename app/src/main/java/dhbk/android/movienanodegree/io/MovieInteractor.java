@@ -1,39 +1,51 @@
 package dhbk.android.movienanodegree.io;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.data.MovieReposition;
 import dhbk.android.movienanodegree.data.local.MoviesContract;
+import dhbk.android.movienanodegree.models.MovieReviewsResponse;
+import dhbk.android.movienanodegree.models.MovieVideosResponse;
 import rx.Observable;
 import rx.Subscriber;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+import rx.subscriptions.CompositeSubscription;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Created by phongdth.ky on 8/8/2016.
  *  contain methods to interact with Movie Api
  */
 public class MovieInteractor {
-    private static final String TAG = MovieInteractor.class.getSimpleName();
     private final MovieRetrofitEndpoint mApiService;
     private final Context mContext;
+    private CompositeSubscription mCompositeSubscription;
 
     @Inject
     MovieReposition mMoviesDataSource;
 
     public MovieInteractor(Context context, MovieRetrofitEndpoint apiService) {
+        checkNotNull(context);
+        checkNotNull(apiService);
         mContext = context;
         mApiService = apiService;
         ((MVPApp)mContext).getMovieComponent().inject(this);
+
+        // make Composite Subscriptions to listen the life cycler of view, so we can unsubscribe when view doesn't exist anymore
+        mCompositeSubscription = new CompositeSubscription();
     }
 
-    // search a list of artist which equals to query
-    public void performMovieSearch(String sort, @Nullable Integer page, MovieSearchServerCallback callback) {
-        mApiService.discoverMovies(sort, page)
+    // search a list of movie which equals to query
+    public void performMovieSearch(String sort, int page, MovieSearchServerCallback callback) {
+        Subscription serchMovieSubscription = mApiService.discoverMovies(sort, page)
                 // observe on different thread
                 .subscribeOn(Schedulers.io())
                 /**
@@ -66,7 +78,6 @@ public class MovieInteractor {
                 // save movie vừa tải về vào content provider, và return uri địa chỉ ứng với movie vừa add
                 // NOTE: đã save movie vừa tải về tại đây rồi nên ko cần pass về nữa
                 .map(movie -> mMoviesDataSource.saveMovie(movie))
-                // TODO: 8/9/2016 save movie to cache
                 // chuyển uri địa chỉ của 1 movie thành 1 số id (số này là thứ tự trong 1 hàng trong db mà movies đó đang nằm đó)
                 .map(movieUri -> MoviesContract.MovieEntry.getIdFromUri(movieUri))
                 // save movies id to db
@@ -91,7 +102,70 @@ public class MovieInteractor {
 
                     }
                 });
+        mCompositeSubscription.add(serchMovieSubscription);
+    }
+
+
+    // : 8/10/2016 implement search video depend on movie ID
+    public void performLoadVideosFromNetwork(long movieID, MovieVideosServerCallback callback) {
+        //        return Observable<MovieVideosResponse>
+        Subscription searchVideoSubcription = mApiService.getMovieVideos(movieID)
+                .subscribeOn(Schedulers.io())
+                // transform from movieVideoResponse -> array of movieResponse
+                .map(movieVideosResponse -> movieVideosResponse.getResults())
+                .observeOn(AndroidSchedulers.mainThread())
+                // emit the array of movieResponse
+                .subscribe(new Subscriber<ArrayList<MovieVideosResponse.MovieVideo>>() {
+                    @Override
+                    public void onCompleted() {
+                        // when complete, do nothing
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onSetShowOrHideVideoList();
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<MovieVideosResponse.MovieVideo> movieVideos) {
+                        callback.onUpdateVideoAdapter(movieVideos);
+                        callback.onSetShowOrHideVideoList();
+                    }
+                });
+        mCompositeSubscription.add(searchVideoSubcription);
+    }
+
+    // : 8/10/2016 implement search reviews depend on movie ID
+    public void performLoadReviewsFromNetwork(long movieID, MovieReviewsServerCallback callback) {
+        Subscription searchReviewSubscription = mApiService.getMovieReviews(movieID)
+                .subscribeOn(Schedulers.io())
+                .map(reviewsResponse -> reviewsResponse.getResults())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<ArrayList<MovieReviewsResponse.MovieReview>>() {
+                    @Override
+                    public void onCompleted() {
+                        // do nothing
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        callback.onSetShowOrHideReviewList();
+                    }
+
+                    @Override
+                    public void onNext(ArrayList<MovieReviewsResponse.MovieReview> movieReviews) {
+                        callback.onUpdateReviewAdapter(movieReviews);
+                        callback.onSetShowOrHideReviewList();
+                    }
+                });
+        mCompositeSubscription.add(searchReviewSubscription);
     }
 
     // TODO: 8/9/16 add unsubscript this
+    public void unSubscribe() {
+        if (mCompositeSubscription != null) {
+            mCompositeSubscription.clear();
+        }
+    }
+
 }

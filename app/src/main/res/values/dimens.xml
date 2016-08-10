@@ -35,4 +35,5 @@
     <dimen name="size_item_home_fab">36dp</dimen>
     <dimen name="margin_bottom_item_home_fab">13dp</dimen>
     <dimen name="margin_start_item_home_fab">142dp</dimen>
+    <dimen name="movie_item_offset">4dp</dimen>
 </resources>

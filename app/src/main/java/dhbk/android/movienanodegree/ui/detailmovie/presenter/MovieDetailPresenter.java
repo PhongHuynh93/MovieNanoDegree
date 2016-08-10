@@ -1,7 +1,14 @@
 package dhbk.android.movienanodegree.ui.detailmovie.presenter;
 
+import java.util.ArrayList;
+
 import javax.inject.Inject;
 
+import dhbk.android.movienanodegree.io.MovieInteractor;
+import dhbk.android.movienanodegree.io.MovieReviewsServerCallback;
+import dhbk.android.movienanodegree.io.MovieVideosServerCallback;
+import dhbk.android.movienanodegree.models.MovieReviewsResponse;
+import dhbk.android.movienanodegree.models.MovieVideosResponse;
 import dhbk.android.movienanodegree.ui.detailmovie.DetailMovieContract;
 
 /**
@@ -10,10 +17,12 @@ import dhbk.android.movienanodegree.ui.detailmovie.DetailMovieContract;
 public class MovieDetailPresenter implements DetailMovieContract.Presenter {
 
     private final DetailMovieContract.View mView;
+    private final MovieInteractor mMovieInteractor;
 
     @Inject
-    MovieDetailPresenter(DetailMovieContract.View view) {
+    MovieDetailPresenter(DetailMovieContract.View view, MovieInteractor movieInteractor) {
         mView = view;
+        mMovieInteractor = movieInteractor;
     }
 
     @Inject
@@ -35,8 +44,33 @@ public class MovieDetailPresenter implements DetailMovieContract.Presenter {
 
     @Override
     public void start() {
-        mView.loadVideosFromNetwork();
-        mView.loadReviewsFromNetwork();
+        if (mView.shouldLoadVideosFromNetwork()){
+            mMovieInteractor.performLoadVideosFromNetwork(mView.getMovieId(), new MovieVideosServerCallback() {
+                @Override
+                public void onSetShowOrHideVideoList() {
+                    mView.setShowOrHideVideoList();
+                }
+
+                @Override
+                public void onUpdateVideoAdapter(ArrayList<MovieVideosResponse.MovieVideo> movieVideos) {
+                    mView.makeVideoAdapterChangeData(movieVideos);
+                }
+            });
+        }
+
+        if (mView.shouldLoadReviewsFromNetwork()) {
+            mMovieInteractor.performLoadReviewsFromNetwork(mView.getMovieId(), new MovieReviewsServerCallback() {
+                @Override
+                public void onUpdateReviewAdapter(ArrayList<MovieReviewsResponse.MovieReview> movieReviews) {
+                    mView.makeReviewAdapterChangeData(movieReviews);
+                }
+
+                @Override
+                public void onSetShowOrHideReviewList() {
+                    mView.setShowOrHideReviewList();
+                }
+            });
+        }
         mView.setShowOrHideVideoList();
         mView.setShowOrHideReviewList();
     }

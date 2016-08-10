@@ -1,8 +1,15 @@
 package dhbk.android.movienanodegree.models;
 
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
+
+import lombok.Getter;
+
 /**
  * Created by huynhducthanhphong on 7/30/16.
- *
+ * Get the reviews for a particular movie id to {@link MovieReviewsResponse}
+ * http://api.themoviedb.org/3/movie/id/reviews
  {
      "id": 49026,
      "page": 1,
@@ -31,5 +38,38 @@ package dhbk.android.movienanodegree.models;
  }
  */
 public class MovieReviewsResponse {
+    @Getter
+    @SerializedName("id")
+    private long movieId;
 
+    @Getter
+    @SerializedName("page")
+    private int page;
+
+    @Getter
+    @SerializedName("results")
+    private ArrayList<MovieReview> results;
+
+    @Getter
+    @SerializedName("total_pages")
+    private int totalPages;
+
+    public static class MovieReview {
+        @Getter
+        @SerializedName("id")
+        private String reviewId;
+
+        @Getter
+        @SerializedName("author")
+        private String author;
+
+        @Getter
+        @SerializedName("url")
+        private String reviewUrl;
+
+        @Getter
+        @SerializedName("content")
+        private String content;
+
+    }
 }

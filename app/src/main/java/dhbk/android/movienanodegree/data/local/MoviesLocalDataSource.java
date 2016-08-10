@@ -7,13 +7,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import javax.inject.Inject;
+
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.data.MoviesDataSource;
 import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
 import dhbk.android.movienanodegree.util.Constant;
-
-import javax.inject.Inject;
-
 import hugo.weaving.DebugLog;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -40,7 +39,7 @@ public class MoviesLocalDataSource implements MoviesDataSource {
         ((MVPApp) context).getMovieComponent().inject(this);
     }
 
-//    get the last page of movies in local db
+//    get the current page of movies in local db
     @Override
     public int getCurrentPage() {
         Uri uri = getSortedMoviesUri();
