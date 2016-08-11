@@ -15,7 +15,7 @@
     <!--detail activity-->
     <string name="detail_activity_backdrop_image">Movie backdrop image</string>
     <string name="content_description_movie_poster">Movie poster image</string>
-    <string name="movie_detail_overview_title">Overview</string>
+    <string name="movie_detail_overview_title">Info</string>
     <string name="movie_detail_videos_title">Videos</string>
     <string name="movie_detail_reviews_title">Reviews</string>
     <string name="content_description_movie_video">Movie video thumbnail</string>

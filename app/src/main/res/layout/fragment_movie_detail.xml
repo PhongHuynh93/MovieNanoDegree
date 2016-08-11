@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".ui.detailmovie.view.MovieDetailActivity"
     tools:ignore="MissingPrefix">
 
@@ -121,13 +122,18 @@
             android:padding="@dimen/spacing_medium">
 
             <TextView
+                fontPath="fonts/Helvetica.ttf"
+                android:textColor="@color/grey_dark"
+                android:textSize="@dimen/textsize_small_17"
                 android:id="@+id/text_movie_overview_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/movie_detail_overview_title"
-                android:textStyle="bold"/>
+                android:text="@string/movie_detail_overview_title"/>
 
             <TextView
+                android:textColor="@color/grey_dark"
+                android:textSize="@dimen/textsize_small_13"
+                fontPath="fonts/Helvetica-Light.ttf"
                 android:id="@+id/text_movie_overview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,11 +164,13 @@
             android:padding="@dimen/spacing_medium">
 
             <TextView
+                fontPath="fonts/Helvetica.ttf"
+                android:textColor="@color/grey_dark"
+                android:textSize="@dimen/textsize_small_17"
                 android:id="@+id/text_videos_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/movie_detail_videos_title"
-                android:textStyle="bold"/>
+                android:text="@string/movie_detail_videos_title"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/movie_videos"
