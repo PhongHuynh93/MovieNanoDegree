@@ -127,4 +127,51 @@ public class MoviesLocalDataSource implements MoviesDataSource {
                 throw new IllegalStateException("Unknown sort.");
         }
     }
+
+    /**
+     * get into the db and get the state of fab by compare the movie id
+     *
+     * @return
+     * @param movie
+     */
+    @Override
+    public boolean isFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        boolean favorite = false;
+        Cursor cursor = mContext.getContentResolver().query(
+                MoviesContract.Favorites.CONTENT_URI,
+                null,
+                MoviesContract.COLUMN_MOVIE_ID_KEY + " = " + movie.getId(),
+                null,
+                null
+        );
+        if (cursor != null) {
+            favorite = cursor.getCount() != 0;
+            cursor.close();
+        }
+        return favorite;
+    }
+
+    /**
+     * remove favorite from db by compare movie ID
+     * @param movie
+     */
+    @Override
+    public void removeFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        mContext.getContentResolver().delete(
+                MoviesContract.Favorites.CONTENT_URI,
+                MoviesContract.COLUMN_MOVIE_ID_KEY + " = " + movie.getId(),
+                null
+        );
+    }
+
+    /**
+     * add favorite to db with movie ID
+     * @param movie
+     */
+    @Override
+    public void addFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MoviesContract.COLUMN_MOVIE_ID_KEY, movie.getId());
+        mContext.getContentResolver().insert(MoviesContract.Favorites.CONTENT_URI, contentValues);
+    }
 }

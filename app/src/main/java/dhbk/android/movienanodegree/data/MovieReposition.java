@@ -77,4 +77,33 @@ public class MovieReposition implements MoviesDataSource{
         checkNotNull(sort);
         mMoviesLocalDataSource.saveSortByPreference(sort);
     }
+
+    /**
+     * get into the db and get the state of fab
+     *
+     * @return
+     * @param movie
+     */
+    @Override
+    public boolean isFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        return mMoviesLocalDataSource.isFavorite(movie);
+    }
+
+    /**
+     * remove favorite from db by compare movie ID
+     * @param movie
+     */
+    @Override
+    public void removeFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        mMoviesLocalDataSource.removeFavorite(movie);
+    }
+
+    /**
+     * add favorite to db with movie ID
+     * @param movie
+     */
+    @Override
+    public void addFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        mMoviesLocalDataSource.addFavorite(movie);
+    }
 }

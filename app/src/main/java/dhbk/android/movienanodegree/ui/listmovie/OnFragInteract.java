@@ -12,4 +12,9 @@ public interface OnFragInteract {
     void setForceLoad();
 
     void gotoDetailActivity(DiscoverMovieResponse.DiscoverMovie item);
+
+    /**
+     * open the nav drawer from left to right
+     */
+    void openNavDrawer();
 }

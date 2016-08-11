@@ -74,6 +74,4 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     // check a view has toolbar or not
     protected abstract boolean hasToolbar();
-
-
 }
