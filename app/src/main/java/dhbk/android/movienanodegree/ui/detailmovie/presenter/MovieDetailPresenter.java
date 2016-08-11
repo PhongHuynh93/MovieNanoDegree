@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import dhbk.android.movienanodegree.data.MovieReposition;
 import dhbk.android.movienanodegree.io.MovieInteractor;
 import dhbk.android.movienanodegree.io.MovieReviewsServerCallback;
 import dhbk.android.movienanodegree.io.MovieVideosServerCallback;
+import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
 import dhbk.android.movienanodegree.models.MovieReviewsResponse;
 import dhbk.android.movienanodegree.models.MovieVideosResponse;
 import dhbk.android.movienanodegree.ui.detailmovie.DetailMovieContract;
@@ -18,11 +20,13 @@ public class MovieDetailPresenter implements DetailMovieContract.Presenter {
 
     private final DetailMovieContract.View mView;
     private final MovieInteractor mMovieInteractor;
+    private final MovieReposition mMovieReposition;
 
     @Inject
-    MovieDetailPresenter(DetailMovieContract.View view, MovieInteractor movieInteractor) {
+    MovieDetailPresenter(DetailMovieContract.View view, MovieInteractor movieInteractor, MovieReposition movieReposition) {
         mView = view;
         mMovieInteractor = movieInteractor;
+        mMovieReposition = movieReposition;
     }
 
     @Inject
@@ -75,5 +79,32 @@ public class MovieDetailPresenter implements DetailMovieContract.Presenter {
         mView.setShowOrHideReviewList();
     }
 
+    /**
+     * get into the db and get the state of fab
+     *
+     * @return
+     * @param movie
+     */
+    @Override
+    public boolean isFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        return mMovieReposition.isFavorite(movie);
+    }
 
+    /**
+     * remove favorite from db by compare movie ID
+     * @param movie
+     */
+    @Override
+    public void removeFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        mMovieReposition.removeFavorite(movie);
+    }
+
+    /**
+     * add favorite to db with movie ID
+     * @param movie
+     */
+    @Override
+    public void addFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        mMovieReposition.addFavorite(movie);
+    }
 }

@@ -6,12 +6,17 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.dagger.listmovie.DaggerListMovieComponent;
@@ -30,6 +35,12 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
 
     @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
+    @BindView(R.id.framelayout_act_main_nav)
+    RelativeLayout mFramelayoutActMainNav;
+    @BindView(R.id.textview_act_main_explore)
+    TextView mTextviewActMainExplore;
+    @BindView(R.id.textview_act_main_favorite)
+    TextView mTextviewActMainFavorite;
     private ListMovieViewPagerFragment mView;
 
     @Inject
@@ -49,22 +60,7 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), mView, R.id.framelayout_act_main_content);
         }
-
-        // TODO: 8/11/16 1 create nav
-        // Set up the navigation drawer.
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
-//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-//        if (navigationView != null) {
-//            setupDrawerContent(navigationView);
-//        }
     }
-
-    // TODO: 8/11/16 3 setup nav
-    private void setupDrawerContent(NavigationView navigationView) {
-
-    }
-
 
     @Override
     protected void injectDependencies() {
@@ -130,7 +126,7 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
     }
 
     /**
-     * restart the loader to save movie again
+     * todo restart the loader to save movie again when call restart loader, get it with bundle of frag, so it can get the correct uri
      */
     @Override
     public void restartLoader() {
@@ -152,6 +148,14 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
         return false;
     }
 
+    /**
+     * 2 open the nav drawer from left to right
+     */
+    @Override
+    public void openNavDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.START);
+    }
+
     @Override
     public void setForceLoad() {
         mView.setForceload();
@@ -160,5 +164,31 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
     @Override
     public void gotoDetailActivity(DiscoverMovieResponse.DiscoverMovie movie) {
         MovieDetailActivity.newIntent(this, movie);
+    }
+
+    @OnClick({R.id.textview_act_main_explore, R.id.textview_act_main_favorite})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.textview_act_main_explore:
+                // : 8/11/2016 replace with explore if not have
+                Fragment exploreFrag = getSupportFragmentManager().findFragmentById(R.id.framelayout_act_main_content);
+                if (!(exploreFrag instanceof ListMovieViewPagerFragment)) {
+                    ListMovieViewPagerFragment fragment = ListMovieViewPagerFragment.newInstance();
+                    ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.framelayout_act_main_content);
+                }
+                // TODO: 8/11/2016 1 change title
+                mDrawerLayout.closeDrawers();
+                break;
+            case R.id.textview_act_main_favorite:
+                // : 8/11/2016 replace with favorite if not have
+                Fragment favoriteFrag = getSupportFragmentManager().findFragmentById(R.id.framelayout_act_main_content);
+                if (!(favoriteFrag instanceof ListMovieFavoriteFragment)) {
+                    ListMovieFavoriteFragment fragment = ListMovieFavoriteFragment.newInstance();
+                    ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.framelayout_act_main_content);
+                }
+                // TODO: 8/11/2016 1b change title
+                mDrawerLayout.closeDrawers();
+                break;
+        }
     }
 }
