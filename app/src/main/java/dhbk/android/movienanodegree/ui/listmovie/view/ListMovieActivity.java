@@ -99,6 +99,8 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
         return new CursorLoader(this, mPresenter.getContentUri(), null, null, null, null);
     }
 
+
+
     /**
      * Called when a previously created loader has finished its load.
      *
