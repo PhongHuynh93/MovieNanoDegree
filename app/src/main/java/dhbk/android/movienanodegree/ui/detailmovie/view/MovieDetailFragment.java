@@ -8,7 +8,6 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -40,7 +39,6 @@ import dhbk.android.movienanodegree.ui.detailmovie.ItemOffsetDecoration;
 import dhbk.android.movienanodegree.ui.detailmovie.MovieReviewsAdapter;
 import dhbk.android.movienanodegree.ui.detailmovie.MovieVideosAdapter;
 import dhbk.android.movienanodegree.util.Constant;
-import dhbk.android.movienanodegree.util.HelpUtils;
 import hugo.weaving.DebugLog;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -215,21 +213,6 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(review.getReviewUrl()));
             startActivity(intent);
         }
-    }
-
-    /**
-     *  set card elevation for 4 views.
-     */
-    @Override
-    public void setCardElevation() {
-        setupCardElevation(cardMovieDetail);
-        setupCardElevation(cardMovieVideos);
-        setupCardElevation(cardMovieOverview);
-        setupCardElevation(cardMovieReviews);
-    }
-
-    private void setupCardElevation(View view) {
-        ViewCompat.setElevation(view, HelpUtils.getPixelForDp(getContext(), getResources().getInteger(R.integer.detail_frag_content_elevation_in_dp)));
     }
 
     @DebugLog
