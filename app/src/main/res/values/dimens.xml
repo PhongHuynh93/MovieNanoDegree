@@ -48,4 +48,10 @@
     <dimen name="margin_detail_act_nestedscrollview">20dp</dimen>
     <dimen name="width_detail_act_imageview_poster">144dp</dimen>
 
+    <!--nav-->
+    <dimen name="width_listmovie_relativelayout_nav">281dp</dimen>
+    <dimen name="margin_top_act_main_linearlayout_explore">226dp</dimen>
+    <dimen name="margin_act_main_imageview">15dp</dimen>
+    <dimen name="margin_start_act_main_textview_explore">46dp</dimen>
+
 </resources>

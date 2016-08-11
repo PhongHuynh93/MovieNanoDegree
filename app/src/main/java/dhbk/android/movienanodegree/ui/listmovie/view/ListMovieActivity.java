@@ -7,9 +7,11 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.dagger.listmovie.DaggerListMovieComponent;
@@ -26,6 +28,8 @@ import hugo.weaving.DebugLog;
 
 public class ListMovieActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>, OnFragInteract {
 
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
     private ListMovieViewPagerFragment mView;
 
     @Inject
@@ -47,6 +51,13 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
         }
 
         // TODO: 8/11/16 1 create nav
+        // Set up the navigation drawer.
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        if (navigationView != null) {
+//            setupDrawerContent(navigationView);
+//        }
     }
 
     // TODO: 8/11/16 3 setup nav
@@ -55,7 +66,7 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
     }
 
 
-        @Override
+    @Override
     protected void injectDependencies() {
         // create the presenter
         DaggerListMovieComponent
