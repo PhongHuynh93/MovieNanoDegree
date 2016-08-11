@@ -11,7 +11,7 @@
     tools:ignore="MissingPrefix">
 
     <!--name of movie-->
-    <android.support.v7.widget.CardView
+    <FrameLayout
         android:id="@+id/card_movie_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -102,10 +102,10 @@
 
         </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+    </FrameLayout>
 
     <!--description of movie-->
-    <android.support.v7.widget.CardView
+    <FrameLayout
         android:id="@+id/card_movie_overview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -143,10 +143,10 @@
 
         </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+    </FrameLayout>
 
     <!--list of videos related to movies-->
-    <android.support.v7.widget.CardView
+    <FrameLayout
         android:id="@+id/card_movie_videos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -184,10 +184,10 @@
 
         </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+    </FrameLayout>
 
     <!--list of reviews related to movies-->
-    <android.support.v7.widget.CardView
+    <FrameLayout
         android:id="@+id/card_movie_reviews"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -219,6 +219,6 @@
 
         </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+    </FrameLayout>
 
 </RelativeLayout>

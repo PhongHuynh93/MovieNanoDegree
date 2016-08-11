@@ -9,11 +9,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -65,17 +65,17 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
     @BindView(R.id.text_movie_overview)
     TextView movieOverview;
     @BindView(R.id.card_movie_detail)
-    CardView cardMovieDetail;
+    FrameLayout cardMovieDetail;
     @BindView(R.id.card_movie_overview)
-    CardView cardMovieOverview;
+    FrameLayout cardMovieOverview;
 
     @BindView(R.id.card_movie_videos)
-    CardView cardMovieVideos;
+    FrameLayout cardMovieVideos;
     @BindView(R.id.movie_videos)
     RecyclerView movieVideos;
 
     @BindView(R.id.card_movie_reviews)
-    CardView cardMovieReviews;
+    FrameLayout cardMovieReviews;
     @BindView(R.id.movie_reviews)
     RecyclerView movieReviews;
 
@@ -222,10 +222,10 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
      */
     @Override
     public void setCardElevation() {
-        setupCardElevation(cardMovieDetail);
-        setupCardElevation(cardMovieVideos);
-        setupCardElevation(cardMovieOverview);
-        setupCardElevation(cardMovieReviews);
+//        setupCardElevation(cardMovieDetail);
+//        setupCardElevation(cardMovieVideos);
+//        setupCardElevation(cardMovieOverview);
+//        setupCardElevation(cardMovieReviews);
     }
 
     private void setupCardElevation(View view) {
