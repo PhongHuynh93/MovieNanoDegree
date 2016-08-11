@@ -341,7 +341,7 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
     }
 
     /**
-     * todo set hide or show videos list depends on datas from video list which has download from network
+     *  set hide or show videos list depends on datas from video list which has download from network
      */
     @Override
     public void setShowOrHideVideoList() {
@@ -353,7 +353,7 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
     }
 
     /**
-     * todo set hide or show reviews list depends on datas from video list which has download from network
+     *  set hide or show reviews list depends on datas from video list which has download from network
      */
     @Override
     public void setShowOrHideReviewList() {

@@ -96,7 +96,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
 
     @Override
     public void saveSortByPreference(String sort) {
-
+        mMovieReposition.saveSortByPreference(sort);
     }
 
     @Override
