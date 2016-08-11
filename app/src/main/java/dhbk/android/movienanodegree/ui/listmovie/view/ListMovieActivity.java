@@ -107,7 +107,8 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
          * CursorLoader: A loader that queries the ContentResolver and returns a Cursor.
          * -> must provide it with content provider uri
          */
-        return new CursorLoader(this, mPresenter.getContentUri(), null, null, null, null);
+        String tag = args.getString(Constant.TAG_FRAG);
+        return new CursorLoader(this, mPresenter.getContentUri(tag), null, null, null, null);
     }
 
 
@@ -143,7 +144,17 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
      */
     @Override
     public void restartLoader() {
-        getLoaderManager().restartLoader(Constant.LOADER_ID, null, this);
+        // get the view
+        String whichFrag = "";
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.framelayout_act_main_content);
+        if (fragment instanceof ListMovieViewPagerFragment) {
+            whichFrag = Constant.TAG_VIEWPAGER;
+        } else if (fragment instanceof ListMovieFavoriteFragment) {
+            whichFrag = Constant.TAG_FAVORITE;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.TAG_FRAG, whichFrag);
+        getLoaderManager().restartLoader(Constant.LOADER_ID, bundle, this);
     }
 
     @Override

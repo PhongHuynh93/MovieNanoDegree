@@ -51,9 +51,10 @@ public interface ListMovieContract {
 
         /**
          * get the sort type which has saved from db
+         * @param tag
          */
         @NonNull
-        Uri getContentUri();
+        Uri getContentUri(String tag);
 
         void loadTask(boolean forceUpdate, boolean firstLoad, String sort);
 

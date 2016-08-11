@@ -12,6 +12,7 @@ import dhbk.android.movienanodegree.io.MovieInteractor;
 import dhbk.android.movienanodegree.io.MovieSearchServerCallback;
 import dhbk.android.movienanodegree.ui.listmovie.ListMovieContract;
 import dhbk.android.movienanodegree.ui.listmovie.view.ListMovieViewPagerFragment;
+import dhbk.android.movienanodegree.util.Constant;
 
 /**
  * Created by phongdth.ky on 8/8/2016.
@@ -107,11 +108,20 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
 
     /**
      * get the sort type which has saved from db
+     * @param tag
      */
     @NonNull
     @Override
-    public Uri getContentUri() {
-        return mMovieReposition.getSortedMoviesUri();
+    public Uri getContentUri(String tag) {
+        switch (tag) {
+            case Constant.TAG_VIEWPAGER:
+                return mMovieReposition.getSortedMoviesUri();
+            case Constant.TAG_FAVORITE:
+                // TODO: 8/11/16 return the favorite uri
+                break;
+            default:
+                throw new IllegalArgumentException("CANNOT FIND URI");
+        }
     }
 
     @Override
