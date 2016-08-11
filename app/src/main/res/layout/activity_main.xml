@@ -6,9 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.home.ListMovieActivity"
+    tools:context=".ui.listmovie.view.ListMovieActivity"
     tools:ignore="MissingPrefix">
-
+    <!--todo 0 add nav-->
     <!--main content-->
     <FrameLayout
         android:id="@+id/framelayout_act_main_content"

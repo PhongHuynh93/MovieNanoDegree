@@ -6,6 +6,7 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 
 import javax.inject.Inject;
 
@@ -44,9 +45,17 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
             ActivityUtils.addFragmentToActivity(
                     getSupportFragmentManager(), mView, R.id.framelayout_act_main_content);
         }
+
+        // TODO: 8/11/16 1 create nav
     }
 
-    @Override
+    // TODO: 8/11/16 3 setup nav
+    private void setupDrawerContent(NavigationView navigationView) {
+
+    }
+
+
+        @Override
     protected void injectDependencies() {
         // create the presenter
         DaggerListMovieComponent
