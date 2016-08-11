@@ -39,4 +39,5 @@
     <dimen name="margin_bottom_item_home_vote_count">10dp</dimen>
     <dimen name="margin_start_item_home_fab">142dp</dimen>
     <dimen name="movie_item_offset">4dp</dimen>
+    <dimen name="margin_detail_act_nestedscrollview">20dp</dimen>
 </resources>
