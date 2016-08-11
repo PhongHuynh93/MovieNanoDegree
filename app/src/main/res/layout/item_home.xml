@@ -77,7 +77,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginBottom="@dimen/margin_bottom_item_home_fab"
-                android:src="@drawable/heart_copy_2"/>
+                android:src="@drawable/heart_mini"/>
 
             <TextView
                 android:layout_width="wrap_content"
