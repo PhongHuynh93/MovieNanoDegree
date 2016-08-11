@@ -31,8 +31,14 @@ public interface ListMovieContract {
 
         void onCursorLoaded(@Nullable Cursor data);
 
+        /**
+         * restart loader to load datas from local database again
+         */
         void callRestartLoader();
 
+        /**
+         * save the current tab of the viewpager and force load datas from network
+         */
         void setForceload();
     }
 

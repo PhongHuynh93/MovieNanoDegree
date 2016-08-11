@@ -120,6 +120,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     }
 
     /**
+     * todo 4 test this method
      * @param forceUpdate   Pass in true to refresh the data in the {@link MovieReposition}
      */
     private void loadTasks(boolean forceUpdate, String sort) {
@@ -130,6 +131,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
         if (forceUpdate) {
             mListMovieView.makePullToRefreshAppear();
             // : 8/10/2016 3 change page from null to use function to calculate the current page from databse
+//            todo  getCurrentPageFromDb bị lỗi nó ko trả về page tận 11 lận
             callDiscoverMovies(sort, getCurrentPageFromDb() + 1);
         }
 
