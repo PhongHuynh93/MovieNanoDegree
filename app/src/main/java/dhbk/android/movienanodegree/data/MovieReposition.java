@@ -71,6 +71,15 @@ public class MovieReposition implements MoviesDataSource{
         return mMoviesLocalDataSource.getSortedMoviesUri();
     }
 
+    /**
+     * get the uri of the favorite resource
+     * @return
+     */
+    @Override
+    public Uri getFavMovieUri() {
+        return mMoviesLocalDataSource.getFavMovieUri();
+    }
+
     // TODO: 8/11/16 4 method này không bao giờ được gọi cho nên nó khi lấy từ sort nó ko có lấy được
     @Override
     public void saveSortByPreference(@Constant.NavigationMode String sort) {
@@ -106,4 +115,6 @@ public class MovieReposition implements MoviesDataSource{
     public void addFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
         mMoviesLocalDataSource.addFavorite(movie);
     }
+
+
 }

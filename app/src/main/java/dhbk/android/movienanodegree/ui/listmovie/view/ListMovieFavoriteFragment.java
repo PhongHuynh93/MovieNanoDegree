@@ -15,11 +15,11 @@ public class ListMovieFavoriteFragment extends  ListMovieFragment implements Lis
     }
 
     /**
-     * a child fragment can use to make their own layout
+     * todo 1 a child fragment can use to make their own layout
      */
     @Override
     protected void loadData() {
-
+        getMListener().restartLoader();
     }
 
 
@@ -48,4 +48,10 @@ public class ListMovieFavoriteFragment extends  ListMovieFragment implements Lis
     public void setPresenter(ListMovieContract.Presenter presenter) {
 
     }
+
+    // TODO: 8/11/16 update the cursor
+//    @Override
+//    public void onCursorLoaded(@Nullable Cursor data) {
+//        super.onCursorLoaded(data);
+//    }
 }

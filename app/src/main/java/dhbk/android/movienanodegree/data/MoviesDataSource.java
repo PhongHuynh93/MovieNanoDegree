@@ -57,5 +57,11 @@ public interface MoviesDataSource {
      * @param movie
      */
     void addFavorite(DiscoverMovieResponse.DiscoverMovie movie);
+
+    /**
+     * get the uri of the favorite resource
+     * @return
+     */
+    Uri getFavMovieUri();
 }
 
