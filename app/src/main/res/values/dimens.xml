@@ -7,10 +7,20 @@
     <!-- Z-axis elevations -->
     <dimen name="z_app_bar">4dp</dimen>
 
+    <!--textsize-->
     <dimen name="textsize_small">12sp</dimen>
     <dimen name="textsize_small_15">15sp</dimen>
     <dimen name="textsize_small_13">13sp</dimen>
     <dimen name="textsize_small_8">8sp</dimen>
+    <dimen name="textsize_small_17">17sp</dimen>
+    <dimen name="textsize_small_11">11sp</dimen>
+    <dimen name="textsize_small_7">7sp</dimen>
+    <dimen name="textsize_small_10">10sp</dimen>
+
+    <!--space-->
+    <dimen name="spacing_small">4dp</dimen>
+    <dimen name="spacing_medium">8dp</dimen>
+
 
     <!--home activity-->
     <dimen name="height_home_activity_tablayout">20dp</dimen>
@@ -21,16 +31,12 @@
     <dimen name="margin_top_detail_activity_nestedscollview">0dp</dimen>
     <dimen name="padding_left_detail_activity_framelayout_content">0dp</dimen>
     <dimen name="padding_right_detail_activity_framelayout_content">0dp</dimen>
-    <dimen name="spacing_small">4dp</dimen>
     <dimen name="movie_detail_cards_margin_left_right">0dp</dimen>
-    <dimen name="spacing_medium">8dp</dimen>
     <dimen name="padding_start_item_home_relativelayout">180dp</dimen>
     <dimen name="padding_end_item_home_relativelayout">8.75dp</dimen>
     <dimen name="height_item_home_framelayout">187dp</dimen>
     <dimen name="width_item_home_cardview">346dp</dimen>
     <dimen name="height_item_home_cardview">155dp</dimen>
-    <dimen name="textsize_small_7">7sp</dimen>
-    <dimen name="textsize_small_10">10sp</dimen>
     <dimen name="width_item_home_imageview">143dp</dimen>
     <dimen name="height_item_home_imageview">180dp</dimen>
     <dimen name="margin_start_item_home_imageview">17dp</dimen>
@@ -41,4 +47,5 @@
     <dimen name="movie_item_offset">4dp</dimen>
     <dimen name="margin_detail_act_nestedscrollview">20dp</dimen>
     <dimen name="width_detail_act_imageview_poster">144dp</dimen>
+
 </resources>

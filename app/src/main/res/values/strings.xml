@@ -19,5 +19,5 @@
     <string name="movie_detail_videos_title">Videos</string>
     <string name="movie_detail_reviews_title">Reviews</string>
     <string name="content_description_movie_video">Movie video thumbnail</string>
-    <string name="movie_detail_release_date">Release date: %s</string>
+    <string name="movie_detail_release_date">%s</string>
 </resources>

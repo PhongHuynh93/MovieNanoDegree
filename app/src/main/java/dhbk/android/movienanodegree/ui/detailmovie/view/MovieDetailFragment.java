@@ -151,10 +151,10 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
                 .into(movieImagePoster);
 //        title
         movieOriginalTitle.setText(mMovie.getOriginalTitle());
-//        user rating
+//        user rating, auto change color depend on vote count
         movieUserRating.setText(String.format(Locale.US, "%.1f", mMovie.getAverageVote()));
         movieUserRating.setTextColor(getRatingColor(mMovie.getAverageVote()));
-//        release data
+//      fixme  release data, remember String.format     <string name="movie_detail_release_date">%s</string>, can change to html format color
         String releaseDate = String.format(getString(R.string.movie_detail_release_date),
                 mMovie.getReleaseDate());
         movieReleaseDate.setText(releaseDate);
