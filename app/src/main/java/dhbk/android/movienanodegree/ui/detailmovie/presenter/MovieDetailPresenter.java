@@ -39,7 +39,7 @@ public class MovieDetailPresenter implements DetailMovieContract.Presenter {
         mView.declareMovieInfo();
         mView.declareVideoList();
         mView.declareMovieInfo();
-        mView.setCardElevation();
+//        mView.setCardElevation();
     }
 
     @Override

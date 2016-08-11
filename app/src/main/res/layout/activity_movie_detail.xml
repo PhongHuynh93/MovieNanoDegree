@@ -60,6 +60,8 @@
         android:id="@+id/nestedScrollView_detail_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/margin_detail_act_nestedscrollview"
+        android:layout_marginEnd="@dimen/margin_detail_act_nestedscrollview"
         app:behavior_overlapTop="@dimen/margin_top_detail_activity_nestedscollview"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -80,6 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/heart"
         app:layout_anchor="@id/app_bar_layout_detail_activity"
         app:layout_anchorGravity="bottom|right|end"/>
 

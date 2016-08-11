@@ -46,11 +46,6 @@ public interface DetailMovieContract {
         void onMovieReviewClicked(int position);
 
         /**
-         * set card elevation
-         */
-        void setCardElevation();
-
-        /**
          * set hide or show videos list depends on datas from video list which has download from network
          */
         void setShowOrHideVideoList();

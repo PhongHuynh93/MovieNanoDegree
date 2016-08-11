@@ -5,8 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".ui.detailmovie.view.MovieDetailActivity">
+    tools:context=".ui.detailmovie.view.MovieDetailActivity"
+    tools:ignore="MissingPrefix">
 
     <!--name of movie-->
     <android.support.v7.widget.CardView
@@ -23,9 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!--scale lại nhưng phải giữ đúng tỷ lệ-->
             <dhbk.android.movienanodegree.ui.detailmovie.view.ProportionalImageView
                 android:id="@+id/image_movie_detail_poster"
-                android:layout_width="160dp"
+                android:layout_width="@dimen/width_detail_act_imageview_poster"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/content_description_movie_poster"
@@ -34,6 +37,7 @@
             <TextView
                 android:id="@+id/text_movie_original_title"
                 style="@android:style/TextAppearance.Large"
+                fontPath="fonts/Helvetica.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/image_movie_detail_poster"
@@ -47,10 +51,13 @@
                 android:paddingRight="8dp"
                 android:paddingStart="8dp"
                 android:paddingTop="16dp"
+                android:textColor="@color/grey_dark"
+                android:textSize="@dimen/textsize_small_17"
                 tools:text="Original movie title"/>
 
             <TextView
                 android:id="@+id/text_movie_user_rating"
+                fontPath="fonts/Helvetica.ttf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -62,19 +69,36 @@
                 android:textSize="42sp"
                 tools:text="10.0"/>
 
-            <TextView
-                android:id="@+id/text_movie_release_date"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@id/image_movie_detail_poster"
                 android:layout_marginBottom="@dimen/spacing_medium"
                 android:layout_toEndOf="@+id/image_movie_detail_poster"
                 android:layout_toRightOf="@+id/image_movie_detail_poster"
+                android:orientation="horizontal"
                 android:paddingEnd="8dp"
                 android:paddingLeft="8dp"
                 android:paddingRight="8dp"
-                android:paddingStart="8dp"
-                tools:text="Release date: 08.10.2015"/>
+                android:paddingStart="8dp">
+
+                <TextView
+                    fontPath="fonts/Helvetica-Light.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Release date: "
+                    android:textColor="@color/grey_light2"
+                    android:textSize="@dimen/textsize_small_11"/>
+
+                <TextView
+                    android:id="@+id/text_movie_release_date"
+                    fontPath="fonts/Helvetica-Light.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey_light"
+                    android:textSize="@dimen/textsize_small_11"/>
+
+            </LinearLayout>
 
         </RelativeLayout>
 
@@ -99,17 +123,22 @@
 
             <TextView
                 android:id="@+id/text_movie_overview_title"
+                fontPath="fonts/Helvetica.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/movie_detail_overview_title"
-                android:textStyle="bold"/>
+                android:textColor="@color/grey_dark"
+                android:textSize="@dimen/textsize_small_17"/>
 
             <TextView
                 android:id="@+id/text_movie_overview"
+                fontPath="fonts/Helvetica-Light.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_movie_overview_title"
                 android:paddingTop="@dimen/spacing_medium"
+                android:textColor="@color/grey_dark"
+                android:textSize="@dimen/textsize_small_13"
                 tools:text="A plot synopsis (called overview in the api)"/>
 
         </RelativeLayout>
@@ -136,17 +165,18 @@
 
             <TextView
                 android:id="@+id/text_videos_title"
+                fontPath="fonts/Helvetica.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/movie_detail_videos_title"
-                android:textStyle="bold"/>
+                android:textColor="@color/grey_dark"
+                android:textSize="@dimen/textsize_small_17"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/movie_videos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/text_videos_title"
-                android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingTop="@dimen/spacing_medium"
                 app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
@@ -174,10 +204,12 @@
 
             <TextView
                 android:id="@+id/text_reviews_title"
+                fontPath="fonts/Helvetica.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/movie_detail_reviews_title"
-                android:textStyle="bold"/>
+                android:textColor="@color/grey_dark"
+                android:textSize="@dimen/textsize_small_17"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/movie_reviews"
