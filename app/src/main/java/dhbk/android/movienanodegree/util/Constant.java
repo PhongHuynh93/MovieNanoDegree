@@ -2,6 +2,7 @@ package dhbk.android.movienanodegree.util;
 
 import android.content.Context;
 import android.support.annotation.StringDef;
+import android.util.SparseArray;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -39,16 +40,17 @@ public class Constant {
     // sort constant
     @StringDef({MOST_POPULAR, HIGHEST_RATED, MOST_RATED})
     @Retention(RetentionPolicy.SOURCE)
-    public @interface NavigationMode {}
+    public @interface NavigationMode {
+    }
 
     public static final String MOST_POPULAR = "popularity.desc";
     public static final String HIGHEST_RATED = "vote_average.desc";
     public static final String MOST_RATED = "vote_count.desc";
 
-//    loader for load db to populate datas
+    //    loader for load db to populate datas
     public static final int LOADER_ID = 0;
 
-//    list movie
+    //    list movie
     public static final String BROADCAST_CREATE_VIEWPAGER_ITEM_FRAG = "create_view_pager_item_frag";
 
 
@@ -68,4 +70,27 @@ public class Constant {
     public static final String SITE_YOUTUBE = "YouTube";
     public static final String YOUTUBE_THUMBNAIL = "https://img.youtube.com/vi/%s/mqdefault.jpg";
 
+    public static final SparseArray<String> GENRES_NAME = new SparseArray<>();
+    public static void setGenresName() {
+        GENRES_NAME.put(28, "Action");
+        GENRES_NAME.put(12, "Adventure");
+        GENRES_NAME.put(16, "Animation");
+        GENRES_NAME.put(35, "Comedy");
+        GENRES_NAME.put(80, "Crime");
+        GENRES_NAME.put(99, "Documentary");
+        GENRES_NAME.put(18, "Drama");
+        GENRES_NAME.put(10751, "Family");
+        GENRES_NAME.put(14, "Fantasy");
+        GENRES_NAME.put(10402, "Music");
+        GENRES_NAME.put(9648, "Mystery");
+        GENRES_NAME.put(10749, "Romance");
+        GENRES_NAME.put(878, "Science Fiction");
+        GENRES_NAME.put(10770, "TV Movie");
+        GENRES_NAME.put(10752, "War");
+        GENRES_NAME.put(37, "Western");
+    }
+
+    public static String getGenresName(int position) {
+        return GENRES_NAME.get(position);
+    }
 }

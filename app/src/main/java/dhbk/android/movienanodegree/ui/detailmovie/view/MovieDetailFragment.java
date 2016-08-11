@@ -1,27 +1,45 @@
 package dhbk.android.movienanodegree.ui.detailmovie.view;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
+import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
+import dhbk.android.movienanodegree.dagger.detailmovie.DaggerDetailMovieViewComponent;
+import dhbk.android.movienanodegree.dagger.detailmovie.MovieReviewsAdapterModule;
+import dhbk.android.movienanodegree.dagger.detailmovie.MovieVideosAdapterModule;
 import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
+import dhbk.android.movienanodegree.models.MovieReviewsResponse;
+import dhbk.android.movienanodegree.models.MovieVideosResponse;
 import dhbk.android.movienanodegree.ui.base.BaseFragment;
 import dhbk.android.movienanodegree.ui.detailmovie.DetailMovieContract;
+import dhbk.android.movienanodegree.ui.detailmovie.ItemOffsetDecoration;
+import dhbk.android.movienanodegree.ui.detailmovie.MovieReviewsAdapter;
+import dhbk.android.movienanodegree.ui.detailmovie.MovieVideosAdapter;
 import dhbk.android.movienanodegree.util.Constant;
+import hugo.weaving.DebugLog;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -59,11 +77,18 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
     @BindView(R.id.movie_reviews)
     RecyclerView movieReviews;
 
+    @Inject
+    MovieVideosAdapter mMovieVideosAdapter;
+
+    @Inject
+    MovieReviewsAdapter mMovieReviewsAdapter;
+
     public MovieDetailFragment() {
         // Required empty public constructor
     }
 
     // : 8/9/2016 5 set the fragment  with movie
+    @DebugLog
     public static MovieDetailFragment newInstance(@NonNull DiscoverMovieResponse.DiscoverMovie movie) {
         checkNotNull(movie);
         MovieDetailFragment fragment = new MovieDetailFragment();
@@ -83,6 +108,7 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
     protected boolean hasToolbar() {
         return false;
     }
+
 
     @Override
     protected void initView() {
@@ -111,7 +137,7 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
     }
 
     /**
-     * todo load poster image, name of movies
+     *  load poster image, name of movies
      */
     @Override
     public void declareMovieInfo() {
@@ -123,10 +149,10 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
                 .into(movieImagePoster);
 //        title
         movieOriginalTitle.setText(mMovie.getOriginalTitle());
-//        user rating
+//        user rating, auto change color depend on vote count
         movieUserRating.setText(String.format(Locale.US, "%.1f", mMovie.getAverageVote()));
         movieUserRating.setTextColor(getRatingColor(mMovie.getAverageVote()));
-//        release data
+//      fixme  release data, remember String.format     <string name="movie_detail_release_date">%s</string>, can change to html format color
         String releaseDate = String.format(getString(R.string.movie_detail_release_date),
                 mMovie.getReleaseDate());
         movieReleaseDate.setText(releaseDate);
@@ -135,29 +161,61 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
     }
 
     /**
-     * todo declare video recyclerview
+     *  declare video recyclerview
      */
     @Override
     public void declareVideoList() {
-
+        // : 8/9/2016 8c listen when click trailer
+        mMovieVideosAdapter.setMOnItemClickListener((itemView, position) -> onMovieVideoClicked(position));
+        movieVideos.setAdapter(mMovieVideosAdapter);
+        movieVideos.setItemAnimator(new DefaultItemAnimator());
+        movieVideos.addItemDecoration(new ItemOffsetDecoration(getActivity(), R.dimen.movie_item_offset));
+        movieVideos.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
     }
 
     /**
-     * todo declare reviews recyclerview
+     *  if you click a trailer among trailers in video list, this method will be called
+     * get to youtube site via Intent
+     * @see <a href="http://stackoverflow.com/questions/574195/android-youtube-app-play-video-intent">Tutorial</a>
+     * @param position position in a list of video.
+     */
+    @Override
+    public void onMovieVideoClicked(int position) {
+        // go to youtube intent with data
+        MovieVideosResponse.MovieVideo video = mMovieVideosAdapter.getItem(position);
+        if (video != null && video.isYoutubeVideo()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + video.getKey()));
+            startActivity(intent);
+        }
+    }
+
+    /**
+     *  declare reviews recyclerview
      */
     @Override
     public void declareReviewList() {
-
+        // : 8/9/2016 9c listen when click the review
+        mMovieVideosAdapter.setMOnItemClickListener((itemView, position) -> onMovieReviewClicked(position));
+        movieReviews.setAdapter(mMovieReviewsAdapter);
+        movieReviews.setItemAnimator(new DefaultItemAnimator());
+        movieReviews.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     /**
-     * todo set card elevation
+     * if you click one review among any reviews, call this method
+     * pass the url to another viewer in your device via Intent to see full reviews.
+     * @param position
      */
     @Override
-    public void setCardElevation() {
-
+    public void onMovieReviewClicked(int position) {
+        MovieReviewsResponse.MovieReview review = mMovieReviewsAdapter.getItem(position);
+        if (review != null && review.getReviewUrl() != null) {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(review.getReviewUrl()));
+            startActivity(intent);
+        }
     }
 
+    @DebugLog
     @Override
     public void setPresenter(DetailMovieContract.Presenter presenter) {
         checkNotNull(presenter, "Presenter in MovieDetailFragment not be null");
@@ -165,11 +223,18 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
     }
 
     /**
-     * todo etup the object graph and inject the dependencies needed on this fragment.
+     * setup the object graph and inject the dependencies needed on this fragment.
      */
     @Override
     protected void injectDependencies() {
-
+        // Create adapter
+        DaggerDetailMovieViewComponent
+                .builder()
+                .movieComponent(((MVPApp) getActivity().getApplication()).getMovieComponent())
+                .movieVideosAdapterModule(new MovieVideosAdapterModule())
+                .movieReviewsAdapterModule(new MovieReviewsAdapterModule())
+                .build()
+                .inject(this);
     }
 
 
@@ -201,35 +266,85 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
     }
 
     /**
-     * todo load list of video from network
+     * see if the video adapter whether have empty datas or not,
+     * if it has empty data, connect to network to load
+     *
+     * @return the state that indicate that we can load data or not
      */
     @Override
-    public void loadVideosFromNetwork() {
-
+    public boolean shouldLoadVideosFromNetwork() {
+        if (mMovieVideosAdapter.getItemCount() == 0) {
+            return true;
+        }
+        return false;
     }
 
     /**
-     * todo load list of reviews from network
+     * see if the review adapter whether have empty datas or not,
+     * if it has empty data, connect to network to load
+     *
+     * @return the state that indicate that we can load data or not
      */
     @Override
-    public void loadReviewsFromNetwork() {
-
+    public boolean shouldLoadReviewsFromNetwork() {
+        if (mMovieReviewsAdapter.getItemCount() == 0) {
+            return true;
+        }
+        return false;
     }
 
     /**
-     * todo set hide or show videos list depends on datas from video list which has download from network
+     * get the id of a movie
+     *
+     * @return movie ID
+     */
+    @Override
+    public long getMovieId() {
+        return mMovie.getId();
+    }
+
+    /**
+     * make the view adapter chagne the data
+     *
+     * @param movieVideos
+     */
+    @Override
+    public void makeVideoAdapterChangeData(ArrayList<MovieVideosResponse.MovieVideo> movieVideos) {
+        mMovieVideosAdapter.setMovieVideos(movieVideos);
+    }
+
+    /**
+     * make the review adapter change the data
+     *
+     * @param movieReviews
+     */
+    @Override
+    public void makeReviewAdapterChangeData(ArrayList<MovieReviewsResponse.MovieReview> movieReviews) {
+        mMovieReviewsAdapter.setMovieReviews(movieReviews);
+    }
+
+    /**
+     *  set hide or show videos list depends on datas from video list which has download from network
      */
     @Override
     public void setShowOrHideVideoList() {
-
+        if (mMovieVideosAdapter == null || mMovieVideosAdapter.getItemCount() == 0) {
+            cardMovieVideos.setVisibility(View.GONE);
+        } else {
+            cardMovieVideos.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
-     * todo set hide or show reviews list depends on datas from video list which has download from network
+     *  set hide or show reviews list depends on datas from video list which has download from network
      */
     @Override
     public void setShowOrHideReviewList() {
-
+        if (mMovieReviewsAdapter == null || mMovieReviewsAdapter.getItemCount() == 0) {
+            cardMovieReviews.setVisibility(View.GONE);
+        } else {
+            cardMovieReviews.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

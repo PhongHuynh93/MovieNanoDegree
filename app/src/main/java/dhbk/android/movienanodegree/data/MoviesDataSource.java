@@ -21,6 +21,7 @@ public interface MoviesDataSource {
 
     void saveSortByPreference(@NonNull String sort);
 
+    //    get the current page of movies in local db
     int getCurrentPage();
 
      //save movie id in db

@@ -32,7 +32,7 @@ import hugo.weaving.DebugLog;
 /**
  * A simple {@link Fragment} subclass.
  */
-// TODO: 8/9/2016 set the adapter in dagger
+// : 8/9/2016 set the adapter in dagger
 public class ListMovieItemFragment extends BaseFragment {
     private static final String ARG_POSITION = "position";
     @Inject
@@ -100,7 +100,8 @@ public class ListMovieItemFragment extends BaseFragment {
 
         // : 8/1/16 set adapter for recyclerview
         mListMovieRecyclerViewAdapter.setOnItemClickListener((itemView, position) -> {
-            // TODO: 8/7/16 when click, go to another activity to show detail
+            // =: 8/7/16 when click, go to another activity to show detail
+            mListener.gotoDetailActivity(mListMovieRecyclerViewAdapter.getItem(position));
         });
         mRecyclerviewHomeListMovies.setAdapter(mListMovieRecyclerViewAdapter);
         // make list show 1 vertical column of data
@@ -112,8 +113,14 @@ public class ListMovieItemFragment extends BaseFragment {
 
         endlessRecyclerViewScrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
+            // : 8/1/16 load more items from list
             public void onLoadMore(int page, int totalItemsCount) {
-                // TODO: 8/1/16 implement this function
+
+                // 1  this call refresh indicator
+                setThePullToRefreshAppear();
+
+                //  2 call service the load more movies from list and restart the loader
+                mListener.setForceLoad();
             }
         };
         mRecyclerviewHomeListMovies.addOnScrollListener(endlessRecyclerViewScrollListener);
@@ -174,7 +181,6 @@ public class ListMovieItemFragment extends BaseFragment {
         updateLayout();
     }
 
-
     public void setThePullToRefreshAppear() {
         mSwiperefreshHome.setRefreshing(true);
     }
@@ -183,8 +189,8 @@ public class ListMovieItemFragment extends BaseFragment {
         mSwiperefreshHome.setRefreshing(false);
     }
 
+    // turn off loading for new news
     public void stopEndlessListener() {
-        // turn off loading for new news
         endlessRecyclerViewScrollListener.setLoading(false);
     }
 
@@ -196,13 +202,5 @@ public class ListMovieItemFragment extends BaseFragment {
             mRecyclerviewHomeListMovies.setVisibility(View.VISIBLE);
 //            noMoviesView.setVisibility(View.GONE);
         }
-    }
-
-    public boolean getFirstload() {
-        return mFirstload;
-    }
-
-    public void setFirstload(boolean firstload) {
-        mFirstload = firstload;
     }
 }

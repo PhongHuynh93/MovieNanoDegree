@@ -7,13 +7,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
+import javax.inject.Inject;
+
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.data.MoviesDataSource;
 import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
 import dhbk.android.movienanodegree.util.Constant;
-
-import javax.inject.Inject;
-
 import hugo.weaving.DebugLog;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -40,7 +39,7 @@ public class MoviesLocalDataSource implements MoviesDataSource {
         ((MVPApp) context).getMovieComponent().inject(this);
     }
 
-//    get the last page of movies in local db
+//    get the current page of movies in local db
     @Override
     public int getCurrentPage() {
         Uri uri = getSortedMoviesUri();
@@ -96,7 +95,7 @@ public class MoviesLocalDataSource implements MoviesDataSource {
     public void logResponse(DiscoverMovieResponse discoverMoviesResponse) {
     }
 
-    // save sort type to pref
+    // todo 3 save sort type to pref, test if this method id called (not called)
     @Override
     public void saveSortByPreference(@Constant.NavigationMode String sort) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
@@ -105,6 +104,7 @@ public class MoviesLocalDataSource implements MoviesDataSource {
     }
 
     // get sort type from pref
+    // TODO: 8/10/16 get the sort value in db
     @Override
     public String getSort() {
         return mSharedPreferences.getString(PREF_SORT_BY_KEY, PREF_SORT_BY_DEFAULT_VALUE);
@@ -113,6 +113,7 @@ public class MoviesLocalDataSource implements MoviesDataSource {
     // get uri for sort type from pref
     @Override
     public Uri getSortedMoviesUri() {
+        // TODO: 8/10/16 1 getSort get error, it's always return popularity
         String sort = getSort();
         switch (sort) {
             case Constant.MOST_POPULAR:

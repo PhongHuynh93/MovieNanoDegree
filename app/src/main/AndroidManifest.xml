@@ -22,6 +22,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.detailmovie.view.MovieDetailActivity"
+            android:theme="@style/Movie.Home">
+        </activity>
+
         <!--content provider-->
         <provider
             android:name="dhbk.android.movienanodegree.data.local.MoviesProvider"

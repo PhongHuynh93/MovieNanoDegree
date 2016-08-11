@@ -41,5 +41,5 @@ public interface MovieRetrofitEndpoint {
      * @return
      */
     @GET("discover/movie")
-    Observable<DiscoverMovieResponse> discoverMovies(@Query("sort_by") String sortBy, @Query("page") Integer page);
+    Observable<DiscoverMovieResponse> discoverMovies(@Query("sort_by") String sortBy, @Query("page") int page);
 }

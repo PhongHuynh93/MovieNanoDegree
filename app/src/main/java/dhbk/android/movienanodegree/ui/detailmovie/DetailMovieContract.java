@@ -1,5 +1,9 @@
 package dhbk.android.movienanodegree.ui.detailmovie;
 
+import java.util.ArrayList;
+
+import dhbk.android.movienanodegree.models.MovieReviewsResponse;
+import dhbk.android.movienanodegree.models.MovieVideosResponse;
 import dhbk.android.movienanodegree.ui.base.Mvp;
 
 /**
@@ -29,24 +33,17 @@ public interface DetailMovieContract {
         void declareVideoList();
 
         /**
+         * if you click a trailer among trailers in video list, this method will be called
+         * @param position
+         */
+        void onMovieVideoClicked(int position);
+
+        /**
          * declare reviews recyclerview
          */
         void declareReviewList();
 
-        /**
-         * set card elevation
-         */
-        void setCardElevation();
-
-        /**
-         * load list of video from network
-         */
-        void loadVideosFromNetwork();
-
-        /**
-         * load list of reviews from network
-         */
-        void loadReviewsFromNetwork();
+        void onMovieReviewClicked(int position);
 
         /**
          * set hide or show videos list depends on datas from video list which has download from network
@@ -57,6 +54,38 @@ public interface DetailMovieContract {
          * set hide or show reviews list depends on datas from video list which has download from network
          */
         void setShowOrHideReviewList();
+
+        /**
+         * see if the video adapter whether have empty datas or not,
+         * if it has empty data, connect to network to load
+         * @return the state that indicate that we can load data or not
+         */
+        boolean shouldLoadVideosFromNetwork();
+
+        /**
+         * see if the review adapter whether have empty datas or not,
+         * if it has empty data, connect to network to load
+         * @return the state that indicate that we can load data or not
+         */
+        boolean shouldLoadReviewsFromNetwork();
+
+        /**
+         * get the id of a movie
+         * @return movie ID
+         */
+        long getMovieId();
+
+        /**
+         * make the view adapter chagne the data
+         * @param movieVideos
+         */
+        void makeVideoAdapterChangeData(ArrayList<MovieVideosResponse.MovieVideo> movieVideos);
+
+
+        /**
+         * make the review adapter change the data
+         */
+        void makeReviewAdapterChangeData(ArrayList<MovieReviewsResponse.MovieReview> movieReviews);
     }
 
     interface Presenter extends Mvp.BasePresenter {

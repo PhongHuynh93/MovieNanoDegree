@@ -76,7 +76,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
 
         // If the total item count is zero and the previous isn't, assume the
         // list is invalidated and should be reset back to initial state
-        // TODO: 8/3/2016 reset lại vị trí của list về lại abn đầu.
+        // : 8/3/2016 reset lại vị trí của list về lại abn đầu.
         if (totalItemCount < previousTotalItemCount) {
             this.currentPage = this.startingPageIndex;
             this.previousTotalItemCount = totalItemCount;
@@ -96,7 +96,8 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         // the visibleThreshold and need to reload more data.
         // If we do need to reload some more data, we execute onLoadMore to fetch the data.
         // threshold should reflect how many total columns there are too
-        // TODO: 8/3/2016 khi đủ điều kiện thì gọi onLoadMore để load thêm data, tăng page hiện tại đang đứng lên
+
+        // khi ta scroll đến gần cuối của list thì hàm này sẽ được gọi để load thêm data từ server
         if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
             currentPage++;
             onLoadMore(currentPage, totalItemCount);

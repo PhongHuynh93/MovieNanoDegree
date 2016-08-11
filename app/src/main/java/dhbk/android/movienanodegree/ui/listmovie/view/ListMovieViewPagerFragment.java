@@ -78,7 +78,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
     @Override
     protected void doThingWhenResumeApp() {
-
     }
 
     @Override
@@ -120,7 +119,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
             // when page select, force load in the first time
             @Override
             public void onPageSelected(int position) {
-                // change the sort type
                 String sort;
                 switch (position) {
                     case ListMovieViewPagerAdapter.MOST_POPULAR:
@@ -136,10 +134,12 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
                         //It will never reach here, just to make compiler happy
                         throw new IllegalArgumentException("Something strange happend");
                 }
-                // FIXME: 8/9/2016 watch this - why this called make pull to refresh appear again
-                // force loading data from network the first time
-                mPresenter.loadTask(false, true, sort);
-                // every change in page, restart the loader to load datas from local data again.
+                // save the current sort
+                mPresenter.saveSortByPreference(sort);
+//                not call this method
+//                mPresenter.loadTask(false, true, sort);
+                //  3 every change in page, restart the loader to load datas from local data again,
+                //  call this method to load db from db every time the page select change
                 mListener.restartLoader();
             }
 
@@ -150,6 +150,9 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
         });
     }
 
+    /**
+     * save the current tab of the viewpager and force load datas from network
+     */
     @Override
     public void setForceload() {
         // change the sort type
@@ -232,6 +235,9 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     }
 
 
+    /**
+     * restart loader to load datas from local database again
+     */
     @Override
     public void callRestartLoader() {
         mListener.restartLoader();

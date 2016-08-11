@@ -15,10 +15,17 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
+import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
+import dhbk.android.movienanodegree.dagger.detailmovie.DaggerDetailMovieComponent;
+import dhbk.android.movienanodegree.dagger.detailmovie.DetailMoviePresenterModule;
 import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
 import dhbk.android.movienanodegree.ui.base.BaseActivity;
+import dhbk.android.movienanodegree.ui.detailmovie.DetailMovieContract;
+import dhbk.android.movienanodegree.ui.detailmovie.presenter.MovieDetailPresenter;
 import dhbk.android.movienanodegree.util.ActivityUtils;
 import dhbk.android.movienanodegree.util.Constant;
 
@@ -43,6 +50,9 @@ public class MovieDetailActivity extends BaseActivity {
     private MovieDetailFragment mView;
     private DiscoverMovieResponse.DiscoverMovie mMovie;
 
+    @Inject
+    MovieDetailPresenter mPresenter;
+
     //  1 make intent to this class with movie parcel
     public static void newIntent(Context context, DiscoverMovieResponse.DiscoverMovie discoverMovie) {
         Intent intent = new Intent(context, MovieDetailActivity.class);
@@ -55,7 +65,14 @@ public class MovieDetailActivity extends BaseActivity {
      */
     @Override
     protected void injectDependencies() {
-
+        // : 8/10/16 inject presenter in here
+        // create the presenter
+        DaggerDetailMovieComponent
+                .builder()
+                .movieComponent(((MVPApp) getApplicationContext()).getMovieComponent())
+                .detailMoviePresenterModule(new DetailMoviePresenterModule((DetailMovieContract.View) mView))
+                .build()
+                .inject(this);
     }
 
     @Override
