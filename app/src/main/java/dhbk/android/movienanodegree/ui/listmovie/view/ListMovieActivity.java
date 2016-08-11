@@ -71,9 +71,20 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
                 .listMoviePresenterModule(new ListMoviePresenterModule((ListMovieContract.View) mView))
                 .build()
                 .inject(this);
+    }
+
+    private void injectDependencies(ListMovieContract.View view) {
+        // create the presenter
+        DaggerListMovieComponent
+                .builder()
+                .movieComponent(((MVPApp) getApplicationContext()).getMovieComponent())
+                .listMoviePresenterModule(new ListMoviePresenterModule(view))
+                .build()
+                .inject(this);
         // set up loader to load the database
 //        getLoaderManager().initLoader(Constant.LOADER_ID, null, this);
     }
+
 
     // make sure viewfragment is create
     @Override
@@ -175,8 +186,12 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
                 // : 8/11/2016 replace with explore if not have
                 Fragment exploreFrag = getSupportFragmentManager().findFragmentById(R.id.framelayout_act_main_content);
                 if (!(exploreFrag instanceof ListMovieViewPagerFragment)) {
-                    ListMovieViewPagerFragment fragment = ListMovieViewPagerFragment.newInstance();
-                    ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.framelayout_act_main_content);
+                    // TODO: 8/11/16 test this
+                    // set view again
+                    mView = ListMovieViewPagerFragment.newInstance();
+                    ActivityUtils.replaceFragment(getSupportFragmentManager(), mView, R.id.framelayout_act_main_content);
+                    // set presenter again
+                    injectDependencies();
                 }
                 // TODO: 8/11/2016 1 change title
                 mDrawerLayout.closeDrawers();
@@ -185,8 +200,9 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
                 // : 8/11/2016 replace with favorite if not have
                 Fragment favoriteFrag = getSupportFragmentManager().findFragmentById(R.id.framelayout_act_main_content);
                 if (!(favoriteFrag instanceof ListMovieFavoriteFragment)) {
-                    ListMovieFavoriteFragment fragment = ListMovieFavoriteFragment.newInstance();
-                    ActivityUtils.replaceFragment(getSupportFragmentManager(), fragment, R.id.framelayout_act_main_content);
+                    ListMovieFavoriteFragment favoriteView = ListMovieFavoriteFragment.newInstance();
+                    ActivityUtils.replaceFragment(getSupportFragmentManager(), favoriteView, R.id.framelayout_act_main_content);
+                    injectDependencies(favoriteView);
                 }
                 // TODO: 8/11/2016 1b change title
                 mDrawerLayout.closeDrawers();
