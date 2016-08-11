@@ -78,7 +78,6 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
 
     @Override
     protected void doThingWhenResumeApp() {
-
     }
 
     @Override
