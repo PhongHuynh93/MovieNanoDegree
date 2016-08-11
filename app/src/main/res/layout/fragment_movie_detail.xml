@@ -23,9 +23,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <!--scale lại nhưng phải giữ đúng tỷ lệ-->
             <dhbk.android.movienanodegree.ui.detailmovie.view.ProportionalImageView
                 android:id="@+id/image_movie_detail_poster"
-                android:layout_width="160dp"
+                android:layout_width="@dimen/width_detail_act_imageview_poster"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/content_description_movie_poster"
