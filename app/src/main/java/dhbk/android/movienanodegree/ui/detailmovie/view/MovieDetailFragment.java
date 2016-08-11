@@ -218,7 +218,7 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
     }
 
     /**
-     *  set card elevation for 4 views.
+     * todo 1 remove this: set card elevation for 4 views.
      */
     @Override
     public void setCardElevation() {
