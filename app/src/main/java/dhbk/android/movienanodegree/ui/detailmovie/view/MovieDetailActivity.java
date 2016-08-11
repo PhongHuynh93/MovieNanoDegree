@@ -65,7 +65,7 @@ public class MovieDetailActivity extends BaseActivity {
      */
     @Override
     protected void injectDependencies() {
-        // TODO: 8/10/16 inject presenter in here
+        // : 8/10/16 inject presenter in here
         // create the presenter
         DaggerDetailMovieComponent
                 .builder()
