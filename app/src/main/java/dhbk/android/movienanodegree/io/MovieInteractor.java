@@ -87,6 +87,7 @@ public class MovieInteractor {
                 .subscribe(new Subscriber<Long>() {
                     @Override
                     public void onCompleted() {
+                        // : 8/11/16 2 test this if be called or not (result: it's will called )
                         callback.onSetLoading(false);
                         callback.onDownloadAndSaveToDbSuccess();
                     }

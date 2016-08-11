@@ -64,6 +64,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
              */
             @Override
             public void onSetLoading(boolean b) {
+                // : 8/11/16  3 làm cho nó biến mất icon  (result: the icon will dissappear if the network called success or failed)
                 mListMovieView.makePullToRefreshDissappear();
                 mListMovieView.stopEndlessListener();
             }
@@ -120,7 +121,6 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
     }
 
     /**
-     * todo 4 test this method
      * @param forceUpdate   Pass in true to refresh the data in the {@link MovieReposition}
      */
     private void loadTasks(boolean forceUpdate, String sort) {
@@ -129,9 +129,9 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
 
         // force to update
         if (forceUpdate) {
+//           1  make to icon appear
             mListMovieView.makePullToRefreshAppear();
             // : 8/10/2016 3 change page from null to use function to calculate the current page from databse
-//            todo  getCurrentPageFromDb bị lỗi nó ko trả về page tận 11 lận
             callDiscoverMovies(sort, getCurrentPageFromDb() + 1);
         }
 
