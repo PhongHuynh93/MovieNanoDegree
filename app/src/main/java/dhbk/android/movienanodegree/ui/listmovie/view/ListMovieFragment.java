@@ -159,6 +159,7 @@ public abstract class ListMovieFragment extends BaseFragment {
                 .inject(this);
     }
 
+    // TODO: 8/11/16 update the layout
     public void onCursorLoaded(@Nullable Cursor data) {
         mListMovieRecyclerViewAdapter.changeCursor(data);
         // update layout

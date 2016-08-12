@@ -129,6 +129,16 @@ public class MoviesLocalDataSource implements MoviesDataSource {
     }
 
     /**
+     * get the uri of the favorite resource
+     *
+     * @return
+     */
+    @Override
+    public Uri getFavMovieUri() {
+        return MoviesContract.Favorites.CONTENT_URI;
+    }
+
+    /**
      * get into the db and get the state of fab by compare the movie id
      *
      * @return
