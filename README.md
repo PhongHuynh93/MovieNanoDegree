@@ -1,5 +1,4 @@
 # MovieNanoDegree
-Nanodegree Udacity Project 2 movie
 <a data-flickr-embed="true"  href="https://www.flickr.com/photos/59466970@N04/28658279480/in/dateposted-public/" title="2016-08-13 00.53.46"><img src="https://c1.staticflickr.com/9/8885/28658279480_99c1d43cbd_z.jpg" width="360" height="640" alt="2016-08-13 00.53.46"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
 
 <a data-flickr-embed="true"  href="https://www.flickr.com/photos/59466970@N04/28867469121/in/dateposted-public/" title="2016-08-13 00.53.31"><img src="https://c2.staticflickr.com/9/8770/28867469121_f86cc4e987_z.jpg" width="360" height="640" alt="2016-08-13 00.53.31"></a><script async src="//embedr.flickr.com/assets/client-code.js" charset="utf-8"></script>
