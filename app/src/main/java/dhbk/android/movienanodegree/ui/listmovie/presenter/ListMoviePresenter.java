@@ -90,7 +90,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
         });
     }
 
-    // todo 6 when cursor change, update old with new cursor
+    //   6 when cursor change, update old with new cursor
     @Override
     public void updateListWithCursordata(@Nullable Cursor data) {
         mListMovieView.onCursorLoaded(data);
@@ -117,7 +117,7 @@ public class ListMoviePresenter implements ListMovieContract.Presenter {
             case Constant.TAG_VIEWPAGER:
                 return mMovieReposition.getSortedMoviesUri();
             case Constant.TAG_FAVORITE:
-                // TODO: 8/11/16 return the favorite uri
+                // : 8/11/16 return the favorite uri
                 return mMovieReposition.getFavMovieUri();
             default:
                 throw new IllegalArgumentException("CANNOT FIND URI");

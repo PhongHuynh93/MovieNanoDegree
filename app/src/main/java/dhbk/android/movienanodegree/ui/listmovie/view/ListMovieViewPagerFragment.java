@@ -254,4 +254,10 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     public void callRestartLoader() {
         mListener.restartLoader();
     }
+
+
+    @Override
+    protected String getTitle() {
+        return "List movies";
+    }
 }

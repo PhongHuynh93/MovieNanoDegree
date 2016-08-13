@@ -42,6 +42,8 @@ public abstract class ListMovieFragment extends BaseFragment {
 
     @BindView(R.id.recyclerview_home_list_movies)
     RecyclerView mRecyclerviewHomeListMovies;
+
+    @Getter
     @BindView(R.id.swiperefresh_home)
     SwipeRefreshLayout mSwiperefreshHome;
 
@@ -79,6 +81,7 @@ public abstract class ListMovieFragment extends BaseFragment {
                 android.R.color.holo_red_light);
         mSwiperefreshHome.setOnRefreshListener(() ->{
             // : 8/11/2016 3 make this method abtrack, so we can load depend on current view
+            // : 8/12/2016 5 test khi refresh no gọi gì
             loadData();
         });
 
@@ -130,10 +133,10 @@ public abstract class ListMovieFragment extends BaseFragment {
 
     }
 
-    @Override
-    public int getLayout() {
-        return R.layout.fragment_item_list_movie;
-    }
+//    @Override
+//    public int getLayout() {
+//        return R.layout.fragment_item_list_movie;
+//    }
 
     @Override
     protected boolean hasToolbar() {
@@ -159,7 +162,7 @@ public abstract class ListMovieFragment extends BaseFragment {
                 .inject(this);
     }
 
-    // TODO: 8/11/16 update the layout
+    // : 8/11/16 update the layout
     public void onCursorLoaded(@Nullable Cursor data) {
         mListMovieRecyclerViewAdapter.changeCursor(data);
         // update layout
@@ -168,9 +171,7 @@ public abstract class ListMovieFragment extends BaseFragment {
         updateLayout();
     }
 
-    public void setThePullToRefreshAppear() {
-        mSwiperefreshHome.setRefreshing(true);
-    }
+    public abstract void setThePullToRefreshAppear();
 
     public void setThePullToRefreshDissappear() {
         mSwiperefreshHome.setRefreshing(false);

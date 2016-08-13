@@ -2,6 +2,8 @@ package dhbk.android.movienanodegree.ui.listmovie.view;
 
 import android.support.annotation.NonNull;
 
+import dhbk.android.movienanodegree.R;
+
 /**
  * Created by phongdth.ky on 8/11/2016.
  */
@@ -22,5 +24,20 @@ public class ListMovieItemFragment extends ListMovieFragment {
     @Override
     protected void loadData() {
         getMListener().setForceLoad();
+    }
+
+    @Override
+    public void setThePullToRefreshAppear() {
+        getMSwiperefreshHome().setRefreshing(true);
+    }
+
+    @Override
+    protected String getTitle() {
+        return null;
+    }
+
+    @Override
+    public int getLayout() {
+        return R.layout.fragment_item_list_movie;
     }
 }

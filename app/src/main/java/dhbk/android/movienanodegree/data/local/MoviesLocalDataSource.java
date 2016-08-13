@@ -95,7 +95,7 @@ public class MoviesLocalDataSource implements MoviesDataSource {
     public void logResponse(DiscoverMovieResponse discoverMoviesResponse) {
     }
 
-    // todo 3 save sort type to pref, test if this method id called (not called)
+    //  3 save sort type to pref, test if this method id called (not called)
     @Override
     public void saveSortByPreference(@Constant.NavigationMode String sort) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
@@ -104,7 +104,7 @@ public class MoviesLocalDataSource implements MoviesDataSource {
     }
 
     // get sort type from pref
-    // TODO: 8/10/16 get the sort value in db
+    // : 8/10/16 get the sort value in db
     @Override
     public String getSort() {
         return mSharedPreferences.getString(PREF_SORT_BY_KEY, PREF_SORT_BY_DEFAULT_VALUE);
@@ -113,7 +113,7 @@ public class MoviesLocalDataSource implements MoviesDataSource {
     // get uri for sort type from pref
     @Override
     public Uri getSortedMoviesUri() {
-        // TODO: 8/10/16 1 getSort get error, it's always return popularity
+        // : 8/10/16 1 getSort get error, it's always return popularity
         String sort = getSort();
         switch (sort) {
             case Constant.MOST_POPULAR:

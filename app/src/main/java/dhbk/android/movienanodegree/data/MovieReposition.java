@@ -80,7 +80,7 @@ public class MovieReposition implements MoviesDataSource{
         return mMoviesLocalDataSource.getFavMovieUri();
     }
 
-    // TODO: 8/11/16 4 method này không bao giờ được gọi cho nên nó khi lấy từ sort nó ko có lấy được
+    // : 8/11/16 4 method này không bao giờ được gọi cho nên nó khi lấy từ sort nó ko có lấy được
     @Override
     public void saveSortByPreference(@Constant.NavigationMode String sort) {
         checkNotNull(sort);
