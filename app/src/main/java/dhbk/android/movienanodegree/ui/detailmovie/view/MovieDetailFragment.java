@@ -356,4 +356,9 @@ public class MovieDetailFragment extends BaseFragment implements DetailMovieCont
     protected void doThingWhenDestroyApp() {
 
     }
+
+    @Override
+    protected String getTitle() {
+        return null;
+    }
 }

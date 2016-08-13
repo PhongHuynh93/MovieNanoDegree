@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -73,6 +74,8 @@ public class MovieDetailActivity extends BaseActivity {
                 .detailMoviePresenterModule(new DetailMoviePresenterModule((DetailMovieContract.View) mView))
                 .build()
                 .inject(this);
+        // declare fab here because we use the presenter which != null after injecting.
+        declareFab();
     }
 
     @Override
@@ -106,8 +109,6 @@ public class MovieDetailActivity extends BaseActivity {
 
         declareView();
 
-        declareFab();
-
         declareToolbar();
     }
 
@@ -127,10 +128,46 @@ public class MovieDetailActivity extends BaseActivity {
         }
     }
 
-    // TODO: 8/9/2016 3 declare fab and when click, save to favorite db
+    // : 8/9/2016 3 declare fab and when click, save to favorite db
     private void declareFab() {
-        // get favorite from db and change image depends on this data
+        // : 8/11/2016 4 update fab when first open this creen by go to db and change the heart_white icon
+        updateFab();
+
+        //  5 get favorite from db and change image depends on this data
+        mFabDetailActivity.setOnClickListener(view -> {
+            // : 8/11/2016 6 change fab state in db
+            saveFabState();
+            // : 8/11/2016 7  change icon heart_white
+            updateFab();
+        });
     }
+
+    /**
+     *  6b change fab state to db
+     */
+    private void saveFabState() {
+        // if favorite is in db, remove it
+        if (mPresenter.isFavorite(mMovie)) {
+            mPresenter.removeFavorite(mMovie);
+        } else {
+//            if favorite is not in db, add it
+            mPresenter.addFavorite(mMovie);
+        }
+    }
+
+    /**
+     *  7b change icon heart_white by getting state from db.
+     */
+    private void updateFab() {
+        if (mPresenter.isFavorite(mMovie)) {
+            // change fab to red heart_white
+            mFabDetailActivity.setImageResource(R.drawable.heart_red);
+        } else {
+            // change fab to white heart_white
+            mFabDetailActivity.setImageResource(R.drawable.heart_white);
+        }
+    }
+
 
     // : 8/9/2016 4 declare toolbar with poster image which can collapse and expand
     private void declareToolbar() {
@@ -149,5 +186,17 @@ public class MovieDetailActivity extends BaseActivity {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade()
                 .into(mImageviewDetailActivity);
+    }
+
+    // : 8/11/2016 when click home button, nav to previous activity
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // : 8/11/2016 1 call nav to open
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

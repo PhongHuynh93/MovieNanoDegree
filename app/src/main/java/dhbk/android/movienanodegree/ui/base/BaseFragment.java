@@ -45,10 +45,15 @@ public abstract class BaseFragment extends Fragment {
             ActionBar ab = ((AppCompatActivity) getActivity()).getSupportActionBar();
             ab.setHomeAsUpIndicator(R.drawable.toolbar_open_drawer);
             ab.setDisplayHomeAsUpEnabled(true); // set the left arrow in toolbar
+            if (getTitle() != null) {
+                ab.setTitle(getTitle());
+            }
         }
         doThingWhenActivityCreated();
 
     }
+
+    protected abstract String getTitle();
 
 
     @Override

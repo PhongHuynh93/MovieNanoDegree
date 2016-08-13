@@ -70,6 +70,10 @@ public class Constant {
     public static final String SITE_YOUTUBE = "YouTube";
     public static final String YOUTUBE_THUMBNAIL = "https://img.youtube.com/vi/%s/mqdefault.jpg";
 
+    public static final String TAG_VIEWPAGER = "viewpager";
+    public static final String TAG_FAVORITE = "favorite";
+    public static final String TAG_FRAG = "frag";
+
     public static final SparseArray<String> GENRES_NAME = new SparseArray<>();
     public static void setGenresName() {
         GENRES_NAME.put(28, "Action");

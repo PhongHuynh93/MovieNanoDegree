@@ -37,5 +37,31 @@ public interface MoviesDataSource {
 
      // delete movies depend on sort
     void deleteMovies();
+
+    /**
+     * get into the db and get the state of fab
+     *
+     * @return
+     * @param movie
+     */
+    boolean isFavorite(DiscoverMovieResponse.DiscoverMovie movie);
+
+    /**
+     * remove favorite from db by compare movie ID
+     * @param movie
+     */
+    void removeFavorite(DiscoverMovieResponse.DiscoverMovie movie);
+
+    /**
+     * add favorite to db with movie ID
+     * @param movie
+     */
+    void addFavorite(DiscoverMovieResponse.DiscoverMovie movie);
+
+    /**
+     * get the uri of the favorite resource
+     * @return
+     */
+    Uri getFavMovieUri();
 }
 

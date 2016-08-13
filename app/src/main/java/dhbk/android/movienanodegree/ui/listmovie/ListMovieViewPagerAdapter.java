@@ -39,11 +39,11 @@ public class ListMovieViewPagerAdapter extends SmartFragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case MOST_POPULAR: // ListMovieItemFragment # 0 - This will show FirstFragment
-                return ListMovieItemFragment.newInstance(MOST_POPULAR);
+                return ListMovieItemFragment.newInstance();
             case HIGHEST_RATED: // ListMovieItemFragment # 0 - This will show FirstFragment different title
-                return ListMovieItemFragment.newInstance(HIGHEST_RATED);
+                return ListMovieItemFragment.newInstance();
             case MOST_RATED: // ListMovieItemFragment # 1 - This will show SecondFragment
-                return ListMovieItemFragment.newInstance(MOST_RATED);
+                return ListMovieItemFragment.newInstance();
             default:
                 return null;
         }

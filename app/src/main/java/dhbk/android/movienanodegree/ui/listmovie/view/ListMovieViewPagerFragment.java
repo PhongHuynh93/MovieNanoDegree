@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import javax.inject.Inject;
 
@@ -99,6 +100,17 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     @Override
     protected boolean hasToolbar() {
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // : 8/11/2016 1 call nav to open
+                mListener.openNavDrawer();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -241,5 +253,11 @@ public class ListMovieViewPagerFragment extends BaseFragment implements ListMovi
     @Override
     public void callRestartLoader() {
         mListener.restartLoader();
+    }
+
+
+    @Override
+    protected String getTitle() {
+        return "List movies";
     }
 }

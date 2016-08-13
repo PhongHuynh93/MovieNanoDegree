@@ -1,21 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.home.ListMovieActivity"
-    tools:ignore="MissingPrefix">
+    tools:openDrawer="start">
 
-    <!--main content-->
-    <FrameLayout
-        android:id="@+id/framelayout_act_main_content"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </FrameLayout>
+        android:fitsSystemWindows="true"
+        tools:context=".ui.listmovie.view.ListMovieActivity"
+        tools:ignore="MissingPrefix">
+        <!--todo 0 test this add nav-->
+        <!--main content-->
+        <FrameLayout
+            android:id="@+id/framelayout_act_main_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        </FrameLayout>
 
+    </android.support.design.widget.CoordinatorLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+    <!-- Navigation Drawer -->
+    <RelativeLayout
+        android:id="@+id/framelayout_act_main_nav"
+        android:layout_width="@dimen/width_listmovie_relativelayout_nav"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/white_solid"
+        android:fitsSystemWindows="true">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/cover"/>
+
+        <!--explore activity-->
+
+        <ImageView
+            android:id="@+id/imageview_act_main_explore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="@dimen/margin_act_main_imageview"
+            android:layout_marginTop="@dimen/margin_top_act_main_linearlayout_explore"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/user"/>
+
+        <TextView
+            android:id="@+id/textview_act_main_explore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imageview_act_main_explore"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="@dimen/margin_start_act_main_textview_explore"
+            android:text="@string/listmovie_activity_explore"
+            android:textColor="@color/grey_dark"
+            android:textSize="@dimen/textsize_small_15"/>
+
+        <!--favorite activity-->
+        <ImageView
+            android:id="@+id/imageview_act_main_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageview_act_main_explore"
+            android:layout_alignLeft="@id/imageview_act_main_explore"
+            android:layout_marginTop="@dimen/margin_act_main_imageview"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/shopping_bag"/>
+
+        <TextView
+            android:gravity="bottom"
+            android:id="@+id/textview_act_main_favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imageview_act_main_favorite"
+            android:layout_below="@+id/textview_act_main_explore"
+            android:layout_alignLeft="@+id/textview_act_main_explore"
+            android:text="@string/listmovie_activity_favorite"
+            android:textColor="@color/grey_dark"
+            android:textSize="@dimen/textsize_small_15"/>
+    </RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

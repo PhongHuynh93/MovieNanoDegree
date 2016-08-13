@@ -6,9 +6,17 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.OnClick;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.R;
 import dhbk.android.movienanodegree.dagger.listmovie.DaggerListMovieComponent;
@@ -25,6 +33,14 @@ import hugo.weaving.DebugLog;
 
 public class ListMovieActivity extends BaseActivity implements LoaderManager.LoaderCallbacks<Cursor>, OnFragInteract {
 
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @BindView(R.id.framelayout_act_main_nav)
+    RelativeLayout mFramelayoutActMainNav;
+    @BindView(R.id.textview_act_main_explore)
+    TextView mTextviewActMainExplore;
+    @BindView(R.id.textview_act_main_favorite)
+    TextView mTextviewActMainFavorite;
     private ListMovieViewPagerFragment mView;
 
     @Inject
@@ -55,9 +71,20 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
                 .listMoviePresenterModule(new ListMoviePresenterModule((ListMovieContract.View) mView))
                 .build()
                 .inject(this);
+    }
+
+    private void injectDependencies(ListMovieContract.View view) {
+        // create the presenter
+        DaggerListMovieComponent
+                .builder()
+                .movieComponent(((MVPApp) getApplicationContext()).getMovieComponent())
+                .listMoviePresenterModule(new ListMoviePresenterModule(view))
+                .build()
+                .inject(this);
         // set up loader to load the database
 //        getLoaderManager().initLoader(Constant.LOADER_ID, null, this);
     }
+
 
     // make sure viewfragment is create
     @Override
@@ -80,8 +107,12 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
          * CursorLoader: A loader that queries the ContentResolver and returns a Cursor.
          * -> must provide it with content provider uri
          */
-        return new CursorLoader(this, mPresenter.getContentUri(), null, null, null, null);
+        // : 8/11/16 4 load data depend on uri
+        String tag = args.getString(Constant.TAG_FRAG);
+        return new CursorLoader(this, mPresenter.getContentUri(tag), null, null, null, null);
     }
+
+
 
     /**
      * Called when a previously created loader has finished its load.
@@ -93,6 +124,7 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         // update db with cursor data
+        // : 8/11/16 5 change the cursor
         mPresenter.updateListWithCursordata(data);
     }
 
@@ -110,11 +142,21 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
     }
 
     /**
-     * restart the loader to save movie again
+     *  3 restart the loader to save movie again when call restart loader, get it with bundle of frag, so it can get the correct uri
      */
     @Override
     public void restartLoader() {
-        getLoaderManager().restartLoader(Constant.LOADER_ID, null, this);
+        //  7 get the view
+        String whichFrag = "";
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.framelayout_act_main_content);
+        if (fragment instanceof ListMovieViewPagerFragment) {
+            whichFrag = Constant.TAG_VIEWPAGER;
+        } else if (fragment instanceof ListMovieFavoriteFragment) {
+            whichFrag = Constant.TAG_FAVORITE;
+        }
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.TAG_FRAG, whichFrag);
+        getLoaderManager().restartLoader(Constant.LOADER_ID, bundle, this);
     }
 
     @Override
@@ -132,13 +174,55 @@ public class ListMovieActivity extends BaseActivity implements LoaderManager.Loa
         return false;
     }
 
+    /**
+     * 2 open the nav drawer from left to right
+     */
+    @Override
+    public void openNavDrawer() {
+        mDrawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    // : 8/11/16 2 not call this method, call restart the loader, not the setForceload cause we not load datas from network
     @Override
     public void setForceLoad() {
-        mView.setForceload();
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.framelayout_act_main_content);
+        if (fragment instanceof ListMovieViewPagerFragment) {
+            mView.setForceload();
+        }
     }
 
     @Override
     public void gotoDetailActivity(DiscoverMovieResponse.DiscoverMovie movie) {
         MovieDetailActivity.newIntent(this, movie);
+    }
+
+    @OnClick({R.id.textview_act_main_explore, R.id.textview_act_main_favorite})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.textview_act_main_explore:
+                // : 8/11/2016 replace with explore if not have
+                Fragment exploreFrag = getSupportFragmentManager().findFragmentById(R.id.framelayout_act_main_content);
+                if (!(exploreFrag instanceof ListMovieViewPagerFragment)) {
+                    // set view again
+                    mView = ListMovieViewPagerFragment.newInstance();
+                    ActivityUtils.replaceFragment(getSupportFragmentManager(), mView, R.id.framelayout_act_main_content);
+                    // set presenter again
+                    injectDependencies();
+                }
+                // TODO: 8/11/2016 1 change title
+                mDrawerLayout.closeDrawers();
+                break;
+            case R.id.textview_act_main_favorite:
+                // : 8/11/2016 replace with favorite if not have
+                Fragment favoriteFrag = getSupportFragmentManager().findFragmentById(R.id.framelayout_act_main_content);
+                if (!(favoriteFrag instanceof ListMovieFavoriteFragment)) {
+                    ListMovieFavoriteFragment favoriteView = ListMovieFavoriteFragment.newInstance();
+                    ActivityUtils.replaceFragment(getSupportFragmentManager(), favoriteView, R.id.framelayout_act_main_content);
+                    injectDependencies(favoriteView);
+                }
+                // TODO: 8/11/2016 1b change title
+                mDrawerLayout.closeDrawers();
+                break;
+        }
     }
 }

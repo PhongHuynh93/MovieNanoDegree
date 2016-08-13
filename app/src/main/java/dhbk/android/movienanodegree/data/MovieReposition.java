@@ -71,10 +71,50 @@ public class MovieReposition implements MoviesDataSource{
         return mMoviesLocalDataSource.getSortedMoviesUri();
     }
 
-    // TODO: 8/11/16 4 method này không bao giờ được gọi cho nên nó khi lấy từ sort nó ko có lấy được
+    /**
+     * get the uri of the favorite resource
+     * @return
+     */
+    @Override
+    public Uri getFavMovieUri() {
+        return mMoviesLocalDataSource.getFavMovieUri();
+    }
+
+    // : 8/11/16 4 method này không bao giờ được gọi cho nên nó khi lấy từ sort nó ko có lấy được
     @Override
     public void saveSortByPreference(@Constant.NavigationMode String sort) {
         checkNotNull(sort);
         mMoviesLocalDataSource.saveSortByPreference(sort);
     }
+
+    /**
+     * get into the db and get the state of fab
+     *
+     * @return
+     * @param movie
+     */
+    @Override
+    public boolean isFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        return mMoviesLocalDataSource.isFavorite(movie);
+    }
+
+    /**
+     * remove favorite from db by compare movie ID
+     * @param movie
+     */
+    @Override
+    public void removeFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        mMoviesLocalDataSource.removeFavorite(movie);
+    }
+
+    /**
+     * add favorite to db with movie ID
+     * @param movie
+     */
+    @Override
+    public void addFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        mMoviesLocalDataSource.addFavorite(movie);
+    }
+
+
 }

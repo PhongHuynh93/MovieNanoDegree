@@ -95,7 +95,7 @@ public class MoviesLocalDataSource implements MoviesDataSource {
     public void logResponse(DiscoverMovieResponse discoverMoviesResponse) {
     }
 
-    // todo 3 save sort type to pref, test if this method id called (not called)
+    //  3 save sort type to pref, test if this method id called (not called)
     @Override
     public void saveSortByPreference(@Constant.NavigationMode String sort) {
         SharedPreferences.Editor editor = mSharedPreferences.edit();
@@ -104,7 +104,7 @@ public class MoviesLocalDataSource implements MoviesDataSource {
     }
 
     // get sort type from pref
-    // TODO: 8/10/16 get the sort value in db
+    // : 8/10/16 get the sort value in db
     @Override
     public String getSort() {
         return mSharedPreferences.getString(PREF_SORT_BY_KEY, PREF_SORT_BY_DEFAULT_VALUE);
@@ -113,7 +113,7 @@ public class MoviesLocalDataSource implements MoviesDataSource {
     // get uri for sort type from pref
     @Override
     public Uri getSortedMoviesUri() {
-        // TODO: 8/10/16 1 getSort get error, it's always return popularity
+        // : 8/10/16 1 getSort get error, it's always return popularity
         String sort = getSort();
         switch (sort) {
             case Constant.MOST_POPULAR:
@@ -126,5 +126,62 @@ public class MoviesLocalDataSource implements MoviesDataSource {
                 // Signals that a method has been invoked at an illegal or inappropriate time.
                 throw new IllegalStateException("Unknown sort.");
         }
+    }
+
+    /**
+     * get the uri of the favorite resource
+     *
+     * @return
+     */
+    @Override
+    public Uri getFavMovieUri() {
+        return MoviesContract.Favorites.CONTENT_URI;
+    }
+
+    /**
+     * get into the db and get the state of fab by compare the movie id
+     *
+     * @return
+     * @param movie
+     */
+    @Override
+    public boolean isFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        boolean favorite = false;
+        Cursor cursor = mContext.getContentResolver().query(
+                MoviesContract.Favorites.CONTENT_URI,
+                null,
+                MoviesContract.COLUMN_MOVIE_ID_KEY + " = " + movie.getId(),
+                null,
+                null
+        );
+        if (cursor != null) {
+            favorite = cursor.getCount() != 0;
+            cursor.close();
+        }
+        return favorite;
+    }
+
+    /**
+     * remove favorite from db by compare movie ID
+     * @param movie
+     */
+    @Override
+    public void removeFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        mContext.getContentResolver().delete(
+                MoviesContract.Favorites.CONTENT_URI,
+                MoviesContract.COLUMN_MOVIE_ID_KEY + " = " + movie.getId(),
+                null
+        );
+    }
+
+    /**
+     * add favorite to db with movie ID
+     * @param movie
+     */
+    @Override
+    public void addFavorite(DiscoverMovieResponse.DiscoverMovie movie) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MoviesContract.COLUMN_MOVIE_ID_KEY, movie.getId());
+        mContext.getContentResolver().insert(MoviesContract.Favorites.CONTENT_URI, contentValues);
     }
 }

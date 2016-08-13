@@ -69,7 +69,7 @@
                 android:textColor="@color/grey_light"
                 android:textSize="@dimen/textsize_small_10"/>
 
-            <!--the heart icon to show view count-->
+            <!--the heart_white icon to show view count-->
             <ImageView
                 android:id="@+id/imageview_listmovie_hearticon"
                 android:layout_width="wrap_content"
