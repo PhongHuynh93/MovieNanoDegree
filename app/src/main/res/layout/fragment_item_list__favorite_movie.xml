@@ -1,0 +1,40 @@
+<!--Implementing Pull to Refresh Guide-->
+<!--http://guides.codepath.com/android/Implementing-Pull-to-Refresh-Guide#using-swiperefreshlayout-->
+<!--main content-->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--toolbar-->
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Movie.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/Movie.PopupOverlay"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <!--content type swipe-->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh_home"
+        android:layout_marginTop="95dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--lists of movies -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_home_list_movies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
+        </android.support.v7.widget.RecyclerView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+</FrameLayout>

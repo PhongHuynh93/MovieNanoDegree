@@ -16,7 +16,6 @@
         android:fitsSystemWindows="true"
         tools:context=".ui.listmovie.view.ListMovieActivity"
         tools:ignore="MissingPrefix">
-        <!--todo 0 test this add nav-->
         <!--main content-->
         <FrameLayout
             android:id="@+id/framelayout_act_main_content"
@@ -73,21 +72,21 @@
             android:id="@+id/imageview_act_main_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageview_act_main_explore"
             android:layout_alignLeft="@id/imageview_act_main_explore"
+            android:layout_below="@id/imageview_act_main_explore"
             android:layout_marginTop="@dimen/margin_act_main_imageview"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             android:src="@drawable/shopping_bag"/>
 
         <TextView
-            android:gravity="bottom"
             android:id="@+id/textview_act_main_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/imageview_act_main_favorite"
-            android:layout_below="@+id/textview_act_main_explore"
             android:layout_alignLeft="@+id/textview_act_main_explore"
+            android:layout_below="@+id/textview_act_main_explore"
+            android:gravity="bottom"
             android:text="@string/listmovie_activity_favorite"
             android:textColor="@color/grey_dark"
             android:textSize="@dimen/textsize_small_15"/>
