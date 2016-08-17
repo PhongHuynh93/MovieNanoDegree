@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import dhbk.android.movienanodegree.MVPApp;
 import dhbk.android.movienanodegree.data.MovieReposition;
 import dhbk.android.movienanodegree.data.local.MoviesContract;
+import dhbk.android.movienanodegree.models.DiscoverMovieResponse;
 import dhbk.android.movienanodegree.models.MovieReviewsResponse;
 import dhbk.android.movienanodegree.models.MovieVideosResponse;
 import rx.Observable;
@@ -66,7 +67,8 @@ public class MovieInteractor {
                  * từ {@link DiscoverMovieResponse}
                  * sang {@link DiscoverMovie}
                  */
-                .map(discoverMoviesResponse -> discoverMoviesResponse.getResults())
+                .map(discoverMovieResponse -> discoverMovieResponse.getResults())
+//                .map(discoverMoviesResponse -> discoverMoviesResponse.getResults())
                 /**
                  * Flatmap:
                  * @see <a href="http://reactivex.io/documentation/operators/flatmap.html"></a>
